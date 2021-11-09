@@ -1,0 +1,72 @@
+.input {
+  padding-bottom: 20px;
+  position: relative;
+  width: 100%;
+
+  &__container {
+    padding: 10px;
+    backdrop-filter: blur(54.3656px);
+    border-radius: 5px;
+    min-width: 370px;
+    border: solid 1px rgba($color: #000, $alpha: 0.3);
+    z-index: 1;
+    position: relative;
+
+    &--disable {
+      cursor: default;
+      background-color: #f2f2f2;
+    }
+  }
+
+  &__label {
+    margin-bottom: 0.4rem;
+    padding-left: 2px;
+    font-size: 14px;
+    color: #555555;
+  }
+
+  &__error {
+    font-size: 14px;
+    color: #fa3434;
+    margin-top: 0.2rem;
+    background: transparent;
+    position: relative;
+  }
+
+  &__showPass {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    right: 15px;
+    transform: translate(0, -50%);
+    font-size: 13px;
+    color: #2489f4;
+  }
+
+  &__input {
+    border-radius: 5px;
+    border: none;
+    height: 100%;
+    width: 100%;
+    color: #000;
+    font-size: 15px;
+    padding-left: 8px;
+    &:focus {
+      outline: none;
+    }
+    &:focus::placeholder {
+      color: transparent;
+      opacity: 0;
+    }
+
+    &::placeholder {
+      color: #888888;
+      font-size: 15px;
+      opacity: 0.6;
+    }
+
+    &--show {
+      padding-right: 40px;
+    }
+  }
+}

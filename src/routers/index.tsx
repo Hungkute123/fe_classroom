@@ -6,6 +6,8 @@ import { PublicRouter } from "./PublicRouter";
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
 
 import { Header, Footer } from '../components/common';
+import { ListMemberClass } from '../components/ListMemberClass/ListMemberClass';
+
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -24,6 +26,7 @@ export const Routers = () => {
           isHasFooter={true}
           footer={Footer}
         />
+          
       </Switch>
     </Router>
   );

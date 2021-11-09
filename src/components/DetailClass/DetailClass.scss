@@ -1,0 +1,106 @@
+.detail-class {
+  max-height: 240px;
+  margin: 0 auto;
+  max-width: 47.5rem;
+  margin-top: 20px;
+  //padding: 1.5rem 1.5rem;
+  width: calc(100% - 2 * 1.5rem);
+  max-width: 62.5rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 10px 10px 10px 10px;
+  &__container {
+    position: relative;
+    img {
+      border-radius: 10px 10px 10px 10px;
+      background-repeat: no-repeat;
+      max-height: 240px;
+      max-width: 1000px;
+    }
+    &__show {
+      img {
+        border-radius: 10px 10px 0 0;
+      }
+    }
+    &__bottom-left {
+      position: absolute;
+      bottom: 1rem;
+      left: 2.6rem;
+      &__name {
+        font-size: 2.25rem;
+        font-weight: 500;
+        line-height: 2.75rem;
+        color: #fff;
+        font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      }
+      &__part {
+        font-size: 1.375rem;
+        font-weight: 400;
+        line-height: 1.75rem;
+        color: #fff;
+        font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      }
+    }
+    &__top-right {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      &__btn {
+        font-family: 'Google Sans', Roboto, Arial, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.25px;
+        line-height: 36px;
+        background-color: #fff;
+        color: #1967d2;
+        width: 95px;
+        height: 36px;
+        border-radius: 5px 5px 5px 5px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &__bottom-right {
+      position: absolute;
+      bottom: 8px;
+      right: 16px;
+      &__btn {
+        font-weight: bold;
+        color: #fff;
+        width: 24px;
+        height: 24px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__panel {
+    padding: 0 18px;
+    display: none;
+    background-color: white;
+    overflow: hidden;
+    &__show {
+      display: block;
+    }
+    &__padding {
+      padding: 1.5rem;
+    }
+    &__detail {
+      letter-spacing: 0.01428571em;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.25rem;
+      color: #3c4043;
+    }
+    em {
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+  &__show {
+    min-height: 350px;
+  }
+}
