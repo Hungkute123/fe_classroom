@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ListClass } from '../../components/ListClass/ListClass';
+import './Home.scss';
+
 import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../redux/rootReducer';
 import { getClassroomByIDUser } from '../../redux/slice/appSlice/classroomSlice';
 import classroomApi from '../../services/aixos/classroomApi';
-import './Home.scss';
-import { RootState } from '../../redux/rootReducer';
-import { ListMemberClass } from '../../components/ListMemberClass/ListMemberClass';
+
 import { Tabs } from '../../components/common';
-import { DetailClass } from '../../components/DetailClass/DetailClass';
+import { ListClass, ListMemberClass, DetailClass } from '../../components';
 
 export const Home = () => {
   const dispatch = useDispatch();
