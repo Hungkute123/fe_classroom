@@ -1,0 +1,72 @@
+.footer {
+    color: #b0b0b0;
+    background-color: #2f332f;
+    padding: 3em 0 2.25em;
+    text-align: center;
+
+    &__logo {
+        text-align: center;
+        margin-bottom: 2em;
+
+        a {
+            color: #e0e0e0;
+        }
+
+        img {
+            vertical-align: middle;
+            display: inline-block;
+            width: auto;
+            height: 30px;
+        }
+    }
+
+    &__contact {
+        overflow: hidden;
+        font-size: 0.875em;
+
+        &--right,
+        &--left {
+            width: 48%;
+
+            p {
+                color: #b0b0b0;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        &--right {
+            float: right;
+            text-align: left;
+        }
+
+        &--left {
+            float: left;
+            text-align: right;
+        }
+    }
+
+    &__social {
+        overflow: hidden;
+        line-height: 1em;
+        margin-right: -1.25em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &--content {
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+        }
+
+        &--item {
+            padding: 20px;
+            font-size: 30px;
+            text-align: center;
+        }
+
+        svg {
+            color: #fff;
+        }
+    }
+}

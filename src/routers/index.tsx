@@ -26,14 +26,11 @@ export const Routers = () => {
           footer={Footer}
         />
         <PrivateRouter
+          exact={true}
           path={'/account/login'}
           component={Account}
-          layout={HeaderFooterLayout}
-          isHasHeader={true}
-          header={Header}
-          titleHeader="Tài khoản người dùng"
-          isHasFooter={true}
-          footer={Footer}
+          layout={BlankLayout}
+          titleHeader="Cộng đồng"
         />
       </Switch>
     </Router>

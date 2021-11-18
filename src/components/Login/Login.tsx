@@ -2,6 +2,9 @@ import React from 'react';
 import './Login.scss';
 
 import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
+import { MdEmail } from 'react-icons/md';
+import { BsKeyFill } from 'react-icons/bs';
+import { SiGmail } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 export const Login = () => {
@@ -13,33 +16,36 @@ export const Login = () => {
         </div>
         <div className="login__form">
           <Form>
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="email">Email</InputGroup.Text>
-              <FormControl
-                placeholder="Nhập Email"
-                aria-label="Nhập Email"
-                aria-describedby="email"
-              />
-            </InputGroup>
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="password">Password</InputGroup.Text>
-              <FormControl
-                placeholder="Nhập Password"
-                aria-label="Nhập Password"
-                aria-describedby="password"
-              />
-            </InputGroup>
-            <Button variant="info">Đăng Nhập</Button>
+            <div className="login__group">
+              <input type="email" name="email" placeholder="Nhập E-mail" required />
+              <span className="login__icon">
+                <MdEmail></MdEmail>
+              </span>
+            </div>
+            <div className="login__group">
+              <input type="password" name="password" placeholder="Nhập Password" required />
+              <span className="login__icon">
+                <BsKeyFill></BsKeyFill>
+              </span>
+            </div>
+            <button className="login__btn">Đăng Nhập</button>
           </Form>
-          <div className="login__forgot">
-            <p>Quên mật khẩu</p>
-          </div>
+          <Link to="" className="login__forgot">
+            Quên mật khẩu
+          </Link>
           <div className="login__seperator">
             <b>OR</b>
           </div>
+          <p className="login__login-social">
+            <Link to="/" style={{ fontSize: '16px', color: '#45aba6' }}>
+              Đăng ký {' '}
+            </Link>
+             hoặc đăng nhập bằng nền tảng khác
+          </p>
           <div className="login__social">
-            <Button variant="info">Info</Button>
-            <Button variant="info">Info</Button>
+            <Button variant="info">
+              <SiGmail></SiGmail>
+            </Button>
           </div>
         </div>
       </div>

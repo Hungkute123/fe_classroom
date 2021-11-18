@@ -7,7 +7,7 @@ import { getClassroomByIDUser } from '../../redux/slice/appSlice/classroomSlice'
 import classroomApi from '../../services/aixos/classroomApi';
 
 import { Tabs } from '../../components/common';
-import { ListClass, ListMemberClass, DetailClass, Login } from '../../components';
+import { ListClass, ListMemberClass, DetailClass } from '../../components';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -19,12 +19,11 @@ export const Home = () => {
 
   return (
     <div>
-      <Login></Login>
       {/* <ListClass listclass ={classroom}/> */}
-      {/* <Tabs
+      <Tabs
         titleTabs={['Bảng tin', 'Mọi người']}
         bodyTabs={[<DetailClass></DetailClass>, <ListMemberClass />]}
-      ></Tabs> */}
+      ></Tabs>
     </div>
   );
 };

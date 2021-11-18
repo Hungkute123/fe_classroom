@@ -16,5 +16,5 @@
       "target": "es5",
       "downlevelIteration": true
     },
-    "include": ["src"]
+    "include": ["src","types"]
   }
