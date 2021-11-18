@@ -1,13 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-import { Home } from '../containers';
+
 import { PrivateRouter } from './PrivateRouter';
-import { PublicRouter } from "./PublicRouter";
+import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
 
+import { Home, Account } from '../containers';
 import { Header, Footer } from '../components/common';
-import { ListMemberClass } from '../components/ListMemberClass/ListMemberClass';
-
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -26,7 +25,16 @@ export const Routers = () => {
           isHasFooter={true}
           footer={Footer}
         />
-          
+        <PrivateRouter
+          path={'/account/login'}
+          component={Account}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={Header}
+          titleHeader="Tài khoản người dùng"
+          isHasFooter={true}
+          footer={Footer}
+        />
       </Switch>
     </Router>
   );

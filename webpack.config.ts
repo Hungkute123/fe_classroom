@@ -44,7 +44,7 @@ const config: webpack.Configuration = {
   },
   devServer: {
     compress: true,
-    port: PORT,
+    port: 3001,
   },
   plugins: [
     new HtmlWebpackPlugin({
