@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 
-import { Login } from '../../components';
+import { Login, Register } from '../../components';
 
 export const Account = () => {
   const location = useLocation();
@@ -9,6 +9,9 @@ export const Account = () => {
   switch (location.pathname) {
     case '/account/login':
       return <Login></Login>;
+      break;
+    case '/account/rigister':
+      return <Register></Register>;
       break;
     default:
       return <div></div>;

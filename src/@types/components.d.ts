@@ -1,3 +1,4 @@
+import { List } from './../components/ListMemberClass/List/List';
 interface ICardClass{
     image?: any
     title?: string
@@ -43,4 +44,6 @@ interface ITabs {
     isDisable?: boolean;
     buttonAction?: any;
   }
+
+
  

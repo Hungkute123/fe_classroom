@@ -1,50 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
-  ButtonGroup,
-  Container,
-  Dropdown,
-  DropdownButton,
-  Form,
-  FormControl,
-  Nav,
-  Navbar,
-  NavDropdown,
-  Offcanvas,
+  ButtonGroup, Dropdown,
+  DropdownButton, Image, Offcanvas
 } from 'react-bootstrap';
+import { AiOutlineMenu } from 'react-icons/ai';
 import { BsPlusLg } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
 import './Header.scss';
 
+
 export const Header = () => {
+  const [menu, setMenu] = useState(false);
+
+  const handleShow = () => setMenu(true);
+  const handleClose = () => setMenu(false);
+
   return (
     <div className="header">
-      <Navbar bg="light" expand={false}>
-        <Container fluid>
-          <Navbar.Toggle aria-controls="offcanvasNavbar" />
-          <Navbar.Offcanvas
-            id="offcanvasNavbar"
-            aria-labelledby="offcanvasNavbarLabel"
-            placement="start"
-          >
+      <div className="header__logo">
+        <div className="header__logo--btn">
+          <Button variant="outline-dark" onClick={handleShow}>
+            <AiOutlineMenu />
+          </Button>
+
+          <Offcanvas show={menu} onHide={handleClose}>
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id="offcanvasNavbarLabel">Comming soon</Offcanvas.Title>
+              <Offcanvas.Title>Classroom</Offcanvas.Title>
             </Offcanvas.Header>
-          </Navbar.Offcanvas>
+            <Offcanvas.Body>Hahaha</Offcanvas.Body>
+          </Offcanvas>
+        </div>
+        <Link to="/">
+          <img src="/assets/profile.jpg" alt="" />
+        </Link>
+        <h4>Class Room v1.0</h4>
+      </div>
+      <div className="header__body">
+        <div className="header__body--item">
+          <Button variant="outline-warning">Warning</Button>
+        </div>
+        <div className="header__body--item">
+          <Button variant="outline-warning">Warning</Button>
+        </div>
+        <div className="header__body--item">
+          <Button variant="outline-warning">Warning</Button>
+        </div>
+      </div>
+      <div className="header__action">
+        <div className="header__item">
           <DropdownButton
             as={ButtonGroup}
-            id={`dropdown-button-drop-start`}
-            drop="start"
+            title={<BsPlusLg size={25} />}
+            id="bg-nested-dropdown"
             variant=""
-            title={<BsPlusLg />}
           >
-            <Dropdown.Item href="#/action-1">Tham gia lớp học</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">
+            <Dropdown.Item eventKey="1">Tham gia lớp học</Dropdown.Item>
+            <Dropdown.Item eventKey="2">
               <CreateClassModal />
             </Dropdown.Item>
           </DropdownButton>
-        </Container>
-      </Navbar>
+        </div>
+        <div className="header__item">
+          <Link to="/">
+            <Image src="/assets/profile.jpg" roundedCircle />
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };
