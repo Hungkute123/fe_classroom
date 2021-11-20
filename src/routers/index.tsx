@@ -5,8 +5,9 @@ import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
 
-import { Home, Account } from '../containers';
+import { Home, Account, MyClassroom } from '../containers';
 import { Header, Footer } from '../components/common';
+
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -31,6 +32,17 @@ export const Routers = () => {
           component={Account}
           layout={BlankLayout}
           titleHeader="Cộng đồng"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass'}
+          component={MyClassroom}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={Header}
+          titleHeader="Cộng đồng"
+          isHasFooter={true}
+          footer={Footer}
         />
       </Switch>
     </Router>

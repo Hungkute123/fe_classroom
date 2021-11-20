@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -17,8 +17,10 @@ import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
 import './Header.scss';
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="header">
+      <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen}/>
       <Navbar bg="light" expand={false}>
         <Container fluid>
           <Navbar.Toggle aria-controls="offcanvasNavbar" />
@@ -38,9 +40,8 @@ export const Header = () => {
             variant=""
             title={<BsPlusLg />}
           >
-            <Dropdown.Item href="#/action-1">Tham gia lớp học</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">
-              <CreateClassModal />
+            <Dropdown.Item >Tham gia lớp học</Dropdown.Item>
+            <Dropdown.Item  onClick={() => setIsOpen(true)}>Tạo lớp học
             </Dropdown.Item>
           </DropdownButton>
         </Container>
