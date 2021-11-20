@@ -1,0 +1,24 @@
+.user-body {
+    flex: 1;
+    padding: 3rem !important;
+
+    &__content {
+        display: block;
+        transition: none;
+    }
+
+    h3 {
+        margin-bottom: 1.5rem !important;
+        font-size: 1.75rem;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+
+    &__btn {
+        text-align: left;
+    }
+}
+
+.mr-4 {
+    margin-right: 4px !important;
+}

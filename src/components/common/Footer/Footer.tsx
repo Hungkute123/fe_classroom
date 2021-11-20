@@ -1,51 +1,54 @@
 import React from 'react';
+import { Image } from 'react-bootstrap';
+import { SiGithub, SiGoogle } from 'react-icons/si';
+import {
+  TiSocialFacebookCircular, TiSocialYoutube
+} from 'react-icons/ti';
+import { Link } from 'react-router-dom';
 import './Footer.scss';
 
-import { Link } from 'react-router-dom';
-import { Image } from 'react-bootstrap';
-import {
-  TiSocialFacebookCircular,
-  TiSocialTwitter,
-  TiSocialYoutube,
-  TiSocialSkype,
-} from 'react-icons/ti';
 
 export const Footer = () => {
   return (
     <div className="footer">
-      <div className="footer__content">
-        <div className="footer__logo">
-          <Link to="./">
-            <Image src="./logo.png"></Image>
-          </Link>
-        </div>
-        <div className="footer__contact">
-          <address className="footer__contact--left">
-            <p>Phone: 0123.456.789</p>
-            <p>Fax: 0123.456.789</p>
-          </address>
-          <address className="footer__contact--right">
-            <p>TP.HCM, Viet Nam</p>
-            <p>TP Thu Duc</p>
-          </address>
-        </div>
-        <div className="footer__social">
-          <div className="footer__social--content">
-            <div className="footer__social--item">
-              <TiSocialFacebookCircular size={56}></TiSocialFacebookCircular>
-            </div>
-            <div className="footer__social--item">
-              <TiSocialTwitter size={56}></TiSocialTwitter>
-            </div>
-            <div className="footer__social--item">
-              <TiSocialYoutube size={56}></TiSocialYoutube>
-            </div>
-            <div className="footer__social--item">
-              <TiSocialSkype size={56}></TiSocialSkype>
-            </div>
-          </div>
-        </div>
+      <div className="footer__logo">
+        <Link to="/" title="Trang chủ">
+          <Image src="/assets/profile.jpg"></Image>
+        </Link>
       </div>
+      <ul className="footer__contact">
+        <li>
+          <Link to="/" title="Giới thiệu">Giới thiệu</Link>
+        </li>
+        <li>
+          <Link to="/" title="Hợp tác">Hợp tác</Link>
+        </li>
+        <li>
+          <Link to="/" title="Liên hệ">Liên hệ</Link>
+        </li>
+      </ul>
+      <ul className="footer__social">
+        <li>
+          <Link to="/" title="facebook">
+            <TiSocialFacebookCircular size={40}></TiSocialFacebookCircular>
+          </Link>
+        </li>
+        <li>
+          <Link to="/" title="github">
+            <SiGithub size={30}></SiGithub>
+          </Link>
+        </li>
+        <li>
+          <Link to="/" title="youtube">
+            <TiSocialYoutube size={30}></TiSocialYoutube>
+          </Link>
+        </li>
+        <li>
+          <Link to="/" title="google">
+            <SiGoogle size={30}></SiGoogle>
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 };

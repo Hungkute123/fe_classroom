@@ -1,5 +1,5 @@
 import React from 'react';
-import './Login.scss';
+import './Register.scss';
 
 import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
 import { MdEmail } from 'react-icons/md';
@@ -7,7 +7,7 @@ import { BsKeyFill } from 'react-icons/bs';
 import { SiGmail } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
-export const Login = () => {
+export const Register = () => {
   return (
     <div className="login">
       <div className="login__content">
@@ -38,9 +38,9 @@ export const Login = () => {
           </div>
           <p className="login__login-social">
             <Link to="/" style={{ fontSize: '16px', color: '#45aba6' }}>
-              Đăng ký {' '}
+              Đăng ký{' '}
             </Link>
-             hoặc đăng nhập bằng nền tảng khác
+            hoặc đăng nhập bằng nền tảng khác
           </p>
           <div className="login__social">
             <Button variant="info">
