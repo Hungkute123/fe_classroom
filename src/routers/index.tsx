@@ -1,11 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-
-import { Home, Account, MyClassroom } from '../containers';
+import { Home, Account, MyClassroom, User } from '../containers';
 import { Header, Footer } from '../components/common';
 
 
@@ -31,7 +29,26 @@ export const Routers = () => {
           path={'/account/login'}
           component={Account}
           layout={BlankLayout}
-          titleHeader="Cộng đồng"
+          titleHeader="Đăng nhập"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/account/rigister'}
+          component={Account}
+          layout={BlankLayout}
+          titleHeader="Đăng ký"
+        />
+      </Switch>
+      <Switch>
+      <PrivateRouter
+          path={'/user'}
+          component={User}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={Header}
+          titleHeader="Thông tin cá nhân"
+          isHasFooter={true}
+          footer={Footer}
         />
         <PrivateRouter
           exact={true}

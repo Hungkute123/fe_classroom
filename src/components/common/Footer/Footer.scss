@@ -1,72 +1,73 @@
 .footer {
-    color: #b0b0b0;
+    --height: 66px;
+    position: fixed;
+    bottom: 0;
+    height: var(--height);
+    left: 0;
+    right: 0;
+    z-index: 9;
     background-color: #2f332f;
-    padding: 3em 0 2.25em;
-    text-align: center;
+    border-top: 1px solid #e8ebed;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    transition: -webkit-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+    will-change: transform;
 
     &__logo {
-        text-align: center;
-        margin-bottom: 2em;
-
         a {
-            color: #e0e0e0;
+            text-decoration: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-tap-highlight-color: transparent;
         }
 
         img {
-            vertical-align: middle;
-            display: inline-block;
-            width: auto;
-            height: 30px;
+            width: 40px;
+            height: 40px;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            opacity: 0.8;
+            border-radius: 50%;
+        }
+    }
+
+    &__social,
+    &__contact {
+        display: flex;
+
+        ul {
+            list-style-type: none;
         }
     }
 
     &__contact {
-        overflow: hidden;
-        font-size: 0.875em;
+        padding-left: 16px;
 
-        &--right,
-        &--left {
-            width: 48%;
-
-            p {
-                color: #b0b0b0;
-                padding: 0;
-                margin: 0;
-            }
+        a {
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 4px 10px 6px;
+            display: block;
+            text-decoration: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            -webkit-tap-highlight-color: transparent;
         }
 
-        &--right {
-            float: right;
-            text-align: left;
-        }
-
-        &--left {
-            float: left;
-            text-align: right;
+        li {
+            position: relative;
         }
     }
 
     &__social {
-        overflow: hidden;
-        line-height: 1em;
-        margin-right: -1.25em;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        margin-left: auto;
 
-        &--content {
-            display: grid;
-            grid-template-columns: auto auto auto auto;
-        }
-
-        &--item {
-            padding: 20px;
-            font-size: 30px;
-            text-align: center;
-        }
-
-        svg {
-            color: #fff;
+        a {
+            color: #82919b;
+            font-size: 2rem;
+            padding: 4px 8px;
         }
     }
 }

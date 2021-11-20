@@ -49,3 +49,4 @@ interface IModal {
   isOpen?: boolean;
   setIsOpen?: any;
 }
+
