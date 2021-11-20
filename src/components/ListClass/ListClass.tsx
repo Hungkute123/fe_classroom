@@ -7,7 +7,7 @@ export const ListClass: React.FC<IListClass> = ({ listclass }) => {
     <div className="list-card">
       <Row xs={1} md={4} className="g-4">
       {listclass && listclass.map((item,i)=>{
-              return <CardClass key={i} image={item.Image} title={item.Title}/>
+              return <CardClass key={i} image={item.Image} title={item.Title} codeclass={item.CodeClass}/>
            })}
       </Row>
     </div>
