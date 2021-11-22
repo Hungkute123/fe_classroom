@@ -18,7 +18,7 @@ export const Home = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="home">
       <ListClass listclass ={classroom}/>
     </div>
   );

@@ -5,7 +5,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-const PORT: any = process.env.PORT || 5000;
+const PORT: any = process.env.PORT || 4000;
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
@@ -58,7 +58,7 @@ const config:  Configuration = {
       // favicon: path.join(__dirname, 'public/assets'),
     }),
     new Dotenv({
-      path: './.env',
+      path: './env',
       safe: true,
       allowEmptyValues: true,
       systemvars: true,

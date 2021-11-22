@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User } from '../containers';
-import { Header, Footer } from '../components/common';
+import { Home, Account, MyClassroom, User, MyListMemberClass } from '../containers';
+import { Header, Footer, HeaderClassroom } from '../components/common';
 
 
 export const Routers = () => {
@@ -52,12 +52,23 @@ export const Routers = () => {
         />
         <PrivateRouter
           exact={true}
-          path={'/myclassroom/:codeclass'}
+          path={'/myclassroom/:codeclass/:number/antbntig'}
           component={MyClassroom}
           layout={HeaderFooterLayout}
           isHasHeader={true}
-          header={Header}
-          titleHeader="Cộng đồng"
+          header={HeaderClassroom}
+          titleHeader="Bảng tin"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/:number/omiuniguo'}
+          component={MyListMemberClass}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Mọi người"
           isHasFooter={true}
           footer={Footer}
         />
