@@ -1,11 +1,14 @@
-import React from "react";
-import { Route } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Redirect, Route } from 'react-router-dom';
 // import { doGetCurrentUser } from '../redux/slice';
 // import { EToken } from '../constants/login';
 // import { logout } from '../helpers/app';
 // import { readCookie } from '../helpers/login';
-// import { RootState } from '../redux/reducers/rootReducers';
-import { useAppDispatch } from "../redux/store";
+import { useAppDispatch } from '../redux/store';
+import { getInfo } from '../redux/slice/appSlice/accountSlice';
+import { RootState } from '../redux/rootReducer';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 
 export const PrivateRouter: React.FC<IPrivateRouter> = ({
   component: Component,
@@ -23,47 +26,49 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   withoutAvatar,
 }) => {
   const dispatch = useAppDispatch();
+  const location = useLocation().pathname;
+  const isAccount = useSelector((state: RootState) => state.account.isAccount);
 
-  // const tokenCareer = window.localStorage.getItem(EToken.CAREER_GUIDANCE_ACCESS_KEY);
-  // const tokenComunity = window.localStorage.getItem(EToken.COMUNITY_ACCESS_KEY);
-  // const errorCurrentUser = useSelector((state: RootState) => state.user.err.response?.status);
-  // const titleRedux = useSelector((state: RootState) => state.header.title);
+  useEffect(() => {
+    dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
+    return () => {
+      console.log('isAccount:', isAccount);
+    };
+  }, [location]);
 
-  // useEffect(() => {
-  //   dispatch(doGetCurrentUser());
-  // }, []);
+  if (
+    (isAccount == true && location == '/account/login') ||
+    (isAccount == true && location == '/account/register')
+  ) {
+    return (
+      <Route>
+        <Redirect to="/" />
+      </Route>
+    );
+  }
 
-  // let query = new URLSearchParams(useLocation().search).get('text');
+  if (isAccount == false && location != '/account/login' && location != '/account/register') {
+    return (
+      <Route>
+        <Redirect to="/account/login" />
+      </Route>
+    );
+  }
 
   return (
     <Route
       exact={exact}
       path={path}
       render={(props) => {
-        // if (
-        //   !tokenCareer ||
-        //   !tokenComunity ||
-        //   !readCookie(EToken.CAREER_GUIDANCE_ACCESS_KEY) ||
-        //   !readCookie(EToken.COMUNITY_ACCESS_KEY)
-        // ) {
-        //   logout();
-        // }
-
-        // if (errorCurrentUser === 401) {
-        //   logout();
-        // }
-
         return (
           <Layout
             header={
               isHasHeader ? (
                 <Header
                   title={titleHeader}
-                  // titleDynamic={query}
                   type={typeHeader}
                   onClick={props.history.goBack}
                   path={backPath}
-                  // titleRedux={titleRedux}
                   withoutAvatar={withoutAvatar}
                 />
               ) : (

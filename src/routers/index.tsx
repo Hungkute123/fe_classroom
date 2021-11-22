@@ -33,7 +33,7 @@ export const Routers = () => {
         />
         <PrivateRouter
           exact={true}
-          path={'/account/rigister'}
+          path={'/account/register'}
           component={Account}
           layout={BlankLayout}
           titleHeader="Đăng ký"
