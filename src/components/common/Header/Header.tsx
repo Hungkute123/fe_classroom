@@ -63,7 +63,7 @@ export const Header = () => {
           </DropdownButton>
         </div>
         <div className="header__item">
-          <Link to="/">
+          <Link to="/user">
             <Image src="/assets/profile.jpg" roundedCircle />
           </Link>
         </div>

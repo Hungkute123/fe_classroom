@@ -1,53 +1,121 @@
-import React from 'react';
-import './Register.scss';
-
-import { Button, Form, FormControl, InputGroup } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { BsFillPencilFill, BsKeyboardFill, BsKeyFill } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
-import { BsKeyFill } from 'react-icons/bs';
 import { SiGmail } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import './Register.scss';
+import { useAppDispatch } from '../../redux/store';
+import { registerWithEmail } from '../../redux/slice/appSlice/accountSlice';
 
 export const Register = () => {
+  const dispatch = useAppDispatch();
+  const listRegister = [
+    {
+      name: 'email',
+      type: 'email',
+      content: 'Nhập Email',
+      icon: <MdEmail></MdEmail>,
+
+    },
+    {
+      name: 'name',
+      type: 'text',
+      content: 'Nhập Họ Và tên',
+      icon: <BsFillPencilFill></BsFillPencilFill>,
+    },
+    {
+      name: 'password',
+      type: 'password',
+      content: 'Nhập Password',
+      icon: <BsKeyFill></BsKeyFill>,
+    },
+    {
+      name: 'rePassword',
+      type: 'password',
+      content: 'Nhập Lại Password',
+      icon: <BsKeyboardFill></BsKeyboardFill>,
+  
+    },
+  ];
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    const account = {
+      Email: e.target[0].value,
+      Name: e.target[1].value,
+      Password: e.target[2].value,
+      Repassword: e.target[3].value,
+    };
+
+    if (account.Password != account.Repassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'MẬT KHẨU KHÔNG TRÙNG KHỚP',
+      });
+
+      return;
+    }
+
+    const isRegister = (await dispatch(registerWithEmail(account))).payload;
+
+    if (isRegister) {
+      Swal.fire({
+        icon: 'success',
+        title: 'ĐĂNG NHẬP THÀNH CÔNG',
+      });
+
+      return;
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: 'EMAIL ĐÃ TỒN TẠI',
+    });
+  };
+
   return (
-    <div className="login">
-      <div className="login__content">
-        <div className="login__title">
+    <div className="register">
+      <div className="register__content">
+        <div className="register__title">
           <h1>ClassRoom</h1>
         </div>
-        <div className="login__form">
-          <Form>
-            <div className="login__group">
-              <input type="email" name="email" placeholder="Nhập E-mail" required />
-              <span className="login__icon">
-                <MdEmail></MdEmail>
-              </span>
+        <Form onSubmit={handleSubmit}>
+          <div className="register__form">
+            {listRegister.map((item, moves) => {
+              return (
+                <div className="register__group" key={moves}>
+                  <input
+                    type={item.type}
+                    name={item.name}
+                    placeholder={item.content}
+                    required
+                  />
+                  <span className="register__icon">{item.icon}</span>
+                </div>
+              );
+            })}
+            <button className="register__btn" type="submit">
+              Đăng Ký
+            </button>
+            <div className="register__seperator">
+              <b>OR</b>
             </div>
-            <div className="login__group">
-              <input type="password" name="password" placeholder="Nhập Password" required />
-              <span className="login__icon">
-                <BsKeyFill></BsKeyFill>
-              </span>
+            <p className="register__register-social">
+              <Link to="/account/login" style={{ fontSize: '16px', color: '#45aba6' }}>
+                Quay lại trang đăng nhập{' '}
+              </Link>
+              hoặc đăng nhập bằng nền tảng khác
+            </p>
+            <div className="register__social">
+              <Button variant="info" type="submit">
+                <SiGmail></SiGmail>
+              </Button>
             </div>
-            <button className="login__btn">Đăng Nhập</button>
-          </Form>
-          <Link to="" className="login__forgot">
-            Quên mật khẩu
-          </Link>
-          <div className="login__seperator">
-            <b>OR</b>
           </div>
-          <p className="login__login-social">
-            <Link to="/" style={{ fontSize: '16px', color: '#45aba6' }}>
-              Đăng ký{' '}
-            </Link>
-            hoặc đăng nhập bằng nền tảng khác
-          </p>
-          <div className="login__social">
-            <Button variant="info">
-              <SiGmail></SiGmail>
-            </Button>
-          </div>
-        </div>
+        </Form>
       </div>
     </div>
   );

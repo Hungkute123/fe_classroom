@@ -1,6 +1,6 @@
 import path from 'path';
-import { Configuration as WebpackConfiguration } from "webpack";
-import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
+import { Configuration as WebpackConfiguration } from 'webpack';
+import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -9,7 +9,7 @@ const PORT: any = process.env.PORT || 5000;
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
-const config:  Configuration = {
+const config: Configuration = {
   entry: ['@babel/polyfill', './src/index.tsx'],
   output: {
     path: path.join(__dirname, 'build'),
@@ -69,8 +69,6 @@ const config:  Configuration = {
       filename: 'public/[name].css',
       chunkFilename: '[id].css',
     }),
-    
-    
   ],
 };
 export default config;

@@ -10,7 +10,7 @@ export const Account = () => {
     case '/account/login':
       return <Login></Login>;
       break;
-    case '/account/rigister':
+    case '/account/register':
       return <Register></Register>;
       break;
     default:
