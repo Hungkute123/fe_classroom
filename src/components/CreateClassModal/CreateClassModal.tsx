@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import { Button, FloatingLabel, Form, Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { addClassroom, createClassroom } from '../../redux/slice/appSlice/classroomSlice';
-
 import './CreateClassModal.scss';
-export const CreateClassModal = () => {
-  const [show, setShow] = useState(false);
+
+export const CreateClassModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
   const [validated, setValidated] = useState(false);
   const dispatch = useDispatch();
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const classroom = {
@@ -22,13 +19,19 @@ export const CreateClassModal = () => {
     dispatch(createClassroom(classroom));
     const action = addClassroom(classroom);
     dispatch(action);
-    setShow(false);
+    setIsOpen(false);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
   };
   return (
     <>
-      <div onClick={handleShow}>Tạo lớp học</div>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        show={isOpen}
+        onHide={setIsOpen}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
         <Modal.Header closeButton>
           <Modal.Title>Tạo lớp học</Modal.Title>
         </Modal.Header>

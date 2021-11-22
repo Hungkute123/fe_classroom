@@ -15,7 +15,16 @@
       font-family: 'Google Sans', Roboto, Arial, sans-serif;
       font-size: 0.875rem;
       padding-right: 1.5rem;
-      float: right;
+      float: right; 
+      button{
+        margin-left: 17px;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        &:hover{
+          background-color: rgba(25,103,210,.2);
+        }
+      }
     }
   }
   hr {

@@ -16,12 +16,20 @@ export const createClassroom = createAsyncThunk(
     return await classroomApi.createClass(body).then((res) => res);
   },
 );
+export const getClassroomByCodeClass = createAsyncThunk(
+  'classroom/GetClassroomByCodeClass',
+  async (params: any) => {
+    return await classroomApi.getClassByCodeClass(params).then((res) => res);
+  },
+);
 interface IInitialState {
-  classroom : any,
-  status : string
+  classroom : any;
+  infoMyClassroom: any;
+  status : string;
 }
 const initialclassroom =  {
   classroom: [],
+  infoMyClassroom: '',
   status: "",
 } as IInitialState
 
@@ -56,6 +64,16 @@ export const classroomSlice = createSlice({
       state.status = 'success';
     });
     builder.addCase(createClassroom.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    builder.addCase(getClassroomByCodeClass.pending, (state, action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(getClassroomByCodeClass.fulfilled, (state, action) => {
+      state.status = 'success';
+      state.infoMyClassroom = action.payload;
+    });
+    builder.addCase(getClassroomByCodeClass.rejected, (state, action) => {
       state.status = 'failed';
     });
   },

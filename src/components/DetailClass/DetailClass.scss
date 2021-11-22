@@ -94,6 +94,15 @@
       font-weight: 400;
       line-height: 1.25rem;
       color: #3c4043;
+      &__button{
+        margin-left: 3px;
+        top: -2px;
+        &:active{
+          transform: scale(0.89);
+          background-color: rgba(12, 83, 182, 0.08);
+        }
+        
+      }
     }
     em {
       font-weight: 600;
