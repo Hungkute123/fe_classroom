@@ -64,7 +64,7 @@ export const Register = () => {
     if (isRegister) {
       Swal.fire({
         icon: 'success',
-        title: 'ĐĂNG NHẬP THÀNH CÔNG',
+        title: 'ĐĂNG KÝ THÀNH CÔNG',
       });
 
       return;

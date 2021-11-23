@@ -1,86 +1,92 @@
 .header {
-    --height: 66px;
-    height: var(--height);
-    background-color: #fff;
-    border-bottom: 1px solid #f0f0f0;
-    box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9;
+  --height: 66px;
+  height: var(--height);
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  font-size: 1.4rem;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  will-change: transform;
+
+  &__logo,
+  &__body,
+  &__action {
     display: flex;
     align-items: center;
-    padding: 0 28px;
-    font-size: 1.4rem;
-    transition: -webkit-transform 0.5s ease;
-    transition: transform 0.5s ease;
-    transition: transform 0.5s ease, -webkit-transform 0.5s ease;
-    will-change: transform;
+    flex: 1 1;
+  }
 
-    &__logo,
-    &__body,
-    &__action {
-        display: flex;
-        align-items: center;
-        flex: 1 1;
+  &__logo {
+    a {
+      display: flex;
+      text-decoration: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      -webkit-tap-highlight-color: transparent;
+      background-color: transparent;
     }
 
-    &__logo {
-        a {
-            display: flex;
-            text-decoration: none;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-            -webkit-tap-highlight-color: transparent;
-            background-color: transparent;
-        }
-
-        img {
-            width: 36px;
-            height: 36px;
-            flex-shrink: 0;
-            border-radius: 50%;
-        }
-
-        h4 {
-            margin-left: 16px;
-            color: #333;
-            font-weight: 600;
-        }
-
-        &--btn {
-            margin-right: 12px;
-        }
+    img {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
     }
 
-    &__body {
-        justify-content: center;
-
-        &--item {
-            margin: 0 8px;
-        }
+    h4 {
+      margin-left: 16px;
+      color: #333;
+      font-weight: 600;
+      align-items: center;
+      display: flex;
     }
 
-    &__action {
-        justify-content: flex-end;
-
-        img {
-            width: 36px;
-            height: 36px;
-            object-fit: cover;
-            cursor: pointer;
-        }
+    &--btn {
+      margin-right: 12px;
     }
+  }
 
-    &__item {
-        text-align: center;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 4px;
+  &__body {
+    justify-content: center;
+
+    &--item {
+      margin: 0 8px;
     }
+  }
+
+  &__action {
+    justify-content: flex-end;
+
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+  }
+
+  &__item {
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 4px;
+    &__btn{
+        margin: 0 10px 0 10px;
+        color: rgb(97, 97, 97);
+    }
+  }
 }
 
 .dropdown-toggle::after {
-    display: none !important;
+  display: none !important;
 }
