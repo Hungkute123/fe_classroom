@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
-
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-
-import { Home, Account, User } from '../containers';
+import { Home, Account, MyClassroom, User } from '../containers';
 import { Header, Footer } from '../components/common';
+
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -61,6 +60,7 @@ export const Routers = () => {
         />
         <PrivateRouter
           exact={true}
+<<<<<<< HEAD
           path={'/user/password'}
           component={User}
           layout={HeaderFooterLayout}
@@ -78,6 +78,14 @@ export const Routers = () => {
           isHasHeader={true}
           header={Header}
           titleHeader="Đổi mã số sinh viên"
+=======
+          path={'/myclassroom/:codeclass'}
+          component={MyClassroom}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={Header}
+          titleHeader="Cộng đồng"
+>>>>>>> bff13f8e5dd1b0536c7e76ea3d0b2bb600da811c
           isHasFooter={true}
           footer={Footer}
         />

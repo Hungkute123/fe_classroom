@@ -9,20 +9,23 @@ import { RootState } from '../../../redux/rootReducer';
 import './Header.scss';
 
 export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
   const [menu, setMenu] = useState(false);
+<<<<<<< HEAD
   const account: any = useSelector((state: RootState) => state.account.account);
 
+=======
+>>>>>>> bff13f8e5dd1b0536c7e76ea3d0b2bb600da811c
   const handleShow = () => setMenu(true);
   const handleClose = () => setMenu(false);
-
   return (
     <div className="header">
+      <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen}/>
       <div className="header__logo">
         <div className="header__logo--btn">
           <Button variant="outline-dark" onClick={handleShow}>
             <AiOutlineMenu />
           </Button>
-
           <Offcanvas show={menu} onHide={handleClose}>
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>Classroom</Offcanvas.Title>
@@ -56,8 +59,7 @@ export const Header = () => {
             key={"action"}
           >
             <Dropdown.Item eventKey="1">Tham gia lớp học</Dropdown.Item>
-            <Dropdown.Item eventKey="2">
-              <CreateClassModal />
+            <Dropdown.Item eventKey="2" onClick={() => setIsOpen(true)}>Tạo lớp học
             </Dropdown.Item>
           </DropdownButton>
         </div>

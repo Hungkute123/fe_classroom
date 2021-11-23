@@ -19,11 +19,7 @@ export const Home = () => {
 
   return (
     <div>
-      {/* <ListClass listclass ={classroom}/> */}
-      <Tabs
-        titleTabs={['Bảng tin', 'Mọi người']}
-        bodyTabs={[<DetailClass></DetailClass>, <ListMemberClass />]}
-      ></Tabs>
+      <ListClass listclass ={classroom}/>
     </div>
   );
 };
