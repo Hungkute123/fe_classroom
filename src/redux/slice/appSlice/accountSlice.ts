@@ -48,7 +48,7 @@ export const accountSlice = createSlice({
     });
     builder.addCase(getInfo.fulfilled, (state, action) => {
       state.account = action.payload;
-      if (typeof state.account != 'undefined') {
+      if (state.account) {
         state.isAccount = 'true';
       } else {
         state.isAccount = 'false';

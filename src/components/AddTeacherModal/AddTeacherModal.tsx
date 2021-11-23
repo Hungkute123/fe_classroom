@@ -12,7 +12,8 @@ export const AddTeacherModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
   const [isSpinner, setIsSpinner] = useState(false);
   const dispatch = useAppDispatch();
   const { codeclass }: { codeclass: string } = useParams();
-  let path = process.env.URL_MY_API || 'http://localhost:4000/' + `invite?codeclass=${codeclass}`;
+  let path =
+    (process.env.URL_MY_HOST || 'http://localhost:4000/') + `invite?codeclass=${codeclass}`;
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsSpinner(true);

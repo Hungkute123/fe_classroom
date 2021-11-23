@@ -131,11 +131,14 @@
             color: white;
             height: 50px;
             width: 50px;
-            background: #45aba6;
-            border-radius: 60%;
+            border-radius: 50%;
+            border: 1px solid #ccc;
             margin: 0px 10px;
-            border: none;
             cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ccc;
         }
     }
 }
