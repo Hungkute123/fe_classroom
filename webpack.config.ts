@@ -6,10 +6,10 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-require('dotenv').config({ path: './.env' }); 
+require('dotenv').config({ path: './.env' });
 new webpack.DefinePlugin({
-  "process.env": JSON.stringify(process.env)
-})
+  'process.env': JSON.stringify(process.env),
+});
 const PORT: any = process.env.PORT || 4000;
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
@@ -19,9 +19,12 @@ const config: Configuration = {
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: process.env.NODE_ENV === 'production'
-    ? '/production-sub-path/'
-    : '/'
+    publicPath: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/',
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
   },
   module: {
     rules: [
@@ -59,7 +62,6 @@ const config: Configuration = {
     port: PORT,
     historyApiFallback: true,
     hot: true,
-    
   },
   plugins: [
     new HtmlWebpackPlugin({
