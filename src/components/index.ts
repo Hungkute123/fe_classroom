@@ -9,4 +9,4 @@ export * from "./AddTeacherModal/AddTeacherModal";
 export * from "./Register/Register";
 export * from "./UserNav/UserNav";
 export * from "./UserBody/UserBody";
-
+export * from "./InviteClassroom/InviteClassroom";

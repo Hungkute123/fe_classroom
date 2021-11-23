@@ -27,7 +27,7 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
 }) => {
   const dispatch = useAppDispatch();
   const location = useLocation().pathname;
-  const isAccount = useSelector((state: RootState) => state.account.isAccount);
+  const { isAccount, account } = useSelector((state: RootState) => state.account);
 
   useEffect(() => {
     dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
@@ -36,25 +36,26 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
     };
   }, [location]);
 
-  if (
-    (isAccount == true && location == '/account/login') ||
-    (isAccount == true && location == '/account/register')
-  ) {
-    return (
-      <Route>
-        <Redirect to="/" />
-      </Route>
-    );
-  }
+    
+    if (
+      (isAccount == "true" && location === '/account/login') ||
+      (isAccount == "true" && location === '/account/register')
+    ) {
+      return (
+        <Route>
+          <Redirect to="/" />
+        </Route>
+      );
+    }
 
-  if (isAccount == false && location != '/account/login' && location != '/account/register') {
-    return (
-      <Route>
-        <Redirect to="/account/login" />
-      </Route>
-    );
-  }
-
+    if (isAccount == "false" && location != '/account/login' && location != '/account/register') {
+      return (
+        <Route>
+          <Redirect to="/account/login" />
+        </Route>
+      );
+    }
+  
   return (
     <Route
       exact={exact}

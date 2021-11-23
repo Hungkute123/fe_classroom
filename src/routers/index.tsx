@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User, MyListMemberClass } from '../containers';
+import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
 
 
@@ -20,7 +20,7 @@ export const Routers = () => {
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={Header}
-          titleHeader="Cộng đồng"
+          titleHeader="Classroom"
           isHasFooter={true}
           footer={Footer}
         />
@@ -71,6 +71,13 @@ export const Routers = () => {
           titleHeader="Mọi người"
           isHasFooter={true}
           footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/invite'}
+          component={InviteClass}
+          layout={BlankLayout}
+          titleHeader="Tham gia lớp học"
         />
       </Switch>
     </Router>

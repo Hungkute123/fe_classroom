@@ -15,10 +15,10 @@ export const CreateClassModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
       Theme: event.target[2].value,
       Image: 'https://www.gstatic.com/classroom/themes/img_backtoschool.jpg',
       Room: Number(event.target[3].value),
+      jwt: localStorage.getItem('jwt'),
     };
     dispatch(createClassroom(classroom));
-    const action = addClassroom(classroom);
-    dispatch(action);
+    
     setIsOpen(false);
   };
   const handleClose = () => {

@@ -21,8 +21,7 @@ export const List: React.FC<IList> = ({ list }) => {
           {list &&
             list.map((item: any, i: number) => {
               return (
-                <div className="list__row">
-                  <tr>
+                  <tr className="list__row" key={i}> 
                     <td>
                       <span className="list__row__header">
                         <span>
@@ -31,11 +30,10 @@ export const List: React.FC<IList> = ({ list }) => {
                             alt="ảnh"
                           />
                         </span>
-                        <span className="list__row__name">Nguyễn Đình Hùng</span>
+                        <span className="list__row__name">{item.Name}</span>
                       </span>
                     </td>
                   </tr>
-                </div>
               );
             })}
         </tbody>

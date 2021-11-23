@@ -40,9 +40,9 @@ export const DetailClass: React.FC<IDetailClass> = ({
           <div className="detail-class__container__bottom-left__name">{Title}</div>
           <div className="detail-class__container__bottom-left__part">{Part}</div>
         </div>
-        <div className="detail-class__container__top-right">
+        {/* <div className="detail-class__container__top-right">
           <button className="detail-class__container__top-right__btn">Tải ảnh lên</button>
-        </div>
+        </div> */}
         <div className="detail-class__container__bottom-right">
           <button className="detail-class__container__bottom-right__btn" onClick={handleClickMore} title="Xem thêm" >
             <BsExclamationCircle />
