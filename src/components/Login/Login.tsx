@@ -1,12 +1,14 @@
 import React from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { BsKeyFill } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
-import { SiGmail } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
 import { getInfo, loginWithEmail } from '../../redux/slice/appSlice/accountSlice';
 import { useAppDispatch } from '../../redux/store';
+import { LoginWithGoogle } from '..';
+
 import './Login.scss';
 
 export const Login = () => {
@@ -73,9 +75,7 @@ export const Login = () => {
             hoặc đăng nhập bằng nền tảng khác
           </p>
           <div className="login__social">
-            <Button variant="info">
-              <SiGmail></SiGmail>
-            </Button>
+            <LoginWithGoogle></LoginWithGoogle>
           </div>
         </div>
       </div>

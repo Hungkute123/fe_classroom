@@ -39,15 +39,45 @@ export const Routers = () => {
           layout={BlankLayout}
           titleHeader="Đăng ký"
         />
+        <PrivateRouter
+          exact={true}
+          path={'/account/log-out'}
+          component={Account}
+          layout={BlankLayout}
+          titleHeader="Đăng ký"
+        />
       </Switch>
       <Switch>
-      <PrivateRouter
-          path={'/user'}
+        <PrivateRouter
+          exact={true}
+          path={'/user/info'}
           component={User}
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={Header}
           titleHeader="Thông tin cá nhân"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/user/password'}
+          component={User}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={Header}
+          titleHeader="Đổi mật khẩu"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/user/mssv'}
+          component={User}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={Header}
+          titleHeader="Đổi mã số sinh viên"
           isHasFooter={true}
           footer={Footer}
         />

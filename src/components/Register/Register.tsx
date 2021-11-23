@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import React from 'react';
+import { Form } from 'react-bootstrap';
 import { BsFillPencilFill, BsKeyboardFill, BsKeyFill } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
-import { SiGmail } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import './Register.scss';
-import { useAppDispatch } from '../../redux/store';
+import { LoginWithGoogle } from '..';
 import { registerWithEmail } from '../../redux/slice/appSlice/accountSlice';
+import { useAppDispatch } from '../../redux/store';
+import './Register.scss';
 
 export const Register = () => {
   const dispatch = useAppDispatch();
@@ -64,7 +64,7 @@ export const Register = () => {
     if (isRegister) {
       Swal.fire({
         icon: 'success',
-        title: 'ĐĂNG NHẬP THÀNH CÔNG',
+        title: 'ĐĂNG KÝ THÀNH CÔNG',
       });
 
       return;
@@ -110,9 +110,7 @@ export const Register = () => {
               hoặc đăng nhập bằng nền tảng khác
             </p>
             <div className="register__social">
-              <Button variant="info" type="submit">
-                <SiGmail></SiGmail>
-              </Button>
+            <LoginWithGoogle></LoginWithGoogle>
             </div>
           </div>
         </Form>

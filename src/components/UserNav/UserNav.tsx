@@ -4,17 +4,25 @@ import './UserNav.scss';
 import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-export const UserNav = () => {
-  const [focus, setFocus] = useState(0);
+interface UserNav {
+  name: string;
+  image: string;
+  focus: number;
+}
+
+export const UserNav = ({ name, image, focus }: UserNav) => {
   const listAction = [
     {
       title: 'Thông tin cá nhân',
+      url: '/user/info'
     },
     {
       title: 'Đổi mật khẩu',
+      url: '/user/password'
     },
     {
-      title: 'Thông báo',
+      title: 'Đổi mã số sinh viên',
+      url: '/user/mssv'
     },
   ];
 
@@ -23,15 +31,15 @@ export const UserNav = () => {
       <div className="nav__content">
         <div className="nav__logo">
           <div className="nav__logo--img">
-            <Image src="/assets/profile.jpg" roundedCircle />
+            <Image src={image} roundedCircle />
           </div>
-          <h4 className="nav__logo--title">Nguyễn Hà Anh Kiểm</h4>
+          <h4 className="nav__logo--title">{name}</h4>
         </div>
         <div className="nav__list-item ">
           {listAction.map((item, move) => {
             return (
-              <div className={`nav__item ${focus == move ? 'nav__item--focus' : ''} `}>
-                <Link to="/" title={item.title}>
+              <div className={`nav__item ${focus == move ? 'nav__item--focus' : ''} `} key={move}>
+                <Link to={item.url} title={item.title}>
                   {item.title}
                 </Link>
               </div>
