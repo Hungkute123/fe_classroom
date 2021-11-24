@@ -58,7 +58,7 @@ export const Header = () => {
         <div className="header__item">
           <DropdownButton
             as={ButtonGroup}
-            title={<Image src="/assets/profile.jpg" roundedCircle />}
+            title={<Image src="https://lh3.googleusercontent.com/a/default-user=s32-c" roundedCircle />}
             id="bg-nested-dropdown"
             variant=""
           >
