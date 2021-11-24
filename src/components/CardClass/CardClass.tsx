@@ -13,7 +13,7 @@ export const CardClass:React.FC<ICardClass> = ({id, codeclass, image, title, the
             Some quick example text to build on the card title and make up the bulk of the card's
             content.
           </Card.Text> */}
-          <Link to={`/myclassroom/${codeclass}`}>
+          <Link to={`/myclassroom/${codeclass}/1/antbntig`}>
           <Card className="text-center mt-2 mb-2 position-absolute bottom-0 start-50 translate-middle-x" style={{ width: '10rem'}}>
           <Button variant="primary" >Truy cập</Button>
           </Card>

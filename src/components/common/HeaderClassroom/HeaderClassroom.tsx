@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import { Button, ButtonGroup, Dropdown, DropdownButton, Image, Offcanvas } from 'react-bootstrap';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsPlusLg } from 'react-icons/bs';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/rootReducer';
-import './Header.scss';
+import './HeaderClassroom.scss';
 
-export const Header = () => {
+export const HeaderClassroom = () => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [menu, setMenu] = useState(false);
-  const account: any = useSelector((state: RootState) => state.account.account);
   const handleShow = () => setMenu(true);
   const handleClose = () => setMenu(false);
+  const { codeclass }: { codeclass: string } = useParams();
+  const { number }: { number: string } = useParams();
   const handleLogout = () =>{
     window.localStorage.clear();
     history.push({
@@ -22,10 +21,10 @@ export const Header = () => {
     });
   }
   return (
-    <div className="header">
+    <div className="header-classroom">
       <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="header__logo">
-        <div className="header__logo--btn">
+      <div className="header-classroom__logo">
+        <div className="header-classroom__logo--btn">
           <Button variant="outline-dark" onClick={handleShow}>
             <AiOutlineMenu />
           </Button>
@@ -37,13 +36,22 @@ export const Header = () => {
           </Offcanvas>
         </div>
         <Link to="/">
-
-          <img src="/assets/logo.jpg" alt="" />
+          {/* <img src="/assets/profile.jpg" alt="" /> */}
+          <h4>Classroom</h4>
+        </Link>
+        
+      </div>
+      <div className="header-classroom__body">
+        <Link to={`/myclassroom/${codeclass}/1/antbntig`}>
+          <div className={`header-classroom__title ${number=="1" ? 'header-classroom__title--select' : ''}`}>Bảng tin</div>
+        </Link>
+        <Link to={`/myclassroom/${codeclass}/2/omiuniguo`}>
+          <div className={`header-classroom__title ${number=="2" ? 'header-classroom__title--select' : ''}`}>Mọi người</div>
         </Link>
       </div>
-      <div className="header__action">
-        <div className="header__item">
-          <button className="header__item__btn" onClick={() => setIsOpen(true)}>
+      <div className="header-classroom__action">
+        <div className="header-classroom__item">
+        <button className="header__item__btn" onClick={() => setIsOpen(true)}>
             <BsPlusLg size={25} />
           </button>
           {/* <DropdownButton
@@ -51,34 +59,22 @@ export const Header = () => {
             title={<BsPlusLg size={25} />}
             id="bg-nested-dropdown"
             variant=""
-            key={"action"}
-            onClick={() => setIsOpen(true)}
           >
             <Dropdown.Item eventKey="1">Tham gia lớp học</Dropdown.Item>
-            <Dropdown.Item eventKey="2" onClick={() => setIsOpen(true)}>Tạo lớp học
+            <Dropdown.Item eventKey="2" onClick={() => setIsOpen(true)}>
+              Tạo lớp học
             </Dropdown.Item>
           </DropdownButton> */}
         </div>
-        <div className="header__item">
-          <DropdownButton
+        <div className="header-classroom__item">
+        <DropdownButton
             as={ButtonGroup}
-            title={<Image src={account.Image} roundedCircle />}
+            title={<Image src="https://lh3.googleusercontent.com/a/default-user=s32-c" roundedCircle />}
             id="bg-nested-dropdown"
             variant=""
-            key={"user"}
           >
-            <Dropdown.Item eventKey="1">
-              <Link to="/user/info">Trang cá nhân</Link>
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="2">
-              <Link to="/user/password">Đổi mật khẩu</Link>
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="3">
-              <Link to="/user/mssv">Đổi mã số sinh viên</Link>
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="4" onClick={handleLogout}>
-              Đăng xuất
-            </Dropdown.Item>
+            <Dropdown.Item eventKey="1"><Link to="/user">Trang cá nhân</Link></Dropdown.Item>
+            <Dropdown.Item eventKey="2" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
           </DropdownButton>
         </div>
       </div>

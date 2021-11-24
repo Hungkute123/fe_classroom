@@ -32,7 +32,7 @@ export const getInfo = createAsyncThunk('account/get-info', async (params: any) 
 export const accountSlice = createSlice({
   name: 'account',
   initialState: {
-    isAccount: false,
+    isAccount: '',
     account: {},
   },
   reducers: {},
@@ -49,9 +49,9 @@ export const accountSlice = createSlice({
     builder.addCase(getInfo.fulfilled, (state, action) => {
       state.account = action.payload;
       if (typeof state.account != 'undefined') {
-        state.isAccount = true;
+        state.isAccount = 'true';
       } else {
-        state.isAccount = false;
+        state.isAccount = 'false';
       }
     });
     builder.addCase(updateAccount.fulfilled, (state, action) => {

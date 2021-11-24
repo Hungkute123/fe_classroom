@@ -12,6 +12,16 @@ const memberClassroomApi = {
     const {data} = await axiosClient.get(url, {params});
     return data;
   },
+  joinClassroom: async (params: any) => {
+    const url = 'member/join';
+    const {data} = await axiosClient.get(url, {params});
+    return data;
+  },
+  getMyInfo: async (params: any) => {
+    const url = 'member/my-info';
+    const {data} = await axiosClient.get(url, {params});
+    return data;
+  },
 }
 
 export default memberClassroomApi;

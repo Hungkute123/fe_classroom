@@ -1,9 +1,9 @@
 import axiosClient from './axiosClient';
 
 const classroomApi = {
-  getClassByIDUser: async () => {
+  getClassByIDUser: async (params: any) => {
     const url = 'class';
-    const { data } = await axiosClient.get(url);
+    const { data } = await axiosClient.get(url, {params});
     return data;
   },
 
@@ -17,6 +17,11 @@ const classroomApi = {
     const {data} = await axiosClient.get(url, {params});
     return data;
   },
+  inviteClassroom: async (params: any) =>{
+    const url = 'class/invite';
+    const {data} = await axiosClient.get(url, {params});
+    return data;
+  }
 }
 
 export default classroomApi;

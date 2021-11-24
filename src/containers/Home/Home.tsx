@@ -14,11 +14,11 @@ export const Home = () => {
   const { classroom } = useSelector((state: RootState) => state.classroom);
 
   useEffect(() => {
-    dispatch(getClassroomByIDUser());
+    dispatch(getClassroomByIDUser({jwt: localStorage.getItem('jwt')}));
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="home">
       <ListClass listclass ={classroom}/>
     </div>
   );

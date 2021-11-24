@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User } from '../containers';
-import { Header, Footer } from '../components/common';
+import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass } from '../containers';
+import { Header, Footer, HeaderClassroom } from '../components/common';
 
 
 export const Routers = () => {
@@ -20,7 +20,7 @@ export const Routers = () => {
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={Header}
-          titleHeader="Cộng đồng"
+          titleHeader="Classroom"
           isHasFooter={true}
           footer={Footer}
         />
@@ -60,7 +60,6 @@ export const Routers = () => {
         />
         <PrivateRouter
           exact={true}
-<<<<<<< HEAD
           path={'/user/password'}
           component={User}
           layout={HeaderFooterLayout}
@@ -78,16 +77,46 @@ export const Routers = () => {
           isHasHeader={true}
           header={Header}
           titleHeader="Đổi mã số sinh viên"
-=======
+           isHasFooter={true}
+          footer={Footer}
+        />
+          <PrivateRouter
           path={'/myclassroom/:codeclass'}
           component={MyClassroom}
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={Header}
           titleHeader="Cộng đồng"
->>>>>>> bff13f8e5dd1b0536c7e76ea3d0b2bb600da811c
           isHasFooter={true}
           footer={Footer}
+        />
+    <PrivateRouter
+          path={'/myclassroom/:codeclass/:number/antbntig'}
+          component={MyClassroom}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Bảng tin"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/:number/omiuniguo'}
+          component={MyListMemberClass}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Mọi người"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/invite'}
+          component={InviteClass}
+          layout={BlankLayout}
+          titleHeader="Tham gia lớp học"
         />
       </Switch>
     </Router>
