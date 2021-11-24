@@ -36,9 +36,9 @@ export const ListMemberClass: React.FC<IListMemberClass> = () => {
       const check = (await dispatch(getTeacherByCodeClass(classroom))).payload;
       const isTeacher =  (await dispatch(getMyInfo(classroom))).payload;
       if (!check) {
-        history.push({
-          pathname: `/`,
-        });
+        // history.push({
+        //   pathname: `/`,
+        // });
       }
       if (isTeacher.Permission === 'Teacher') {
         setIsTeacher(true);

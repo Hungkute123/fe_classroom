@@ -27,8 +27,9 @@ export const User = () => {
       label: 'Email',
       type: 'email',
       name: 'email',
-      disabled: false,
+      disabled: true,
       placeholder: account.Email,
+      value: account.Email,
     },
     {
       md: 6,

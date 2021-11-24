@@ -65,18 +65,18 @@
 
   &__action {
     justify-content: flex-end;
-        button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        img {
-            width: 36px;
-            height: 36px;
-            object-fit: cover;
-            cursor: pointer;
-        }
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      cursor: pointer;
     }
   }
 
@@ -86,9 +86,9 @@
     justify-content: center;
     align-items: center;
     margin-right: 4px;
-    &__btn{
-        margin: 0 10px 0 10px;
-        color: rgb(97, 97, 97);
+    &__btn {
+      margin: 0 10px 0 10px;
+      color: rgb(97, 97, 97);
     }
   }
 }

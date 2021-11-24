@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { SiGmail } from 'react-icons/si';
+import { FcGoogle } from 'react-icons/fc';
 import { GoogleLogin } from 'react-google-login';
 import { useAppDispatch } from '../../redux/store';
 import { getInfo, loginWithGoogle } from '../../redux/slice/appSlice/accountSlice';
@@ -47,8 +47,12 @@ export const LoginWithGoogle = () => {
         cookiePolicy={'single_host_origin'}
         buttonText=""
         render={(renderProps) => (
-          <Button variant="info" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-            <SiGmail></SiGmail>
+          <Button
+            variant=""
+            onClick={renderProps.onClick}
+            disabled={renderProps.disabled}
+          >
+            <FcGoogle></FcGoogle>
           </Button>
         )}
       ></GoogleLogin>

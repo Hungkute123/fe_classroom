@@ -6,7 +6,6 @@ import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } f
 import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
 
-
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
 
@@ -77,10 +76,13 @@ export const Routers = () => {
           isHasHeader={true}
           header={Header}
           titleHeader="Đổi mã số sinh viên"
-           isHasFooter={true}
+          isHasFooter={true}
           footer={Footer}
         />
-          <PrivateRouter
+      </Switch>
+      <Switch>
+        <PrivateRouter
+          exact={true}
           path={'/myclassroom/:codeclass'}
           component={MyClassroom}
           layout={HeaderFooterLayout}
@@ -90,7 +92,8 @@ export const Routers = () => {
           isHasFooter={true}
           footer={Footer}
         />
-    <PrivateRouter
+        <PrivateRouter
+          exact={true}
           path={'/myclassroom/:codeclass/:number/antbntig'}
           component={MyClassroom}
           layout={HeaderFooterLayout}
