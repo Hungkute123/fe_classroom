@@ -14,33 +14,49 @@ export const UserBody = ({ title, content, handleBtn }: UserContent) => {
     <div className="user-body">
       <div className="user-body__content">
         <h3>{title}</h3>
-        <Row>
-          {content.map((item, moves) => {
-            return (
-              <Col md={item.md} key={moves}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>{item.label}</Form.Label>
-                  {item.type != 'textarea' ? (
-                    <Form.Control
-                      type={item.type}
-                      placeholder={`Nhập ${item.label}`}
-                      name={item.name}
-                      value={item.value}
-                    />
-                  ) : (
-                    <Form.Control as="textarea" rows={3} />
-                  )}
-                </Form.Group>
-              </Col>
-            );
-          })}
-        </Row>
-        <div className="user-body__btn">
-          <Button variant="primary mr-4" onClick={handleBtn}>
-            Cập Nhật
-          </Button>
-          <Button variant="dark">Hủy</Button>
-        </div>
+        <Form onSubmit={handleBtn}>
+          <Row>
+            {content.map((item, moves) => {
+              return (
+                <Col md={item.md} key={moves}>
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>{item.label}</Form.Label>
+                    {item.type != 'textarea' ? (
+                      <Form.Control
+                        type={item.type}
+                        placeholder={
+                          item.placeholder == '' ? `Nhập ${item.label}` : item.placeholder
+                        }
+                        name={item.name}
+                        id={item.name}
+                        value={item.value}
+                        disabled={item.disabled}
+                        required={true}
+                      />
+                    ) : (
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        name={item.name}
+                        id={item.name}
+                        value={item.value}
+                        placeholder={
+                          item.placeholder == '' ? `Nhập ${item.label}` : item.placeholder
+                        }
+                        required={true}
+                      />
+                    )}
+                  </Form.Group>
+                </Col>
+              );
+            })}
+          </Row>
+          <div className="user-body__btn">
+            <Button variant="primary mr-4" type="submit">
+              Cập Nhật
+            </Button>
+          </div>
+        </Form>
       </div>
     </div>
   );

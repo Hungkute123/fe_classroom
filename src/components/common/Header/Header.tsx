@@ -4,12 +4,15 @@ import { AiOutlineMenu } from 'react-icons/ai';
 import { BsPlusLg } from 'react-icons/bs';
 import { Link, useHistory } from 'react-router-dom';
 import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/rootReducer';
 import './Header.scss';
 
 export const Header = () => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [menu, setMenu] = useState(false);
+  const account: any = useSelector((state: RootState) => state.account.account);
   const handleShow = () => setMenu(true);
   const handleClose = () => setMenu(false);
   const handleLogout = () =>{
@@ -34,8 +37,8 @@ export const Header = () => {
           </Offcanvas>
         </div>
         <Link to="/">
-          {/* <img src="/assets/profile.jpg" alt="" /> */}
-          <h4>Classroom</h4>
+
+          <img src="/assets/logo.jpg" alt="" />
         </Link>
       </div>
       <div className="header__action">
@@ -48,6 +51,7 @@ export const Header = () => {
             title={<BsPlusLg size={25} />}
             id="bg-nested-dropdown"
             variant=""
+            key={"action"}
             onClick={() => setIsOpen(true)}
           >
             <Dropdown.Item eventKey="1">Tham gia lớp học</Dropdown.Item>
@@ -58,12 +62,23 @@ export const Header = () => {
         <div className="header__item">
           <DropdownButton
             as={ButtonGroup}
-            title={<Image src="https://lh3.googleusercontent.com/a/default-user=s32-c" roundedCircle />}
+            title={<Image src={account.Image} roundedCircle />}
             id="bg-nested-dropdown"
             variant=""
+            key={"user"}
           >
-            <Dropdown.Item eventKey="1"><Link to="/user">Trang cá nhân</Link></Dropdown.Item>
-            <Dropdown.Item eventKey="2" onClick={handleLogout}>Đăng xuất</Dropdown.Item>
+            <Dropdown.Item eventKey="1">
+              <Link to="/user/info">Trang cá nhân</Link>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="2">
+              <Link to="/user/password">Đổi mật khẩu</Link>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="3">
+              <Link to="/user/mssv">Đổi mã số sinh viên</Link>
+            </Dropdown.Item>
+            <Dropdown.Item eventKey="4" onClick={handleLogout}>
+              Đăng xuất
+            </Dropdown.Item>
           </DropdownButton>
         </div>
       </div>

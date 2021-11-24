@@ -65,12 +65,18 @@
 
   &__action {
     justify-content: flex-end;
+        button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    img {
-      width: 36px;
-      height: 36px;
-      object-fit: cover;
-      cursor: pointer;
+        img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            cursor: pointer;
+        }
     }
   }
 
