@@ -13,7 +13,7 @@ export const Footer = () => {
     <div className="footer">
       <div className="footer__logo">
         <Link to="/" title="Trang chủ">
-          <Image src="/assets/profile.jpg"></Image>
+          <Image src="https://lh3.googleusercontent.com/a/default-user=s32-c"></Image>
         </Link>
       </div>
       <ul className="footer__contact">

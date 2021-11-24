@@ -15,7 +15,7 @@ export const AddStudentModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
   const target = useRef(null);
   const dispatch = useAppDispatch();
   const { codeclass }: { codeclass: string } = useParams();
-  let path = (process.env.URL_MY_HOST || 'http://localhost:5000/') + `invite?codeclass=${codeclass}`;
+  let path = (process.env.URL_MY_HOST || 'https://heheclassroom.netlify.app/') + `invite?codeclass=${codeclass}`;
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsSpinner(true);
