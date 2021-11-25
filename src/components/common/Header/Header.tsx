@@ -37,8 +37,7 @@ export const Header = () => {
           </Offcanvas>
         </div>
         <Link to="/">
-
-          <img src="/assets/logo.jpg" alt="" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVFDa5Tu6odQxY7NItBaXbVdJDW9qcLx8sJ3bKHtSvdKkcpqcrJEZQq7fatBoBkL4BTR0&usqp=CAU" alt="" />
         </Link>
       </div>
       <div className="header__action">

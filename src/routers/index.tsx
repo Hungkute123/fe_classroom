@@ -24,14 +24,12 @@ export const Routers = () => {
           footer={Footer}
         />
         <PrivateRouter
-          exact={true}
           path={'/account/login'}
           component={Account}
           layout={BlankLayout}
           titleHeader="Đăng nhập"
         />
         <PrivateRouter
-          exact={true}
           path={'/account/register'}
           component={Account}
           layout={BlankLayout}
@@ -42,7 +40,7 @@ export const Routers = () => {
           path={'/account/log-out'}
           component={Account}
           layout={BlankLayout}
-          titleHeader="Đăng ký"
+          titleHeader="Đăng xuất"
         />
       </Switch>
       <Switch>

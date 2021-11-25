@@ -36,52 +36,38 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
     };
   }, [location]);
 
-    
+  const render = (props: any) => {
     if (
-      (isAccount == "true" && location === '/account/login') ||
-      (isAccount == "true" && location === '/account/register')
+      (isAccount == 'true' && location === '/account/login') ||
+      (isAccount == 'true' && location === '/account/register')
     ) {
-      return (
-        <Route>
-          <Redirect to="/" />
-        </Route>
-      );
+      return <Redirect to="/" />;
     }
 
-    if (isAccount == "false" && location != '/account/login' && location != '/account/register') {
-      return (
-        <Route>
-          <Redirect to="/account/login" />
-        </Route>
-      );
+    if (isAccount == 'false' && location != '/account/login' && location != '/account/register') {
+      return <Redirect to="/account/login" />;
     }
-  
-  return (
-    <Route
-      exact={exact}
-      path={path}
-      render={(props) => {
-        return (
-          <Layout
-            header={
-              isHasHeader ? (
-                <Header
-                  title={titleHeader}
-                  type={typeHeader}
-                  onClick={props.history.goBack}
-                  path={backPath}
-                  withoutAvatar={withoutAvatar}
-                />
-              ) : (
-                <></>
-              )
-            }
-            footer={isHasFooter ? <Footer /> : <></>}
-          >
-            <Component {...props} />
-          </Layout>
-        );
-      }}
-    />
-  );
+    return (
+      <Layout
+        header={
+          isHasHeader ? (
+            <Header
+              title={titleHeader}
+              type={typeHeader}
+              onClick={props.history.goBack}
+              path={backPath}
+              withoutAvatar={withoutAvatar}
+            />
+          ) : (
+            <></>
+          )
+        }
+        footer={isHasFooter ? <Footer /> : <></>}
+      >
+        <Component {...props} />
+      </Layout>
+    );
+  };
+
+  return <Route exact={exact} path={path} render={render} />;
 };
