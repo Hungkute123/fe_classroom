@@ -104,7 +104,7 @@ export const User = () => {
       label: 'Mã số sinh viên',
       type: 'number',
       name: 'mssv',
-      disabled: false,
+      disabled: account.MSSV ? true : false,
       placeholder: account.MSSV,
     },
   ];
