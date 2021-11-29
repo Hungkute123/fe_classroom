@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 // import { doGetCurrentUser } from '../redux/slice';
 // import { EToken } from '../constants/login';
@@ -9,6 +9,8 @@ import { getInfo } from '../redux/slice/appSlice/accountSlice';
 import { RootState } from '../redux/rootReducer';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
+import { directive } from '@babel/types';
+import { Spinner } from 'react-bootstrap';
 
 export const PrivateRouter: React.FC<IPrivateRouter> = ({
   component: Component,
@@ -27,10 +29,16 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
 }) => {
   const dispatch = useAppDispatch();
   const location = useLocation().pathname;
+  const [isFetch, setIsFectch] = useState(false);
   const { isAccount, account } = useSelector((state: RootState) => state.account);
-
+  const fecthInfo = async () => {
+    const check = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
+    if (check === true || check === false || String(typeof check) === 'object') {
+      setIsFectch(true);
+    }
+  };
   useEffect(() => {
-    dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
+    fecthInfo();
     return () => {
       console.log('isAccount:', isAccount);
     };
@@ -47,7 +55,18 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
     if (isAccount == 'false' && location != '/account/login' && location != '/account/register') {
       return <Redirect to="/account/login" />;
     }
-    return (
+    return isFetch == false ? (
+      <div style={{ marginTop: '20px' }}>
+        <Spinner animation="grow" variant="primary" />
+        <Spinner animation="grow" variant="secondary" />
+        <Spinner animation="grow" variant="success" />
+        <Spinner animation="grow" variant="danger" />
+        <Spinner animation="grow" variant="warning" />
+        <Spinner animation="grow" variant="info" />
+        <Spinner animation="grow" variant="light" />
+        <Spinner animation="grow" variant="dark" />
+      </div>
+    ) : (
       <Layout
         header={
           isHasHeader ? (
