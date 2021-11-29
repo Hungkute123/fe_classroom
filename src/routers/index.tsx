@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass } from '../containers';
+import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass, GradeStructure } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
 
 export const Routers = () => {
@@ -24,14 +24,12 @@ export const Routers = () => {
           footer={Footer}
         />
         <PrivateRouter
-          exact={true}
           path={'/account/login'}
           component={Account}
           layout={BlankLayout}
           titleHeader="Đăng nhập"
         />
         <PrivateRouter
-          exact={true}
           path={'/account/register'}
           component={Account}
           layout={BlankLayout}
@@ -42,7 +40,7 @@ export const Routers = () => {
           path={'/account/log-out'}
           component={Account}
           layout={BlankLayout}
-          titleHeader="Đăng ký"
+          titleHeader="Đăng xuất"
         />
       </Switch>
       <Switch>
@@ -120,6 +118,13 @@ export const Routers = () => {
           component={InviteClass}
           layout={BlankLayout}
           titleHeader="Tham gia lớp học"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/grade'}
+          component={GradeStructure}
+          layout={BlankLayout}
+          titleHeader="Chỉnh sửa cấu trúc điểm"
         />
       </Switch>
     </Router>

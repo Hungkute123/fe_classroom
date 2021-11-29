@@ -1,7 +1,9 @@
 import React, { FC, useRef, useState } from 'react';
-import { Dropdown, Overlay, Tooltip } from 'react-bootstrap';
+import { Col, Container, Dropdown, Overlay, Row, Tooltip } from 'react-bootstrap';
 import './DetailClass.scss';
 import { BsExclamationCircle, BsFiles } from 'react-icons/bs';
+import { Grade } from './Grade/Grade';
+import { Post } from './Post/Post';
 interface IDetailClass {
   CodeClass: string;
   Title: string;
@@ -19,7 +21,7 @@ export const DetailClass: React.FC<IDetailClass> = ({
   Room,
 }) => {
   const [isShow, setShow] = useState('');
-  const [title, setTitle] = useState("Nhấn để copy mã");
+  const [title, setTitle] = useState('Nhấn để copy mã');
   const target = useRef(null);
   const handleClickMore = () => {
     if (isShow === '') {
@@ -28,9 +30,9 @@ export const DetailClass: React.FC<IDetailClass> = ({
       setShow('');
     }
   };
-  const handleClickCopy= () => {
-    setTitle("Đã copy mã");
-    navigator.clipboard.writeText(CodeClass)
+  const handleClickCopy = () => {
+    setTitle('Đã copy mã');
+    navigator.clipboard.writeText(CodeClass);
   };
   return (
     <div className={`detail-class detail-class__${isShow}`}>
@@ -44,7 +46,11 @@ export const DetailClass: React.FC<IDetailClass> = ({
           <button className="detail-class__container__top-right__btn">Tải ảnh lên</button>
         </div> */}
         <div className="detail-class__container__bottom-right">
-          <button className="detail-class__container__bottom-right__btn" onClick={handleClickMore} title="Xem thêm" >
+          <button
+            className="detail-class__container__bottom-right__btn"
+            onClick={handleClickMore}
+            title="Xem thêm"
+          >
             <BsExclamationCircle />
           </button>
         </div>
@@ -54,10 +60,14 @@ export const DetailClass: React.FC<IDetailClass> = ({
           <div className="detail-class__panel__detail">
             <em>Mã lớp: </em>
             {CodeClass}
-            <button className="detail-class__panel__detail__button" ref={target} onClick={handleClickCopy} title={title}>
+            <button
+              className="detail-class__panel__detail__button"
+              ref={target}
+              onClick={handleClickCopy}
+              title={title}
+            >
               <BsFiles />
             </button>
-            
           </div>
           {Theme && (
             <div className="detail-class__panel__detail">
@@ -72,6 +82,18 @@ export const DetailClass: React.FC<IDetailClass> = ({
             </div>
           )}
         </div>
+      </div>
+      <div className="detail-class__content">
+        <Container>
+          <Row>
+            <Col sm={2}>
+              <Grade />
+            </Col>
+            <Col sm={10} className="detail-class__post">
+              <Post />
+            </Col>
+          </Row>
+        </Container>
       </div>
     </div>
   );

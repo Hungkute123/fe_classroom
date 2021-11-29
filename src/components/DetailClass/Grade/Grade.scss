@@ -1,0 +1,49 @@
+.grade {
+  background-color: white;
+  border: 0.0625rem solid #dadce0;
+  -webkit-border-radius: 0.5rem;
+  border-radius: 0.5rem;
+  -webkit-flex-shrink: 0;
+  flex-shrink: 0;
+  margin-right: 1.5rem;
+  padding: 1rem;
+  width: 10.125rem;
+  display: block;
+  &__body {
+    display: block;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    margin: 0;
+    width: 100%;
+  }
+  &__header{
+    letter-spacing: .01785714em;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    color: #3c4043;
+    text-transform: none;
+  }
+  &__content{
+    color: rgba(0,0,0,0.87);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+  }
+  &__btn{
+    color: rgba(0,0,0,0.87);
+    font-family: 'Roboto',Helvetica,Arial,sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+    color: #1967d2;
+    fill: #1967d2;
+  }
+}

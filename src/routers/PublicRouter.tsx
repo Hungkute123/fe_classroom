@@ -1,5 +1,8 @@
-import React from "react";
-import { Route, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Redirect, Route, useLocation } from "react-router-dom";
+import { getInfo } from "../redux/slice/appSlice/accountSlice";
+import { RootState, useAppDispatch } from "../redux/store";
 
 export const PublicRouter: React.FC<IPublicRouter> = ({
   component: Component,
@@ -14,6 +17,7 @@ export const PublicRouter: React.FC<IPublicRouter> = ({
   typeHeader,
 }) => {
   let query = new URLSearchParams(useLocation().search).get("text");
+  
   return (
     <Route
       exact={exact}

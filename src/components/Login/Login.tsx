@@ -32,12 +32,15 @@ export const Login = () => {
       dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
 
       return;
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'ĐĂNG NHẬP THẤT BẠI',
+      });
+      return;
     }
 
-    Swal.fire({
-      icon: 'error',
-      title: 'ĐĂNG NHẬP THẤT BẠI',
-    });
+    
   };
 
   return (
