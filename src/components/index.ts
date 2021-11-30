@@ -11,4 +11,5 @@ export * from "./UserBody/UserBody";
 export * from "./AddStudentModal/AddStudentModal";
 export * from "./AddTeacherModal/AddTeacherModal";
 export * from "./InviteClassroom/InviteClassroom";
+export * from "./GradeForm/GradeForm";
 

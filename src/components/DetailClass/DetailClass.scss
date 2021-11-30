@@ -83,6 +83,7 @@
     overflow: hidden;
     &__show {
       display: block;
+      margin-bottom: 60px;
     }
     &__padding {
       padding: 1.5rem;
@@ -112,4 +113,16 @@
   &__show {
     min-height: 350px;
   }
+  &__content {
+    display: block;
+    margin-top: 10px;
+  }
+  &__post {
+    padding-left: 25px !important;
+  }
+}
+.row > * {
+ 
+  padding-right: 0 !important;
+ 
 }

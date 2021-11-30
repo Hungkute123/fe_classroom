@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass } from '../containers';
+import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass, GradeStructure } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
 
 export const Routers = () => {
@@ -116,6 +116,13 @@ export const Routers = () => {
           exact={true}
           path={'/invite'}
           component={InviteClass}
+          layout={BlankLayout}
+          titleHeader="Tham gia lớp học"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/grade'}
+          component={GradeStructure}
           layout={BlankLayout}
           titleHeader="Tham gia lớp học"
         />
