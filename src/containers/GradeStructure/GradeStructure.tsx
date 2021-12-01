@@ -6,7 +6,10 @@ import { useParams } from 'react-router-dom';
 import { GradeForm, CreateGrade } from '../../components';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { RootState } from '../../redux/rootReducer';
-import { getClassStructure } from '../../redux/slice/appSlice/classStructureSlide';
+import {
+  getClassStructure,
+  patchClassStructure,
+} from '../../redux/slice/appSlice/classStructureSlide';
 
 interface IGrade {
   _id: string;
@@ -18,6 +21,7 @@ interface IGrade {
 export const GradeStructure = () => {
   const { codeclass }: { codeclass: string } = useParams();
   const [grade, setGrade] = useState<IGrade[]>([]);
+  const status = useAppSelector((state: RootState) => state.classStructure.listGrade);
   const dispatch = useAppDispatch();
   useEffect(() => {
     const getListGrade = async () => {
@@ -26,13 +30,10 @@ export const GradeStructure = () => {
           getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }),
         )
       ).payload;
-      listGrade.map((item: any) => {
-        grade.push(item);
-      });
-      setGrade(grade);
+      setGrade(listGrade);
     };
     getListGrade();
-  }, [grade]);
+  }, []);
 
   console.log(grade);
 
@@ -64,6 +65,10 @@ export const GradeStructure = () => {
     };
 
     setGrade(items);
+    dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...items[source.index] }));
+    dispatch(
+      patchClassStructure({ jwt: localStorage.getItem('jwt'), ...items[destination.index] }),
+    );
   }
 
   return (
@@ -83,6 +88,7 @@ export const GradeStructure = () => {
                     index={index}
                     MarkType={item.MarkType}
                     Mark={item.Mark}
+                    CodeClass={item.CodeClass}
                   ></GradeForm>
                 );
               })}

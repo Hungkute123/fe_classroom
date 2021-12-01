@@ -5,7 +5,10 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import Swal from 'sweetalert2';
 import { useAppDispatch } from '../../redux/store';
-import { saveClassStructure } from '../../redux/slice/appSlice/classStructureSlide';
+import {
+  getClassStructure,
+  saveClassStructure,
+} from '../../redux/slice/appSlice/classStructureSlide';
 
 export const CreateGrade = () => {
   const dispatch = useAppDispatch();
@@ -13,9 +16,7 @@ export const CreateGrade = () => {
   const [typeMark, setTypeMark] = useState('');
   const [mark, setMark] = useState('');
 
-  const handleCreate = async (e: any) => {
-    e.preventDefault();
-
+  const handleCreate = async () => {
     if (typeMark == '' || mark == '') {
       Swal.fire({
         icon: 'error',
@@ -39,6 +40,8 @@ export const CreateGrade = () => {
         icon: 'success',
         title: 'THÊM CẤU TRÚC ĐIỂM THÀNH CÔNG',
       });
+
+      dispatch(getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }));
 
       return;
     }
