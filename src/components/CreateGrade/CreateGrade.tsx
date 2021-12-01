@@ -40,7 +40,8 @@ export const CreateGrade = () => {
         icon: 'success',
         title: 'THÊM CẤU TRÚC ĐIỂM THÀNH CÔNG',
       });
-
+      setTypeMark('');
+      setMark('');
       dispatch(getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }));
 
       return;
@@ -58,15 +59,19 @@ export const CreateGrade = () => {
   };
 
   return (
-    <div className="grade-form">
+    <div className="create-grade">
       <Form>
         <Container>
           <Row>
             <Col sm={6}>
-              <div className="grade-form__body">
-                <div className="grade-form__title">Loại điểm</div>
-                <Form.Control onChange={(e) => setTypeMark(e.target.value)} />
-                <div className="grade-form__btn grade-form__btn--right">
+              <div className="create-grade__body">
+                <div className="create-grade__title">Loại điểm</div>
+                <Form.Control
+                  maxLength={15}
+                  onChange={(e) => setTypeMark(e.target.value)}
+                  value={typeMark}
+                />
+                <div className="create-grade__btn create-grade__btn--right">
                   <Button variant="primary" onClick={handleCreate}>
                     Tạo mới
                   </Button>
@@ -74,10 +79,17 @@ export const CreateGrade = () => {
               </div>
             </Col>
             <Col sm={6}>
-              <div className="grade-form__body">
-                <div className="grade-form__title">Số điểm</div>
-                <Form.Control onChange={(e) => setMark(e.target.value)} />
-                <div className="grade-form__btn grade-form__btn--left">
+              <div className="create-grade__body">
+                <div className="create-grade__title">Số điểm</div>
+                <Form.Control
+                  type="number"
+                  maxLength={4}
+                  onChange={(e) => setMark(e.target.value)}
+                  value={mark}
+                  min="0"
+                  max="1000"
+                />
+                <div className="create-grade__btn create-grade__btn--left">
                   <Button variant="danger" onClick={handleReset}>
                     Xóa dữ liệu
                   </Button>

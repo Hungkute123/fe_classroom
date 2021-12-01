@@ -11,6 +11,7 @@ interface IDetailClass {
   Part?: string;
   Image?: string;
   Room?: string;
+  IsTeacher?: boolean;
 }
 export const DetailClass: React.FC<IDetailClass> = ({
   CodeClass,
@@ -19,6 +20,7 @@ export const DetailClass: React.FC<IDetailClass> = ({
   Part,
   Image,
   Room,
+  IsTeacher = false,
 }) => {
   const [isShow, setShow] = useState('');
   const [title, setTitle] = useState('Nhấn để copy mã');
@@ -37,7 +39,7 @@ export const DetailClass: React.FC<IDetailClass> = ({
   return (
     <div className={`detail-class detail-class__${isShow}`}>
       <div className={`detail-class__container detail-class__container__${isShow}`}>
-        <img src={Image} alt="Background" />
+        <img src="/img_backtoschool.jpg" alt="Background" />
         <div className="detail-class__container__bottom-left">
           <div className="detail-class__container__bottom-left__name">{Title}</div>
           <div className="detail-class__container__bottom-left__part">{Part}</div>
@@ -87,10 +89,10 @@ export const DetailClass: React.FC<IDetailClass> = ({
         <Container>
           <Row>
             <Col sm={2}>
-              <Grade />
+              <Grade IsTeacher={IsTeacher}/>
             </Col>
             <Col sm={10} className="detail-class__post">
-              <Post />
+              {/* <Post /> */}
             </Col>
           </Row>
         </Container>
