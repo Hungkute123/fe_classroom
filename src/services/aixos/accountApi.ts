@@ -1,33 +1,33 @@
-import axiosMy from './axiosClient';
+import axiosClient from './axiosClient';
 
 const userApi = {
   loginWithEmail: async (requestOption: any) => {
     const url = `account/login`;
-    return await axiosMy.post(url, requestOption);
+    return await axiosClient.post(url, requestOption);
   },
   loginWithGoogle: async (requestOption: any) => {
     const url = `account/login-google`;
-    return await axiosMy.post(url, requestOption);
+    return await axiosClient.post(url, requestOption);
   },
   registerWithEmail: async (requestOption: any) => {
     const url = `account/register`;
-    return await axiosMy.post(url, requestOption);
+    return await axiosClient.post(url, requestOption);
   },
   updateAccount: async (requestOption: any) => {
     const url = `account/update-account`;
-    return await axiosMy.patch(url, requestOption);
+    return await axiosClient.patch(url, requestOption);
   },
   updatePass: async (requestOption: any) => {
     const url = `account/update-account-pass`;
-    return await axiosMy.patch(url, requestOption);
+    return await axiosClient.patch(url, requestOption);
   },
   updateMSSV: async (requestOption: any) => {
     const url = `account/update-account-mssv`;
-    return await axiosMy.patch(url, requestOption);
+    return await axiosClient.patch(url, requestOption);
   },
   getInfo: async (params: any) => {
     const url = `account/get-info`;
-    return await axiosMy.get(url, { params });
+    return await axiosClient.get(url, { params });
   },
 };
 
