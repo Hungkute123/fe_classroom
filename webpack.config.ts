@@ -1,25 +1,16 @@
 import path from 'path';
-const webpack = require('webpack');
-import { Configuration as WebpackConfiguration } from 'webpack';
-import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-require('dotenv').config({ path: './.env' });
-new webpack.DefinePlugin({
-  'process.env': JSON.stringify(process.env),
-});
-const PORT: any = process.env.PORT || 4000;
-interface Configuration extends WebpackConfiguration {
-  devServer?: WebpackDevServerConfiguration;
-}
-const config: Configuration = {
+
+const config: webpack.Configuration = {
   entry: ['@babel/polyfill', './src/index.tsx'],
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/',
+    publicPath: '/',
   },
   performance: {
     hints: false,
@@ -57,16 +48,17 @@ const config: Configuration = {
     extensions: ['.tsx', '.ts', '.js', '.scss'],
   },
   devServer: {
-    // contentBase: path.join(__dirname, 'build'),
+    contentBase: path.join(__dirname, 'build'),
     compress: true,
-    port: PORT,
+    port: 5000,
+    overlay: true,
     historyApiFallback: true,
     hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'public', 'index.html'),
-      // favicon: path.join(__dirname, 'public/assets'),
+      favicon: path.join(__dirname, 'public/assets', 'logo.jpg'),
     }),
     new Dotenv({
       path: './.env',
@@ -80,6 +72,8 @@ const config: Configuration = {
       filename: 'public/[name].css',
       chunkFilename: '[id].css',
     }),
+    new CopyWebpackPlugin({ patterns: [{ from: 'public/assets' }, { from: 'public/_redirects' }] }),
   ],
 };
+
 export default config;

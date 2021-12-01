@@ -39,8 +39,7 @@ export const HeaderClassroom = () => {
           </Offcanvas>
         </div>
         <Link to="/">
-          {/* <img src="/assets/profile.jpg" alt="" /> */}
-          <h4>Classroom</h4>
+        <img src="/logo.jpg" alt="" />
         </Link>
       </div>
       <div className="header-classroom__body">

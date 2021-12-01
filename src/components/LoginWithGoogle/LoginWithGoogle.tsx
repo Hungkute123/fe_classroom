@@ -30,10 +30,10 @@ export const LoginWithGoogle = () => {
     });
   };
   const handleFalied = (response: any) => {
-    Swal.fire({
-      icon: 'error',
-      title: 'ĐĂNG NHẬP THẤT BẠI',
-    });
+    // Swal.fire({
+    //   icon: 'error',
+    //   title: '',
+    // });
 
     console.log(response);
   };

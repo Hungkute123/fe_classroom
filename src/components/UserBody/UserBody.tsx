@@ -7,9 +7,10 @@ interface UserContent {
   title: string | undefined;
   content: List;
   handleBtn: any;
+  isDisableBtn?: boolean;
 }
 
-export const UserBody = ({ title, content, handleBtn }: UserContent) => {
+export const UserBody = ({ title, content, handleBtn, isDisableBtn = false}: UserContent) => {
   return (
     <div className="user-body">
       <div className="user-body__content">
@@ -52,7 +53,7 @@ export const UserBody = ({ title, content, handleBtn }: UserContent) => {
             })}
           </Row>
           <div className="user-body__btn">
-            <Button variant="primary mr-4" type="submit">
+            <Button variant="primary mr-4" type="submit" disabled={isDisableBtn}>
               Cập Nhật
             </Button>
           </div>
