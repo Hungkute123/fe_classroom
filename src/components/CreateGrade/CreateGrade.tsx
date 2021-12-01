@@ -65,7 +65,7 @@ export const CreateGrade = () => {
             <Col sm={6}>
               <div className="grade-form__body">
                 <div className="grade-form__title">Loại điểm</div>
-                <Form.Control value={typeMark} onChange={(e) => setTypeMark(e.target.value)} />
+                <Form.Control onChange={(e) => setTypeMark(e.target.value)} />
                 <div className="grade-form__btn grade-form__btn--right">
                   <Button variant="primary" onClick={handleCreate}>
                     Tạo mới
@@ -76,7 +76,7 @@ export const CreateGrade = () => {
             <Col sm={6}>
               <div className="grade-form__body">
                 <div className="grade-form__title">Số điểm</div>
-                <Form.Control value={mark} onChange={(e) => setMark(e.target.value)} />
+                <Form.Control onChange={(e) => setMark(e.target.value)} />
                 <div className="grade-form__btn grade-form__btn--left">
                   <Button variant="danger" onClick={handleReset}>
                     Xóa dữ liệu

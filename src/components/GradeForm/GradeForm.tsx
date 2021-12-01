@@ -97,9 +97,9 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
                 <Row>
                   <Col sm={6}>
                     <div className="grade-form__body">
-                      <div className="grade-form__title">Loại điểm</div>
+                      <div className="grade-form__title">Loại điểm {_id}</div>
                       <Form.Control
-                        value={MarkType}
+                        value={typeMark}
                         onChange={(e) => setTypeMark(e.target.value)}
                       />
                       <div className="grade-form__btn grade-form__btn--right">
@@ -112,7 +112,7 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
                   <Col sm={6}>
                     <div className="grade-form__body">
                       <div className="grade-form__title">Số điểm</div>
-                      <Form.Control value={Mark} onChange={(e) => setMark(e.target.value)} />
+                      <Form.Control value={mark} onChange={(e) => setMark(e.target.value)} />
                       <div className="grade-form__btn grade-form__btn--left">
                         <Button variant="danger" onClick={handleRemove}>
                           Xóa

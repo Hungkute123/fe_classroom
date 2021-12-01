@@ -35,9 +35,7 @@ export const GradeStructure = () => {
     getListGrade();
   }, []);
 
-  console.log(grade);
-
-  function handleOnDragEnd(result: any) {
+  const handleOnDragEnd = (result: any) => {
     const { destination, source } = result;
 
     if (!destination) return;
@@ -46,30 +44,31 @@ export const GradeStructure = () => {
       return;
     }
 
-    let items = Array.from(grade);
-    const idSource = items[source.index]._id;
-    const idDestination = items[destination.index]._id;
-    [items[source.index], items[destination.index]] = [
-      items[destination.index],
-      items[source.index],
-    ];
+    var items = Array.from(grade);
 
-    items[source.index] = {
-      ...items[source.index],
-      _id: idSource,
-    };
+    let id: Array<string> = [];
+    for (let i = 0; i < items.length; i++) {
+      id.push(items[i]._id);
+    }
 
-    items[destination.index] = {
-      ...items[destination.index],
-      _id: idDestination,
-    };
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    for (let i = 0; i < items.length; i++) {
+      items[i] = {
+        ...items[i],
+        _id: id[i]
+      }
+    }
 
     setGrade(items);
-    dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...items[source.index] }));
-    dispatch(
-      patchClassStructure({ jwt: localStorage.getItem('jwt'), ...items[destination.index] }),
-    );
-  }
+
+    // grade.map((item) => {
+    //   dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...item }));
+    // });
+  };
+
+  console.log(grade);
 
   return (
     <div className="grade-structure">
@@ -89,6 +88,7 @@ export const GradeStructure = () => {
                     MarkType={item.MarkType}
                     Mark={item.Mark}
                     CodeClass={item.CodeClass}
+                    key={item._id}
                   ></GradeForm>
                 );
               })}
