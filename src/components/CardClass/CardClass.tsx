@@ -6,7 +6,7 @@ export const CardClass:React.FC<ICardClass> = ({id, codeclass, image, title, the
   return (
     <div className="card-class">
       <Card style={{ width: '18rem', height: '18.75rem' }}>
-      <Card.Img variant="top" src={`${image}`} style={{ height: '6rem' }}/>
+      <Card.Img variant="top" src={`/img_backtoschool.jpg`} style={{ height: '6rem' }}/>
         <Card.Body>
           <Card.Title className="card-class__title">{title}</Card.Title>
           {/* <Card.Text>

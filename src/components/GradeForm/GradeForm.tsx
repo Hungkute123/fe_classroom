@@ -51,7 +51,7 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
     if (status) {
       Swal.fire({
         icon: 'success',
-        title: 'XOÁ CẤU TRÚC ĐIỂM THÀNH CÔNG',
+        title: 'CHỈNH SỬA CẤU TRÚC ĐIỂM THÀNH CÔNG',
       });
 
       dispatch(getClassStructure({ ...infoGrade }));
@@ -61,7 +61,7 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
 
     Swal.fire({
       icon: 'error',
-      title: 'XOÁ CẤU TRÚC ĐIỂM THẤT BẠI',
+      title: 'CHỈNH SỬA CẤU TRÚC ĐIỂM THẤT BẠI',
     });
   };
 
@@ -97,27 +97,36 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
                 <Row>
                   <Col sm={6}>
                     <div className="grade-form__body">
-                      <div className="grade-form__title">Loại điểm {_id}</div>
+                      <div className="grade-form__title">Loại điểm</div>
                       <Form.Control
                         value={typeMark}
                         onChange={(e) => setTypeMark(e.target.value)}
+                        maxLength={15}
                       />
-                      <div className="grade-form__btn grade-form__btn--right">
-                        <Button variant="primary" onClick={handleUpdate}>
-                          Lưu
-                        </Button>
-                      </div>
                     </div>
                   </Col>
-                  <Col sm={6}>
+                  <Col sm={5}>
                     <div className="grade-form__body">
                       <div className="grade-form__title">Số điểm</div>
-                      <Form.Control value={mark} onChange={(e) => setMark(e.target.value)} />
-                      <div className="grade-form__btn grade-form__btn--left">
-                        <Button variant="danger" onClick={handleRemove}>
-                          Xóa
-                        </Button>
-                      </div>
+                      <Form.Control
+                        value={mark}
+                        type="number"
+                        maxLength={4}
+                        onChange={(e) => setMark(e.target.value)}
+                        min="0" max="1000"
+                      />
+                    </div>
+                  </Col>
+                  <Col sm={1}>
+                    <div className="grade-form__btn">
+                      <Button variant="primary" onClick={handleUpdate}>
+                        Lưu
+                      </Button>
+                    </div>
+                    <div className="grade-form__btn">
+                      <Button variant="danger" onClick={handleRemove}>
+                        Xóa
+                      </Button>
                     </div>
                   </Col>
                 </Row>

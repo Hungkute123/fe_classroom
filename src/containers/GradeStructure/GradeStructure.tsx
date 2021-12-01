@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './GradeStructure.scss';
 
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { GradeForm, CreateGrade } from '../../components';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { RootState } from '../../redux/rootReducer';
@@ -10,6 +10,7 @@ import {
   getClassStructure,
   patchClassStructure,
 } from '../../redux/slice/appSlice/classStructureSlide';
+import { Button } from 'react-bootstrap';
 
 interface IGrade {
   _id: string;
@@ -33,7 +34,8 @@ export const GradeStructure = () => {
       setGrade(listGrade);
     };
     getListGrade();
-  }, []);
+    console.log('listgrade', listGrade.length);
+  }, [listGrade.length]);
 
   const handleOnDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -57,8 +59,8 @@ export const GradeStructure = () => {
     for (let i = 0; i < items.length; i++) {
       items[i] = {
         ...items[i],
-        _id: id[i]
-      }
+        _id: id[i],
+      };
     }
 
     setGrade(items);
@@ -71,14 +73,21 @@ export const GradeStructure = () => {
   return (
     <div className="grade-structure">
       <div className="grade-structure__header">
-        <div className="grade-structure__header__title">Cấu trúc điểm</div>
+        <div className="grade-structure__header__title">
+          Cấu trúc điểm
+          <div className="grade-structure__header__btn">
+            <Link to={`/myclassroom/${codeclass}/1/antbntig`}>
+              <Button variant="light">Trở lại lớp học</Button>
+            </Link>
+          </div>
+        </div>
         <h2>Nhập cấu trúc điểm của lớp học của bạn</h2>
       </div>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId={'GRADE'}>
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
-              {grade.map((item, index) => {
+              {grade && grade.map((item, index) => {
                 return (
                   <GradeForm
                     _id={item._id}
@@ -86,7 +95,7 @@ export const GradeStructure = () => {
                     MarkType={item.MarkType}
                     Mark={item.Mark}
                     CodeClass={item.CodeClass}
-                    key={item._id}
+                    key={item.MarkType}
                   ></GradeForm>
                 );
               })}
