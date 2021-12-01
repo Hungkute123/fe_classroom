@@ -20,8 +20,8 @@ interface IGrade {
 
 export const GradeStructure = () => {
   const { codeclass }: { codeclass: string } = useParams();
-  const [grade, setGrade] = useState<IGrade[]>([]);
-  const status = useAppSelector((state: RootState) => state.classStructure.listGrade);
+  const listGrade = useAppSelector((state: RootState) => state.classStructure.listGrade);
+  const [grade, setGrade] = useState<IGrade[]>(listGrade);
   const dispatch = useAppDispatch();
   useEffect(() => {
     const getListGrade = async () => {
@@ -63,12 +63,10 @@ export const GradeStructure = () => {
 
     setGrade(items);
 
-    // grade.map((item) => {
-    //   dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...item }));
-    // });
+    for (let i = 0; i < items.length; i++) {
+      dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...items[i] }));
+    }
   };
-
-  console.log(grade);
 
   return (
     <div className="grade-structure">
