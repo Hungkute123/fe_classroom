@@ -6,7 +6,10 @@ import { useParams } from 'react-router-dom';
 import { GradeForm, CreateGrade } from '../../components';
 import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { RootState } from '../../redux/rootReducer';
-import { getClassStructure } from '../../redux/slice/appSlice/classStructureSlide';
+import {
+  getClassStructure,
+  patchClassStructure,
+} from '../../redux/slice/appSlice/classStructureSlide';
 
 interface IGrade {
   _id: string;
@@ -18,6 +21,7 @@ interface IGrade {
 export const GradeStructure = () => {
   const { codeclass }: { codeclass: string } = useParams();
   const [grade, setGrade] = useState<IGrade[]>([]);
+  const status = useAppSelector((state: RootState) => state.classStructure.listGrade);
   const dispatch = useAppDispatch();
   useEffect(() => {
     const getListGrade = async () => {
@@ -26,17 +30,12 @@ export const GradeStructure = () => {
           getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }),
         )
       ).payload;
-      listGrade.map((item: any) => {
-        grade.push(item);
-      });
-      setGrade(grade);
+      setGrade(listGrade);
     };
     getListGrade();
-  }, [grade]);
+  }, []);
 
-  console.log(grade);
-
-  function handleOnDragEnd(result: any) {
+  const handleOnDragEnd = (result: any) => {
     const { destination, source } = result;
 
     if (!destination) return;
@@ -45,26 +44,31 @@ export const GradeStructure = () => {
       return;
     }
 
-    let items = Array.from(grade);
-    const idSource = items[source.index]._id;
-    const idDestination = items[destination.index]._id;
-    [items[source.index], items[destination.index]] = [
-      items[destination.index],
-      items[source.index],
-    ];
+    var items = Array.from(grade);
 
-    items[source.index] = {
-      ...items[source.index],
-      _id: idSource,
-    };
+    let id: Array<string> = [];
+    for (let i = 0; i < items.length; i++) {
+      id.push(items[i]._id);
+    }
 
-    items[destination.index] = {
-      ...items[destination.index],
-      _id: idDestination,
-    };
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    for (let i = 0; i < items.length; i++) {
+      items[i] = {
+        ...items[i],
+        _id: id[i]
+      }
+    }
 
     setGrade(items);
-  }
+
+    // grade.map((item) => {
+    //   dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...item }));
+    // });
+  };
+
+  console.log(grade);
 
   return (
     <div className="grade-structure">
@@ -83,6 +87,8 @@ export const GradeStructure = () => {
                     index={index}
                     MarkType={item.MarkType}
                     Mark={item.Mark}
+                    CodeClass={item.CodeClass}
+                    key={item._id}
                   ></GradeForm>
                 );
               })}

@@ -5,7 +5,10 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useParams } from 'react-router';
 import Swal from 'sweetalert2';
 import { useAppDispatch } from '../../redux/store';
-import { saveClassStructure } from '../../redux/slice/appSlice/classStructureSlide';
+import {
+  getClassStructure,
+  saveClassStructure,
+} from '../../redux/slice/appSlice/classStructureSlide';
 
 export const CreateGrade = () => {
   const dispatch = useAppDispatch();
@@ -13,9 +16,7 @@ export const CreateGrade = () => {
   const [typeMark, setTypeMark] = useState('');
   const [mark, setMark] = useState('');
 
-  const handleCreate = async (e: any) => {
-    e.preventDefault();
-
+  const handleCreate = async () => {
     if (typeMark == '' || mark == '') {
       Swal.fire({
         icon: 'error',
@@ -40,6 +41,8 @@ export const CreateGrade = () => {
         title: 'THÊM CẤU TRÚC ĐIỂM THÀNH CÔNG',
       });
 
+      dispatch(getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }));
+
       return;
     }
 
@@ -62,7 +65,7 @@ export const CreateGrade = () => {
             <Col sm={6}>
               <div className="grade-form__body">
                 <div className="grade-form__title">Loại điểm</div>
-                <Form.Control value={typeMark} onChange={(e) => setTypeMark(e.target.value)} />
+                <Form.Control onChange={(e) => setTypeMark(e.target.value)} />
                 <div className="grade-form__btn grade-form__btn--right">
                   <Button variant="primary" onClick={handleCreate}>
                     Tạo mới
@@ -73,7 +76,7 @@ export const CreateGrade = () => {
             <Col sm={6}>
               <div className="grade-form__body">
                 <div className="grade-form__title">Số điểm</div>
-                <Form.Control value={mark} onChange={(e) => setMark(e.target.value)} />
+                <Form.Control onChange={(e) => setMark(e.target.value)} />
                 <div className="grade-form__btn grade-form__btn--left">
                   <Button variant="danger" onClick={handleReset}>
                     Xóa dữ liệu
