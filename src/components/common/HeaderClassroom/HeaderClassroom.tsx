@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Dropdown, DropdownButton, Image, Offcanvas } from 'react-bootstrap';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsPlusLg } from 'react-icons/bs';
@@ -7,22 +7,41 @@ import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import './HeaderClassroom.scss';
+import { getMyInfo, getStudentByCodeClass } from '../../../redux/slice/appSlice/memberClassroomSlice';
+import { useAppDispatch } from '../../../redux/store';
 
 export const HeaderClassroom = () => {
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const handleShow = () => setMenu(true);
   const handleClose = () => setMenu(false);
+  const [isTeacher, setIsTeacher] = useState(false);
   const { codeclass }: { codeclass: string } = useParams();
   const { number }: { number: string } = useParams();
   const account: any = useSelector((state: RootState) => state.account.account);
+  const classroom = {
+    codeclass : codeclass,
+    jwt: localStorage.getItem('jwt'),
+  };
   const handleLogout = () => {
     window.localStorage.clear();
     history.push({
       pathname: `/account/login`,
     });
   };
+  const checkTeacher = async () => {
+    const isTeacher = (await dispatch(getMyInfo(classroom))).payload;
+
+    if (isTeacher.Permission === 'Teacher') {
+      setIsTeacher(true);
+    }
+  };
+  checkTeacher();
+  useEffect(() => {
+    dispatch(getStudentByCodeClass(classroom));
+  }, []);
   return (
     <div className="header-classroom">
       <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -39,7 +58,7 @@ export const HeaderClassroom = () => {
           </Offcanvas>
         </div>
         <Link to="/">
-        <img src="/logo.jpg" alt="" />
+          <img src="/logo.jpg" alt="" />
         </Link>
       </div>
       <div className="header-classroom__body">
@@ -61,12 +80,30 @@ export const HeaderClassroom = () => {
             Mọi người
           </div>
         </Link>
+        {isTeacher && <Link to={`/myclassroom/${codeclass}/3/emsdoi`}>
+          <div
+            className={`header-classroom__title ${
+              number == '3' ? 'header-classroom__title--select' : ''
+            }`}
+          >
+            Điểm số
+          </div>
+        </Link>}
+        {/* <Link to={`/myclassroom/${codeclass}/4/abtipa`}>
+          <div
+            className={`header-classroom__title ${
+              number == '4' ? 'header-classroom__title--select' : ''
+            }`}
+          >
+            Bài tập
+          </div>
+        </Link> */}
       </div>
       <div className="header-classroom__action">
         <div className="header-classroom__item">
-          <button className="header__item__btn" onClick={() => setIsOpen(true)}>
+          {/* <button className="header__item__btn" onClick={() => setIsOpen(true)}>
             <BsPlusLg size={25} />
-          </button>
+          </button> */}
           {/* <DropdownButton
             as={ButtonGroup}
             title={<BsPlusLg size={25} />}

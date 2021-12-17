@@ -5,6 +5,8 @@ import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
 import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass, GradeStructure } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
+import { ExerciseClassPage } from '../containers/ExerciseClassPage/ExerciseClassPage';
+import { MarkClassPage } from '../containers/MarkClassPage/MarkClassPage';
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -103,8 +105,30 @@ export const Routers = () => {
         />
         <PrivateRouter
           exact={true}
+          path={'/myclassroom/:codeclass/:number/abtipa'}
+          component={ExerciseClassPage}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Mọi người"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
           path={'/myclassroom/:codeclass/:number/omiuniguo'}
           component={MyListMemberClass}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Mọi người"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/:number/emsdoi'}
+          component={MarkClassPage}
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={HeaderClassroom}

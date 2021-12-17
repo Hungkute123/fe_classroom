@@ -21,6 +21,11 @@ const classroomApi = {
     const url = 'class/invite';
     const {data} = await axiosClient.get(url, {params});
     return data;
+  },
+  isOwnerClass: async (params: any) =>{
+    const url = 'class/owner';
+    const {data} = await axiosClient.get(url, {params});
+    return data;
   }
 }
 
