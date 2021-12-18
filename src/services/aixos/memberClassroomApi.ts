@@ -22,6 +22,11 @@ const memberClassroomApi = {
     const {data} = await axiosClient.get(url, {params});
     return data;
   },
+  joinClassroomByCodeClass: async (params: any) => {
+    const url = 'member/join-codeclass';
+    const {data} = await axiosClient.get(url, {params});
+    return data;
+  },
 }
 
 export default memberClassroomApi;

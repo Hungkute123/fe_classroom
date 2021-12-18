@@ -13,4 +13,5 @@ export * from "./AddTeacherModal/AddTeacherModal";
 export * from "./InviteClassroom/InviteClassroom";
 export * from "./GradeForm/GradeForm";
 export * from "./CreateGrade/CreateGrade";
-
+export * from "./ExerciseClass/ExerciseClass";
+export * from "./MarkClass/MarkClass";
