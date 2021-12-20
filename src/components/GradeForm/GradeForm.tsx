@@ -97,7 +97,7 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
                 <Row>
                   <Col sm={6}>
                     <div className="grade-form__body">
-                      <div className="grade-form__title">Loại điểm {_id}</div>
+                      <div className="grade-form__title">Loại điểm</div>
                       <Form.Control
                         value={typeMark}
                         onChange={(e) => setTypeMark(e.target.value)}

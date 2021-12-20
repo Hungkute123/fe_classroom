@@ -33,7 +33,7 @@ export const GradeStructure = () => {
       setGrade(listGrade);
     };
     getListGrade();
-  }, []);
+  }, [listGrade.length]);
 
   const handleOnDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -61,11 +61,11 @@ export const GradeStructure = () => {
       }
     }
 
-    setGrade(items);
-
     for (let i = 0; i < items.length; i++) {
       dispatch(patchClassStructure({ jwt: localStorage.getItem('jwt'), ...items[i] }));
     }
+
+    setGrade(items);
   };
 
   return (
@@ -86,7 +86,7 @@ export const GradeStructure = () => {
                     MarkType={item.MarkType}
                     Mark={item.Mark}
                     CodeClass={item.CodeClass}
-                    key={item._id}
+                    key={item.MarkType}
                   ></GradeForm>
                 );
               })}
