@@ -30,6 +30,7 @@ export const MarkClass = () => {
   const dispatch = useAppDispatch();
   const [listMark, setListMark] = useState<any>();
   const [keyStructure, setKeyStructure] = useState<any>([]);
+  const [mark, setMark] = useState<any>({});
 
   const fetchClassStructure = async () => {
     const listGrade = (
@@ -43,8 +44,26 @@ export const MarkClass = () => {
   };
 
   const fetchListMark = async () => {
-    const listMark = await markApi.getAllMark({ CodeClass: codeclass });
+    const listMark = await markApi.getAllMark({
+      jwt: localStorage.getItem('jwt'),
+      CodeClass: codeclass,
+    });
     setListMark(listMark);
+
+    const key = Object.keys(listMark[0].Point);
+    let mark: { [property: string]: any } = {};
+
+    for (let i = 0; i < listMark.length; i++) {
+      for (let j = 0; j < key.length; j++) {
+        if (typeof listMark[i].Point != 'undefined') {
+          mark[`${listMark[i].MSSV}-${key[j]}`] = listMark[i].Point[key[j]];
+        } else {
+          mark[`${listMark[i].MSSV}-${key[j]}`] = '';
+        }
+      }
+    }
+
+    setMark(mark);
   };
 
   useEffect(() => {
@@ -107,12 +126,10 @@ export const MarkClass = () => {
 
   const readExcel = (file: any) => {
     const promise = new Promise((resolve, reject) => {
-      console.log(file);
       const fileReader = new FileReader();
       fileReader.readAsArrayBuffer(file);
 
       fileReader.onload = (e: any) => {
-        console.log(e);
         const bufferArray = e.target.result;
 
         const wb = XLSX.read(bufferArray, { type: 'buffer' });
@@ -127,17 +144,16 @@ export const MarkClass = () => {
       };
 
       fileReader.onerror = (error) => {
-        console.log(error);
         reject(error);
       };
     });
 
     promise.then(async (d: any) => {
       const key = Object.keys(d[0]);
-      console.log(d);
 
       if (key[0] === 'MSSV' && key[1] === 'Name') {
         const status = await markApi.addListStudent({
+          jwt: localStorage.getItem('jwt'),
           ListStudent: d,
           CodeClass: codeclass,
         });
@@ -148,35 +164,40 @@ export const MarkClass = () => {
             title: 'IMPORT FILE THÀNH CÔNG',
           });
 
+          fetchListMark();
+
           return;
         }
       } else if (key[0] === 'MSSV') {
-        const keyStructure = Object.keys(obj);
+        let checkFile = false;
+        let structure = '';
 
         for (let i = 0; i < key.length; i++) {
-          if (key[i] != keyStructure[i]) {
-            Swal.fire({
-              icon: 'error',
-              title: 'FILE KHÔNG ĐÚNG CẤU TRÚC',
-            });
-
-            return;
+          if (key[1] === keyStructure[i]) {
+            checkFile = true;
+            structure = keyStructure[i];
+            break;
           }
         }
 
-        const status = await markApi.addMark({
-          ListMark: d,
-          CodeClass: codeclass,
-          ListKeyStructure: keyStructure,
-        });
-
-        if (status.data) {
-          Swal.fire({
-            icon: 'success',
-            title: 'IMPORT FILE THÀNH CÔNG',
+        if (checkFile) {
+          const status = await markApi.addMark({
+            jwt: localStorage.getItem('jwt'),
+            ListMark: d,
+            CodeClass: codeclass,
+            KeyStructure: structure,
           });
 
-          return;
+          if (status.data) {
+            Swal.fire({
+              icon: 'success',
+              title: 'IMPORT FILE THÀNH CÔNG',
+            });
+
+            fetchListMark();
+
+            return;
+          }
         }
       }
 
@@ -184,7 +205,6 @@ export const MarkClass = () => {
         icon: 'error',
         title: 'FILE KHÔNG ĐÚNG CẤU TRÚC',
       });
-      //setItems(d);
     });
   };
 
@@ -209,12 +229,19 @@ export const MarkClass = () => {
         icon: 'success',
         title: 'CẬP NHẬT TRẠNG THÁI XEM ĐIỂM THÀNH CÔNG',
       });
+
+      fetchClassStructure();
     } else {
       Swal.fire({
         icon: 'error',
         title: 'CẬP NHẬT TRẠNG THÁI XEM ĐIỂM THẤT BẠI',
       });
     }
+  };
+
+  const handleUpdateMark = async (MSSV: string, MarkType: string) => {
+    console.log(mark[`${MSSV}-${MarkType}`]);
+    
   };
 
   return (
@@ -304,7 +331,7 @@ export const MarkClass = () => {
                             >
                               Upload danh sách điểm
                             </Dropdown.Item>
-                            <Dropdown.Item eventKey="4">Xem bài tập đã nộp</Dropdown.Item>
+                            {/* <Dropdown.Item eventKey="4">Xem bài tập đã nộp</Dropdown.Item> */}
                           </DropdownButton>
                         </div>
                       </div>
@@ -385,7 +412,7 @@ export const MarkClass = () => {
                       <td key={`grade-${index}`}>
                         <Container className="mark-class__container">
                           <Row className="mark-class__container">
-                            <Col sm={12} className="mark-class__td-mark">
+                            <Col sm={8} className="mark-class__td-mark">
                               <div className="mark-class__input">
                                 <input
                                   type="text"
@@ -393,23 +420,32 @@ export const MarkClass = () => {
                                     item.Point &&
                                     (info.Permission == 'Teacher' || itemGrade.Complete)
                                       ? item.Point[keyStructure[indexGrade + 1]]
-                                      : '__'
+                                      : ''
                                   }
+                                  id={`mark`}
+                                  name={`mark`}
                                 />
                               </div>
                               <div className="mark-class__line"></div>
                             </Col>
-                            {/* <Col sm={4} className="mark-class__td-mark">
+                            <Col sm={4} className="mark-class__td-mark">
                               <span>
                                 <DropdownButton
                                   title={<BsThreeDotsVertical size={25} />}
                                   id="bg-nested-dropdown"
                                   variant=""
                                 >
-                                  <Dropdown.Item eventKey="1">Trả bài</Dropdown.Item>
+                                  <Dropdown.Item
+                                    eventKey="1"
+                                    onClick={(e: any) =>
+                                      handleUpdateMark(item.MSSV, itemGrade.MarkType)
+                                    }
+                                  >
+                                    Trả bài
+                                  </Dropdown.Item>
                                 </DropdownButton>
                               </span>
-                            </Col> */}
+                            </Col>
                           </Row>
                         </Container>
                       </td>
