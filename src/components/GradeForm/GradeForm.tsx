@@ -44,6 +44,7 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
       CodeClass: CodeClass,
       MarkType: typeMark,
       Mark: mark,
+      Complete: false,
     };
 
     const status = (await dispatch(patchClassStructure({ ...grade }))).payload;
@@ -113,7 +114,8 @@ export const GradeForm = ({ _id, index, MarkType, Mark, CodeClass }: IGrade) => 
                         type="number"
                         maxLength={4}
                         onChange={(e) => setMark(e.target.value)}
-                        min="0" max="1000"
+                        min="0"
+                        max="1000"
                       />
                     </div>
                   </Col>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import './MarkClass.scss';
 import {
   Button,
   ButtonGroup,
@@ -12,50 +13,24 @@ import {
 import { BsFillPeopleFill, BsThreeDotsVertical } from 'react-icons/bs';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
-import './MarkClass.scss';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/store';
 import { useParams } from 'react-router-dom';
 import { getClassStructure } from '../../redux/slice/appSlice/classStructureSlide';
-
-// const csvStudentList = [
-//   { 'Mã số sinh viên': '', 'Họ và tên': '' },
-//   // {
-//   //   columns: [
-//   //       {title: "Province State", style: {font: {sz: "18", bold: true}}, width: {wpx: 125}}, // width in pixels
-//   //       {title: "Country Region", style: {font: {sz: "18", bold: true}}, width: {wch: 30}}, // width in characters
-//   //       {title: "Confirmed", style: {font: {sz: "18", bold: true}}, width: {wpx: 100}}, // width in pixels
-//   //       {title: "Deaths", style: {font: {sz: "18", bold: true}}, width: {wpx: 125}}, // width in pixels
-//   //       {title: "Recovered", style: {font: {sz: "18", bold: true}}, width: {wpx: 100}}, // width in pixels
-//   //       {title: "Active", style: {font: {sz: "18", bold: true}}, width: {wpx: 125}}, // width in pixels
-//   //       {title: "Incident Rate", style: {font: {sz: "18", bold: true}}, width: {wch: 30}}, // width in characters
-//   //       {title: "Latitude", style: {font: {sz: "18", bold: true}}, width: {wpx: 125}}, // width in pixels
-//   //       {title: "Longitude", style: {font: {sz: "18", bold: true}}, width: {wpx: 125}}, // width in pixels
-//   //       {title: "Last Update", style: {font: {sz: "18", bold: true}}, width: {wpx: 110}}, // width in pixels
-
-//   //   ],
-//   //   data: [
-//   //       {value: 1, style: {font: {sz: "14"}}},
-//   //       {value: 2, style: {font: {sz: "14"}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "3461eb"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "eb1207"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "4bd909"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "ebc907"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "35bdb4"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "ed14f5"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "ed14f5"}}}},
-//   //       {value: 2, style:{font: {color: {rgb: "ffffff"}}, fill: {patternType: "solid", fgColor: {rgb: "000000"}}}},
-//   //   ]
-//   // }
-// ];
+import Swal from 'sweetalert2';
+import markApi from '../../services/aixos/markApi';
+import classStructureApi from '../../services/aixos/classStructureApi';
 
 export const MarkClass = () => {
   const { codeclass }: { codeclass: string } = useParams();
   const fileInputRef: any = useRef();
-  const csvStudentList = [{ 'Mã số sinh viên': '', 'Họ và tên': '' }];
-  const [csvGradeStructure, setCsvGradeStructure] = useState<any>([]);
-  const obj: any = { 'Mã số sinh viên': '' };
+  const csvStudentList = [{ MSSV: '', Name: '' }];
+  const obj: any = { MSSV: '' };
   const listGrade = useAppSelector((state: RootState) => state.classStructure.listGrade);
+  const info = useAppSelector((state: RootState) => state.memberClassroom.myInfo);
   const dispatch = useAppDispatch();
+  const [listMark, setListMark] = useState<any>();
+  const [keyStructure, setKeyStructure] = useState<any>([]);
+
   const fetchClassStructure = async () => {
     const listGrade = (
       await dispatch(getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }))
@@ -64,47 +39,72 @@ export const MarkClass = () => {
       const temp = String(item.MarkType);
       obj[temp] = '';
     });
-    const csvGradeStructure: any = [];
-    csvGradeStructure.push(obj);
-    setCsvGradeStructure(csvGradeStructure);
-
-    console.log(obj);
-    console.log(csvGradeStructure);
-    console.log(csvStudentList);
+    setKeyStructure(Object.keys(obj));
   };
+
+  const fetchListMark = async () => {
+    const listMark = await markApi.getAllMark({ CodeClass: codeclass });
+    setListMark(listMark);
+  };
+
   useEffect(() => {
     fetchClassStructure();
+    fetchListMark();
   }, []);
-  const handleDowloadTemplateStudentList = (csvData: any, fileName: any) => {
-    const fileType =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    const fileExtension = '.xlsx';
-    const ws = XLSX.utils.json_to_sheet(csvData);
-    ws['!cols'] = [{ width: 20 }, { width: 50 }];
-    const wb = { Sheets: { student_list: ws }, SheetNames: ['student_list'] };
-    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
-  };
-  const handleDowloadTemplateGradeStructureClass = (csvData: any, fileName: any) => {
-    console.log(csvGradeStructure);
-    console.log('hi', csvData);
+
+  const handleDowloadTemplate = (csvData: any, fileName: any) => {
     const fileType =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
     const fileExtension = '.xlsx';
     const ws = XLSX.utils.json_to_sheet(csvData);
     ws['!cols'] = fitToColumn(csvData);
-    const wb = { Sheets: { mark_list: ws }, SheetNames: ['mark_list'] };
+    const wb = { Sheets: { Sheet1: ws }, SheetNames: ['Sheet1'] };
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
     const data = new Blob([excelBuffer], { type: fileType });
     FileSaver.saveAs(data, fileName + fileExtension);
   };
+
   const fitToColumn = (arrayOfArray: any) => {
     // get maximum character of each column
     return arrayOfArray.map((a: any, i: any) => ({
       wch: Math.max(a ? a.toString().length : 0),
     }));
   };
+
+  const handleGradeBoard = () => {
+    if (listMark.length != 0 && keyStructure.length != 0) {
+      const gradeBoard: Array<any> = [];
+
+      listMark.map((item: any, index: number) => {
+        let mark: { [property: string]: any } = {};
+
+        mark['Họ và tên'] = item.Name;
+        mark['Mã số sinh viên'] = item.MSSV;
+
+        for (let i = 1; i < keyStructure.length; i++) {
+          mark[keyStructure[i]] = item.Point ? item.Point[keyStructure[i]] : '';
+        }
+
+        gradeBoard.push(mark);
+      });
+
+      return handleDowloadTemplate(gradeBoard, 'Grade Board');
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: 'BẢNG ĐIỂM RỖNG',
+    });
+  };
+
+  const handleSampleMark = (markType: string) => {
+    let sampleMark: { [property: string]: any } = {};
+    sampleMark['MSSV'] = '';
+    sampleMark[markType] = '';
+
+    return handleDowloadTemplate([sampleMark], 'Sample Mark');
+  };
+
   const readExcel = (file: any) => {
     const promise = new Promise((resolve, reject) => {
       console.log(file);
@@ -132,11 +132,91 @@ export const MarkClass = () => {
       };
     });
 
-    promise.then((d) => {
+    promise.then(async (d: any) => {
+      const key = Object.keys(d[0]);
       console.log(d);
+
+      if (key[0] === 'MSSV' && key[1] === 'Name') {
+        const status = await markApi.addListStudent({
+          ListStudent: d,
+          CodeClass: codeclass,
+        });
+
+        if (status.data) {
+          Swal.fire({
+            icon: 'success',
+            title: 'IMPORT FILE THÀNH CÔNG',
+          });
+
+          return;
+        }
+      } else if (key[0] === 'MSSV') {
+        const keyStructure = Object.keys(obj);
+
+        for (let i = 0; i < key.length; i++) {
+          if (key[i] != keyStructure[i]) {
+            Swal.fire({
+              icon: 'error',
+              title: 'FILE KHÔNG ĐÚNG CẤU TRÚC',
+            });
+
+            return;
+          }
+        }
+
+        const status = await markApi.addMark({
+          ListMark: d,
+          CodeClass: codeclass,
+          ListKeyStructure: keyStructure,
+        });
+
+        if (status.data) {
+          Swal.fire({
+            icon: 'success',
+            title: 'IMPORT FILE THÀNH CÔNG',
+          });
+
+          return;
+        }
+      }
+
+      Swal.fire({
+        icon: 'error',
+        title: 'FILE KHÔNG ĐÚNG CẤU TRÚC',
+      });
       //setItems(d);
     });
   };
+
+  const handleComplete = async (
+    _id: any,
+    CodeClass: string,
+    MarkType: string,
+    Mark: number,
+    Complete: boolean,
+  ) => {
+    const status = await classStructureApi.patchClassStructure({
+      jwt: localStorage.getItem('jwt'),
+      _id: _id,
+      CodeClass: CodeClass,
+      MarkType: MarkType,
+      Mark: Mark,
+      Complete: Complete,
+    });
+
+    if (status) {
+      Swal.fire({
+        icon: 'success',
+        title: 'CẬP NHẬT TRẠNG THÁI XEM ĐIỂM THÀNH CÔNG',
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'CẬP NHẬT TRẠNG THÁI XEM ĐIỂM THẤT BẠI',
+      });
+    }
+  };
+
   return (
     <div className="mark-class">
       <input
@@ -164,45 +244,24 @@ export const MarkClass = () => {
                     >
                       <Dropdown.Item
                         eventKey="1"
-                        onClick={() =>
-                          handleDowloadTemplateStudentList(csvStudentList, 'Sample Student List')
-                        }
+                        onClick={() => handleDowloadTemplate(csvStudentList, 'Sample Student List')}
                       >
                         Dowload mẫu danh sách học viên
                       </Dropdown.Item>
-                      <Dropdown.Item
-                        eventKey="2"
-                        onClick={() =>
-                          handleDowloadTemplateGradeStructureClass(csvGradeStructure, 'Sample Mark')
-                        }
-                      >
-                        Dowload mẫu chấm điểm
+                      <Dropdown.Item eventKey="2" onClick={() => handleGradeBoard()}>
+                        Dowload bảng điểm
                       </Dropdown.Item>
-                      <Dropdown.Item eventKey="3">Dowload bảng điểm</Dropdown.Item>
-                      <Dropdown.Item eventKey="4" onClick={() => fileInputRef.current.click()}>
+                      <Dropdown.Item eventKey="3" onClick={() => fileInputRef.current.click()}>
                         Upload danh sách lớp
                       </Dropdown.Item>
-                      <Dropdown.Item eventKey="5">Upload danh sách điểm</Dropdown.Item>
                     </DropdownButton>
                   </Col>
                   <Col sm={6} className="mark-class__th-one__left">
-                    Sắp xếp theo họ
-                    {/* <Button onClick={() => fileInputRef.current.click()}>
-                      <input
-                        onChange={(e: any) => {
-                          const file = e.target.files[0];
-                          readExcel(file);
-                        }}
-                        multiple={false}
-                        ref={fileInputRef}
-                        type="file"
-                        hidden
-                      />
-                    </Button> */}
+                    Danh sách
                   </Col>
-                  <Col sm={4} className="mark-class__th-one__right">
-                    Điểm trung bình
-                  </Col>
+                  {/* <Col sm={4} className="mark-class__th-one__right">
+                    Điểm tổng
+                  </Col> */}
                 </Row>
               </Container>
             </th>
@@ -219,8 +278,33 @@ export const MarkClass = () => {
                             id="bg-nested-dropdown"
                             variant=""
                           >
-                            <Dropdown.Item eventKey="1">Trả bài</Dropdown.Item>
-                            <Dropdown.Item eventKey="2">Xem bài tập đã nộp</Dropdown.Item>
+                            <Dropdown.Item
+                              eventKey="1"
+                              onClick={() =>
+                                handleComplete(
+                                  item._id,
+                                  item.CodeClass,
+                                  item.MarkType,
+                                  item.Mark,
+                                  !item.Complete,
+                                )
+                              }
+                            >
+                              {item.Complete ? 'Đóng hoàn thành' : 'Hoàn thành'}
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              eventKey="2"
+                              onClick={() => handleSampleMark(item.MarkType)}
+                            >
+                              Dowload mẫu chấm điểm
+                            </Dropdown.Item>
+                            <Dropdown.Item
+                              eventKey="3"
+                              onClick={() => fileInputRef.current.click()}
+                            >
+                              Upload danh sách điểm
+                            </Dropdown.Item>
+                            <Dropdown.Item eventKey="4">Xem bài tập đã nộp</Dropdown.Item>
                           </DropdownButton>
                         </div>
                       </div>
@@ -243,11 +327,11 @@ export const MarkClass = () => {
                       size={32}
                       color={'#1967d2'}
                     />
-                    Điểm trung bình của lớp
+                    Điểm tổng của bài tập
                   </Col>
-                  <Col sm={4} className="mark-class__td-right">
+                  {/* <Col sm={4} className="mark-class__td-right">
                     15%
-                  </Col>
+                  </Col> */}
                 </Row>
               </Container>
             </td>
@@ -259,7 +343,7 @@ export const MarkClass = () => {
                       <Row className="mark-class__container">
                         <Col sm={8} className="mark-class__td-mark">
                           <div className="mark-class__input"></div>
-                          <span className="mark-class__span">100</span>
+                          <span className="mark-class__span">{item.Mark}</span>
                         </Col>
                         <Col sm={4} className="mark-class__td-mark"></Col>
                       </Row>
@@ -270,56 +354,71 @@ export const MarkClass = () => {
 
             <td className="mark-class__background"></td>
           </tr>
-          <tr>
-            <td>
-              <Container className="mark-class__container">
-                <Row className="mark-class__container">
-                  <Col sm={8} className="mark-class__td-left">
-                    <img
-                      className="mark-class__icon-img"
-                      src="https://lh3.googleusercontent.com/a/default-user=s32-c"
-                      alt="ảnh"
-                    />
-                    Nguyễn Đình Hùng
-                  </Col>
-                  <Col sm={4} className="mark-class__td-right">
-                    15%
-                  </Col>
-                </Row>
-              </Container>
-            </td>
-            {listGrade &&
-              listGrade.map((item: any, index: number) => {
-                return (
-                  <td key={index}>
+
+          {listMark &&
+            listGrade &&
+            listMark.map((item: any, index: number) => {
+              return (
+                <tr>
+                  <td key={`student-${index}`}>
                     <Container className="mark-class__container">
                       <Row className="mark-class__container">
-                        <Col sm={8} className="mark-class__td-mark">
-                          <div className="mark-class__input">
-                            <input type="text" />
-                          </div>
-                          <span className="mark-class__span">/{item.Mark}</span>
-                          <div className="mark-class__line"></div>
+                        <Col sm={8} className="mark-class__td-left">
+                          <img
+                            className="mark-class__icon-img"
+                            src={
+                              item.Image || 'https://lh3.googleusercontent.com/a/default-user=s32-c'
+                            }
+                            alt={item.Name}
+                          />
+                          {item.Name}
                         </Col>
-                        <Col sm={4} className="mark-class__td-mark">
-                          <span>
-                            <DropdownButton
-                              title={<BsThreeDotsVertical size={25} />}
-                              id="bg-nested-dropdown"
-                              variant=""
-                            >
-                              <Dropdown.Item eventKey="1">Trả bài</Dropdown.Item>
-                            </DropdownButton>
-                          </span>
-                        </Col>
+                        {/* <Col sm={4} className="mark-class__td-right">
+                          15%
+                        </Col> */}
                       </Row>
                     </Container>
                   </td>
-                );
-              })}
 
-            <td></td>
-          </tr>
+                  {listGrade.map((itemGrade: any, indexGrade: number) => {
+                    return (
+                      <td key={`grade-${index}`}>
+                        <Container className="mark-class__container">
+                          <Row className="mark-class__container">
+                            <Col sm={12} className="mark-class__td-mark">
+                              <div className="mark-class__input">
+                                <input
+                                  type="text"
+                                  value={
+                                    item.Point &&
+                                    (info.Permission == 'Teacher' || itemGrade.Complete)
+                                      ? item.Point[keyStructure[indexGrade + 1]]
+                                      : '__'
+                                  }
+                                />
+                              </div>
+                              <div className="mark-class__line"></div>
+                            </Col>
+                            {/* <Col sm={4} className="mark-class__td-mark">
+                              <span>
+                                <DropdownButton
+                                  title={<BsThreeDotsVertical size={25} />}
+                                  id="bg-nested-dropdown"
+                                  variant=""
+                                >
+                                  <Dropdown.Item eventKey="1">Trả bài</Dropdown.Item>
+                                </DropdownButton>
+                              </span>
+                            </Col> */}
+                          </Row>
+                        </Container>
+                      </td>
+                    );
+                  })}
+                  <td></td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

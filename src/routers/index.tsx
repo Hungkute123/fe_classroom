@@ -3,10 +3,18 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass, GradeStructure } from '../containers';
+import {
+  Home,
+  Account,
+  MyClassroom,
+  User,
+  MyListMemberClass,
+  InviteClass,
+  GradeStructure,
+  ExerciseClassPage,
+  MarkClassPage,
+} from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
-import { ExerciseClassPage } from '../containers/ExerciseClassPage/ExerciseClassPage';
-import { MarkClassPage } from '../containers/MarkClassPage/MarkClassPage';
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
