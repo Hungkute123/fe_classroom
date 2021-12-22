@@ -172,7 +172,7 @@ export const MarkClass = () => {
         let checkFile = false;
         let structure = '';
 
-        for (let i = 0; i < key.length; i++) {
+        for (let i = 0; i < keyStructure.length; i++) {
           if (key[1] === keyStructure[i]) {
             checkFile = true;
             structure = keyStructure[i];
@@ -241,7 +241,6 @@ export const MarkClass = () => {
 
   const handleUpdateMark = async (MSSV: string, MarkType: string) => {
     console.log(mark[`${MSSV}-${MarkType}`]);
-    
   };
 
   return (
@@ -305,20 +304,25 @@ export const MarkClass = () => {
                             id="bg-nested-dropdown"
                             variant=""
                           >
-                            <Dropdown.Item
-                              eventKey="1"
-                              onClick={() =>
-                                handleComplete(
-                                  item._id,
-                                  item.CodeClass,
-                                  item.MarkType,
-                                  item.Mark,
-                                  !item.Complete,
-                                )
-                              }
-                            >
-                              {item.Complete ? 'Đóng hoàn thành' : 'Hoàn thành'}
-                            </Dropdown.Item>
+                            {' '}
+                            {info.Permission == 'Teacher' ? (
+                              <Dropdown.Item
+                                eventKey="1"
+                                onClick={() =>
+                                  handleComplete(
+                                    item._id,
+                                    item.CodeClass,
+                                    item.MarkType,
+                                    item.Mark,
+                                    !item.Complete,
+                                  )
+                                }
+                              >
+                                {item.Complete ? 'Đóng hoàn thành' : 'Hoàn thành'}
+                              </Dropdown.Item>
+                            ) : (
+                              <></>
+                            )}
                             <Dropdown.Item
                               eventKey="2"
                               onClick={() => handleSampleMark(item.MarkType)}
