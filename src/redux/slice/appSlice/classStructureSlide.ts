@@ -38,6 +38,9 @@ export const classStructureSlide = createSlice({
     builder.addCase(getClassStructure.fulfilled, (state, action) => {
       state.listGrade = action.payload;
     });
+    builder.addCase(getClassStructure.rejected, (state, action) => {
+      state.listGrade = [];
+    });
     builder.addCase(saveClassStructure.fulfilled, (state, action) => {
       state.status = action.payload || false;
     });

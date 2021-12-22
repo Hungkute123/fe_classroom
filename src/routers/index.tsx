@@ -3,7 +3,17 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { PrivateRouter } from './PrivateRouter';
 import { PublicRouter } from './PublicRouter';
 import { BlankLayout, HeaderFooterLayout, OnlyFooterLayout, OnlyHeaderLayout } from '../layouts';
-import { Home, Account, MyClassroom, User, MyListMemberClass, InviteClass, GradeStructure } from '../containers';
+import {
+  Home,
+  Account,
+  MyClassroom,
+  User,
+  MyListMemberClass,
+  InviteClass,
+  GradeStructure,
+  ExerciseClassPage,
+  MarkClassPage,
+} from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
 
 export const Routers = () => {
@@ -103,8 +113,30 @@ export const Routers = () => {
         />
         <PrivateRouter
           exact={true}
+          path={'/myclassroom/:codeclass/:number/abtipa'}
+          component={ExerciseClassPage}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Mọi người"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
           path={'/myclassroom/:codeclass/:number/omiuniguo'}
           component={MyListMemberClass}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Mọi người"
+          isHasFooter={true}
+          footer={Footer}
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/:number/emsdoi'}
+          component={MarkClassPage}
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={HeaderClassroom}
