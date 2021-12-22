@@ -7,7 +7,10 @@ import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import './HeaderClassroom.scss';
-import { getMyInfo, getStudentByCodeClass } from '../../../redux/slice/appSlice/memberClassroomSlice';
+import {
+  getMyInfo,
+  getStudentByCodeClass,
+} from '../../../redux/slice/appSlice/memberClassroomSlice';
 import { useAppDispatch } from '../../../redux/store';
 
 export const HeaderClassroom = () => {
@@ -22,7 +25,7 @@ export const HeaderClassroom = () => {
   const { number }: { number: string } = useParams();
   const account: any = useSelector((state: RootState) => state.account.account);
   const classroom = {
-    codeclass : codeclass,
+    codeclass: codeclass,
     jwt: localStorage.getItem('jwt'),
   };
   const handleLogout = () => {
@@ -80,7 +83,7 @@ export const HeaderClassroom = () => {
             Mọi người
           </div>
         </Link>
-        {isTeacher && <Link to={`/myclassroom/${codeclass}/3/emsdoi`}>
+        <Link to={`/myclassroom/${codeclass}/3/emsdoi`}>
           <div
             className={`header-classroom__title ${
               number == '3' ? 'header-classroom__title--select' : ''
@@ -88,7 +91,7 @@ export const HeaderClassroom = () => {
           >
             Điểm số
           </div>
-        </Link>}
+        </Link>
         {/* <Link to={`/myclassroom/${codeclass}/4/abtipa`}>
           <div
             className={`header-classroom__title ${
