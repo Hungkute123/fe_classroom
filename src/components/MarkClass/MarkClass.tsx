@@ -19,6 +19,7 @@ import { getClassStructure } from '../../redux/slice/appSlice/classStructureSlid
 import Swal from 'sweetalert2';
 import markApi from '../../services/aixos/markApi';
 import classStructureApi from '../../services/aixos/classStructureApi';
+import { getMyInfo } from '../../redux/slice/appSlice/memberClassroomSlice';
 
 export const MarkClass = () => {
   const { codeclass }: { codeclass: string } = useParams();
@@ -28,10 +29,25 @@ export const MarkClass = () => {
   const listGrade = useAppSelector((state: RootState) => state.classStructure.listGrade);
   const info = useAppSelector((state: RootState) => state.memberClassroom.myInfo);
   const dispatch = useAppDispatch();
-  const [listMark, setListMark] = useState<any>();
+  const [isTeacher, setIsTeacher] = useState(false);
+  const [listMark, setListMark] = useState<any>([]);
   const [keyStructure, setKeyStructure] = useState<any>([]);
   const [mark, setMark] = useState<any>({});
+  const classroom = {
+    codeclass : codeclass,
+    jwt: localStorage.getItem('jwt'),
+  };
+  const checkTeacher = async () => {
+    const isTeacher = (await dispatch(getMyInfo(classroom))).payload;
 
+    if (isTeacher.Permission === 'Teacher') {
+      setIsTeacher(true);
+    }
+  };
+  
+  useEffect(() => {
+    checkTeacher();
+  }, []);
   const fetchClassStructure = async () => {
     const listGrade = (
       await dispatch(getClassStructure({ jwt: localStorage.getItem('jwt'), CodeClass: codeclass }))
@@ -52,13 +68,13 @@ export const MarkClass = () => {
 
     const key = Object.keys(listMark[0].Point);
     let mark: { [property: string]: any } = {};
-
+    console.log("hi",keyStructure)
     for (let i = 0; i < listMark.length; i++) {
-      for (let j = 0; j < key.length; j++) {
-        if (typeof listMark[i].Point != 'undefined') {
-          mark[`${listMark[i].MSSV}-${key[j]}`] = listMark[i].Point[key[j]];
+      for (let j = 1; j < keyStructure.length; j++) {
+        if (typeof listMark[i].Point[key[j-1]] != 'undefined') {
+          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = listMark[i].Point[key[j-1]];
         } else {
-          mark[`${listMark[i].MSSV}-${key[j]}`] = '';
+          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = undefined;
         }
       }
     }
@@ -68,6 +84,8 @@ export const MarkClass = () => {
 
   useEffect(() => {
     fetchClassStructure();
+  }, []);
+  useEffect(() => {
     fetchListMark();
   }, []);
 
@@ -171,15 +189,16 @@ export const MarkClass = () => {
       } else if (key[0] === 'MSSV') {
         let checkFile = false;
         let structure = '';
+      
 
-        for (let i = 0; i < key.length; i++) {
-          if (key[1] === keyStructure[i]) {
+        for (let i = 0; i < keyStructure.length; i++) {
+          if (String(key[1]) === String(keyStructure[i])) {
             checkFile = true;
             structure = keyStructure[i];
             break;
           }
         }
-
+        
         if (checkFile) {
           const status = await markApi.addMark({
             jwt: localStorage.getItem('jwt'),
@@ -243,7 +262,11 @@ export const MarkClass = () => {
     console.log(mark[`${MSSV}-${MarkType}`]);
     
   };
-
+  const handleChangeInput = (e:any, MSSV: string, MarkType: string) =>{
+    console.log(e.target.value)
+    mark[`${MSSV}-${MarkType}`] = e.target.value;
+    setMark({...mark});
+  }
   return (
     <div className="mark-class">
       <input
@@ -409,7 +432,7 @@ export const MarkClass = () => {
 
                   {listGrade.map((itemGrade: any, indexGrade: number) => {
                     return (
-                      <td key={`grade-${index}`}>
+                      <td key={`grade-${indexGrade}`}>
                         <Container className="mark-class__container">
                           <Row className="mark-class__container">
                             <Col sm={8} className="mark-class__td-mark">
@@ -419,13 +442,15 @@ export const MarkClass = () => {
                                   value={
                                     item.Point &&
                                     (info.Permission == 'Teacher' || itemGrade.Complete)
-                                      ? item.Point[keyStructure[indexGrade + 1]]
+                                      ? mark[`${item.MSSV}-${keyStructure[indexGrade+1]}`]
                                       : ''
                                   }
-                                  id={`mark`}
-                                  name={`mark`}
+                                  id={`${item.MSSV}-${keyStructure[indexGrade+1]}`}
+                                  name={`${item.MSSV}-${keyStructure[indexGrade+1]}`}
+                                  onChange={(e)=>handleChangeInput(e,item.MSSV, itemGrade.MarkType)}
                                 />
                               </div>
+                              <span className="mark-class__span">/{itemGrade.Mark}</span>
                               <div className="mark-class__line"></div>
                             </Col>
                             <Col sm={4} className="mark-class__td-mark">
