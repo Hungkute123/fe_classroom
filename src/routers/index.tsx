@@ -13,8 +13,11 @@ import {
   GradeStructure,
   ExerciseClassPage,
   MarkClassPage,
+  AdminHome,
+  AdminAccount
 } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
+
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -157,6 +160,41 @@ export const Routers = () => {
           component={GradeStructure}
           layout={BlankLayout}
           titleHeader="Chỉnh sửa cấu trúc điểm"
+        />
+        <PublicRouter
+          exact={true}
+          path={'/admin/login'}
+          component={AdminAccount}
+          layout={BlankLayout}
+          titleHeader="Đăng nhập"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/admin/create-admin-account'}
+          component={AdminHome}
+          layout={BlankLayout}
+          titleHeader="Tạo tài khoản admin"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/admin/manage-user-accounts'}
+          component={AdminHome}
+          layout={BlankLayout}
+          titleHeader="Quản lý tài khoản người dùng"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/admin/manage-admin-accounts'}
+          component={AdminHome}
+          layout={BlankLayout}
+          titleHeader="Quản lý tài khoản quản trị viên"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/admin/manage-classes'}
+          component={AdminHome}
+          layout={BlankLayout}
+          titleHeader="Quản lý lớp học"
         />
       </Switch>
     </Router>

@@ -25,6 +25,12 @@ export const inviteClassroom = createAsyncThunk(
     return await classroomApi.inviteClassroom(params).then((res) => res);
   },
 );
+export const getListClass = createAsyncThunk(
+  'classroom/getListClass',
+  async () => {
+    return await classroomApi.getListClass().then((res) => res);
+  },
+);
 interface IInitialState {
   classroom: any;
   infoMyClassroom: any;
@@ -50,6 +56,7 @@ export const classroomSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    //get classroom by iduser
     builder.addCase(getClassroomByIDUser.pending, (state, action) => {
       state.status = 'loading';
     });
@@ -60,6 +67,7 @@ export const classroomSlice = createSlice({
     builder.addCase(getClassroomByIDUser.rejected, (state, action) => {
       state.status = 'failed';
     });
+    // create classrooom
     builder.addCase(createClassroom.pending, (state, action) => {
       state.status = 'loading';
     });
@@ -73,6 +81,7 @@ export const classroomSlice = createSlice({
     builder.addCase(createClassroom.rejected, (state, action) => {
       state.status = 'failed';
     });
+    //get classroom by codeclass
     builder.addCase(getClassroomByCodeClass.pending, (state, action) => {
       state.status = 'loading';
     });
@@ -83,8 +92,25 @@ export const classroomSlice = createSlice({
     builder.addCase(getClassroomByCodeClass.rejected, (state, action) => {
       state.status = 'failed';
     });
+    //invite classroom
+    builder.addCase(inviteClassroom.pending, (state, action) => {
+      state.status = 'loading';
+    });
     builder.addCase(inviteClassroom.fulfilled, (state, action) => {
       state.status = 'success';
+    });
+    builder.addCase(inviteClassroom.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    //get list classroom
+    builder.addCase(getListClass.pending, (state, action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(getListClass.fulfilled, (state, action) => {
+      state.status = 'success';
+    });
+    builder.addCase(getListClass.rejected, (state, action) => {
+      state.status = 'failed';
     });
   },
 });

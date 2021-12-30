@@ -4,12 +4,11 @@ import { BsFillPencilFill, BsKeyboardFill, BsKeyFill } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { LoginWithGoogle } from '..';
-import { registerWithEmail } from '../../redux/slice/appSlice/accountSlice';
-import { useAppDispatch } from '../../redux/store';
-import './Register.scss';
+import { registerWithEmail } from '../../../redux/slice/appSlice/accountSlice';
+import { useAppDispatch } from '../../../redux/store';
+import './CreateAdminAccount.scss';
 
-export const Register = () => {
+export const CreateAdminAccount = () => {
   const dispatch = useAppDispatch();
   const listRegister = [
     {
@@ -17,7 +16,6 @@ export const Register = () => {
       type: 'email',
       content: 'Nhập Email',
       icon: <MdEmail></MdEmail>,
-
     },
     {
       name: 'name',
@@ -36,7 +34,6 @@ export const Register = () => {
       type: 'password',
       content: 'Nhập Lại Password',
       icon: <BsKeyboardFill></BsKeyboardFill>,
-  
     },
   ];
 
@@ -77,43 +74,39 @@ export const Register = () => {
   };
 
   return (
-    <div className="register">
-      <div className="register__content">
-        <div className="register__title">
-          <h1>ClassRoom</h1>
-        </div>
-        <Form onSubmit={handleSubmit}>
-          <div className="register__form">
-            {listRegister.map((item, moves) => {
-              return (
-                <div className="register__group" key={moves}>
-                  <input
-                    type={item.type}
-                    name={item.name}
-                    placeholder={item.content}
-                    required
-                  />
-                  <span className="register__icon">{item.icon}</span>
-                </div>
-              );
-            })}
-            <button className="register__btn" type="submit">
-              Đăng Ký
-            </button>
-            <div className="register__seperator">
-              <b>OR</b>
+    <div className="create-admin-account">
+      <div className="create-admin-account box">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <div className="create-admin-account box content">
+          <div className="create-admin-account__content">
+            <div className="create-admin-account__title">
+              <h1>Tạo tài khoản admin</h1>
             </div>
-            <p className="register__register-social">
-              <Link to="/account/login" style={{ fontSize: '16px', color: '#45aba6' }}>
-                Quay lại trang đăng nhập
-              </Link>
-              hoặc đăng nhập bằng nền tảng khác
-            </p>
-            <div className="register__social">
-            <LoginWithGoogle></LoginWithGoogle>
-            </div>
+            <Form onSubmit={handleSubmit}>
+              <div className="create-admin-account__form">
+                {listRegister.map((item, moves) => {
+                  return (
+                    <div className="create-admin-account__group" key={moves}>
+                      <input
+                        type={item.type}
+                        name={item.name}
+                        placeholder={item.content}
+                        required
+                      />
+                      <i className="create-admin-account__icon">{item.icon}</i>
+                    </div>
+                  );
+                })}
+                <button className="create-admin-account__btn" type="submit">
+                  Tạo tài khoản
+                </button>
+              </div>
+            </Form>
           </div>
-        </Form>
+        </div>
       </div>
     </div>
   );
