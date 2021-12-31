@@ -26,7 +26,7 @@ export const List: React.FC<IList> = ({ list }) => {
                       <span className="list__row__header">
                         <span>
                           <img
-                            src="https://lh3.googleusercontent.com/a/default-user=s32-c"
+                            src={item.Image}
                             alt="ảnh"
                           />
                         </span>

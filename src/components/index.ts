@@ -15,3 +15,4 @@ export * from "./GradeForm/GradeForm";
 export * from "./CreateGrade/CreateGrade";
 export * from "./ExerciseClass/ExerciseClass";
 export * from "./MarkClass/MarkClass";
+export * from "./Admin/Admin"

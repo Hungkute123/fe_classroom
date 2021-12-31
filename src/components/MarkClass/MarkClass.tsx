@@ -65,29 +65,31 @@ export const MarkClass = () => {
       CodeClass: codeclass,
     });
     setListMark(listMark);
-
-    const key = Object.keys(listMark[0].Point);
+  };
+  const updateMark = () =>{
+    // const key = Object.keys(listMark[0].Point);
     let mark: { [property: string]: any } = {};
-    console.log("hi",keyStructure)
+    //console.log(typeof(listMark[0].Point))
     for (let i = 0; i < listMark.length; i++) {
       for (let j = 1; j < keyStructure.length; j++) {
-        if (typeof listMark[i].Point[key[j-1]] != 'undefined') {
-          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = listMark[i].Point[key[j-1]];
+        if (typeof listMark[i].Point != 'undefined') {
+          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = listMark[i].Point[keyStructure[j-1]];
         } else {
-          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = undefined;
+          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = 0;
         }
       }
     }
 
     setMark(mark);
-  };
-
+  }
+    
   useEffect(() => {
     fetchClassStructure();
-  }, []);
-  useEffect(() => {
     fetchListMark();
   }, []);
+  useEffect(() => {
+    updateMark();
+  }, [listMark.length,keyStructure.length]);
 
   const handleDowloadTemplate = (csvData: any, fileName: any) => {
     const fileType =
@@ -451,10 +453,11 @@ export const MarkClass = () => {
                                   }
                                   id={`${item.MSSV}-${keyStructure[indexGrade+1]}`}
                                   name={`${item.MSSV}-${keyStructure[indexGrade+1]}`}
-                                  onChange={(e)=>handleChangeInput(e,item.MSSV, itemGrade.MarkType)}
+                                  onChange={(e)=>handleChangeInput(e,item.MSSV, keyStructure[indexGrade+1])}
+                                  disabled={info.Permission != 'Teacher'}
                                 />
                               </div>
-                              <span className="mark-class__span">/{itemGrade.Mark}</span>
+                              {/* <span className="mark-class__span">/{itemGrade.Mark}</span> */}
                               <div className="mark-class__line"></div>
                             </Col>
                             <Col sm={4} className="mark-class__td-mark">

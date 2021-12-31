@@ -26,7 +26,12 @@ const classroomApi = {
     const url = 'class/owner';
     const {data} = await axiosClient.get(url, {params});
     return data;
-  }
+  },
+  getListClass: async () => {
+    const url = 'class/list-class';
+    const {data} = await axiosClient.get(url);
+    return data;
+  },
 }
 
 export default classroomApi;

@@ -29,6 +29,22 @@ const userApi = {
     const url = `account/get-info`;
     return await axiosClient.get(url, { params });
   },
+  getListAdminAccounts: async () => {
+    const url = `account/get-list-admin-accounts`;
+    return await axiosClient.get(url);
+  },
+  getListUserAccounts: async () => {
+    const url = `account/get-list-user-accounts`;
+    return await axiosClient.get(url);
+  },
+  adminLogin: async (requestOption: any) => {
+    const url = `account/admin-login`;
+    return await axiosClient.post(url, requestOption);
+  },
+  adminRegister: async (requestOption: any) => {
+    const url = `account/admin-register`;
+    return await axiosClient.post(url, requestOption);
+  },
 };
 
 export default userApi;
