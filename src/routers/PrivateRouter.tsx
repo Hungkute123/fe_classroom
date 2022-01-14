@@ -47,14 +47,21 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   const render = (props: any) => {
     if (
       (isAccount == 'true' && location === '/account/login') ||
-      (isAccount == 'true' && location === '/account/register')
+      (isAccount == 'true' && location === '/account/register') ||
+      (isAccount == 'true' && location === '/account/forgot-password')
     ) {
       return <Redirect to="/" />;
     }
 
-    if (isAccount == 'false' && location != '/account/login' && location != '/account/register') {
+    if (
+      isAccount == 'false' &&
+      location != '/account/login' &&
+      location != '/account/register' &&
+      location != '/account/forgot-password'
+    ) {
       return <Redirect to="/account/login" />;
     }
+
     return isFetch == false ? (
       <div style={{ marginTop: '20px' }}>
         <Spinner animation="grow" variant="primary" />

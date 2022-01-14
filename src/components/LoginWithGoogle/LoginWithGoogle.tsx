@@ -30,11 +30,6 @@ export const LoginWithGoogle = () => {
     });
   };
   const handleFalied = (response: any) => {
-    // Swal.fire({
-    //   icon: 'error',
-    //   title: '',
-    // });
-
     console.log(response);
   };
 
@@ -47,11 +42,7 @@ export const LoginWithGoogle = () => {
         cookiePolicy={'single_host_origin'}
         buttonText=""
         render={(renderProps) => (
-          <Button
-            variant=""
-            onClick={renderProps.onClick}
-            disabled={renderProps.disabled}
-          >
+          <Button variant="" onClick={renderProps.onClick} disabled={renderProps.disabled}>
             <FcGoogle></FcGoogle>
           </Button>
         )}
