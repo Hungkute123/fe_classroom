@@ -13,6 +13,10 @@ const userApi = {
     const url = `account/register`;
     return await axiosClient.post(url, requestOption);
   },
+  forgotPassword: async (requestOption: any) => {
+    const url = `account/forgot-password`;
+    return await axiosClient.post(url, requestOption);
+  },
   updateAccount: async (requestOption: any) => {
     const url = `account/update-account`;
     return await axiosClient.patch(url, requestOption);

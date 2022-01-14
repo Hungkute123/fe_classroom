@@ -13,30 +13,32 @@ export const Register = () => {
   const dispatch = useAppDispatch();
   const listRegister = [
     {
-      name: 'email',
+      id: 'register-email',
+      name: 'register-email',
       type: 'email',
       content: 'Nhập Email',
       icon: <MdEmail></MdEmail>,
-
     },
     {
-      name: 'name',
+      id: 'register-name',
+      name: 'register-name',
       type: 'text',
       content: 'Nhập Họ Và tên',
       icon: <BsFillPencilFill></BsFillPencilFill>,
     },
     {
-      name: 'password',
+      id: 'register-password',
+      name: 'register-password',
       type: 'password',
       content: 'Nhập Password',
       icon: <BsKeyFill></BsKeyFill>,
     },
     {
-      name: 'rePassword',
+      id: 'register-rePassword',
+      name: 'register-rePassword',
       type: 'password',
       content: 'Nhập Lại Password',
       icon: <BsKeyboardFill></BsKeyboardFill>,
-  
     },
   ];
 
@@ -91,6 +93,7 @@ export const Register = () => {
                     type={item.type}
                     name={item.name}
                     placeholder={item.content}
+                    id={item.id}
                     required
                   />
                   <span className="register__icon">{item.icon}</span>
@@ -107,10 +110,10 @@ export const Register = () => {
               <Link to="/account/login" style={{ fontSize: '16px', color: '#45aba6' }}>
                 Quay lại trang đăng nhập
               </Link>
-              hoặc đăng nhập bằng nền tảng khác
+              <> hoặc đăng nhập bằng nền tảng khác</>
             </p>
             <div className="register__social">
-            <LoginWithGoogle></LoginWithGoogle>
+              <LoginWithGoogle></LoginWithGoogle>
             </div>
           </div>
         </Form>

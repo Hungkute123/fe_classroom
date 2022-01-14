@@ -14,10 +14,9 @@ import {
   ExerciseClassPage,
   MarkClassPage,
   AdminHome,
-  AdminAccount
+  AdminAccount,
 } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
-
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -54,6 +53,20 @@ export const Routers = () => {
           component={Account}
           layout={BlankLayout}
           titleHeader="Đăng xuất"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/account/forgot-password'}
+          component={Account}
+          layout={BlankLayout}
+          titleHeader="Quên mật khẩu"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/account/re-password'}
+          component={Account}
+          layout={BlankLayout}
+          titleHeader="Đổi mật khẩu"
         />
       </Switch>
       <Switch>
@@ -161,6 +174,8 @@ export const Routers = () => {
           layout={BlankLayout}
           titleHeader="Chỉnh sửa cấu trúc điểm"
         />
+      </Switch>
+      <Switch>
         <PublicRouter
           exact={true}
           path={'/admin/login'}

@@ -20,7 +20,7 @@ export const Login = () => {
       Email: e.target[0].value,
       Password: e.target[1].value,
     };
-    console.log(account)
+
     const isLogin = (await dispatch(loginWithEmail(account))).payload;
 
     if (isLogin) {
@@ -32,15 +32,13 @@ export const Login = () => {
       dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
 
       return;
-    }else{
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'ĐĂNG NHẬP THẤT BẠI',
       });
       return;
     }
-
-    
   };
 
   return (
@@ -52,20 +50,32 @@ export const Login = () => {
         <div className="login__form">
           <Form onSubmit={handleSubmitForm}>
             <div className="login__group">
-              <input type="email" name="email" placeholder="Nhập E-mail" required />
+              <input
+                type="email"
+                id="login-email"
+                name="login-email"
+                placeholder="Nhập E-mail"
+                required
+              />
               <span className="login__icon">
                 <MdEmail></MdEmail>
               </span>
             </div>
             <div className="login__group">
-              <input type="password" name="password" placeholder="Nhập Password" required />
+              <input
+                type="password"
+                id="login-password"
+                name="login-password"
+                placeholder="Nhập Password"
+                required
+              />
               <span className="login__icon">
                 <BsKeyFill></BsKeyFill>
               </span>
             </div>
             <button className="login__btn">Đăng Nhập</button>
           </Form>
-          <Link to="" className="login__forgot">
+          <Link to="/account/forgot-password" className="login__forgot">
             Quên mật khẩu
           </Link>
           <div className="login__seperator">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 
-import { Login, Register } from '../../components';
+import { Login, Register, ForgotPassword } from '../../components';
 
 export const Account = () => {
   const location = useLocation();
@@ -12,6 +12,9 @@ export const Account = () => {
       break;
     case '/account/register':
       return <Register></Register>;
+      break;
+    case '/account/forgot-password':
+      return <ForgotPassword></ForgotPassword>;
       break;
     default:
       return <div></div>;
