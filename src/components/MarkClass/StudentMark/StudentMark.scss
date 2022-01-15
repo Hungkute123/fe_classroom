@@ -1,0 +1,88 @@
+.student-mark {
+    margin-bottom: 1.875rem;
+    background-color: #fff;
+    transition: all 0.5s ease-in-out;
+    position: relative;
+    border: 0px solid transparent;
+    border-radius: 0;
+    box-shadow: 0px 12px 23px 0px rgb(189 162 92 / 4%);
+    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    overflow: hidden !important;
+
+    &__header {
+        position: relative;
+        z-index: 1;
+        text-align: center !important;
+        padding: 1rem !important;
+        background-color: #007a64;
+    }
+
+    &__title {
+        color: #fff !important;
+        margin-top: 1rem !important;
+        margin-bottom: 0.25rem !important;
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    &__mark {
+        color: #fff !important;
+        margin-bottom: 0 !important;
+        line-height: 1.8;
+    }
+
+    &__list {
+        border-top: inherit;
+        border-bottom: inherit;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    &__item {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-width: 0 0 1px;
+        background-color: rgba(255, 255, 255, 0);
+        border: 1px solid #f0f1f5;
+        padding: 1rem 1.5rem;
+        border-radius: 0;
+        display: flex;
+        justify-content: space-between !important;
+        position: relative;
+
+        span {
+            margin-bottom: 0 !important;
+        }
+
+        strong {
+            font-weight: bolder;
+            color: #89879f !important;
+        }
+    }
+
+    &__plex {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__footer {
+        border-radius: 0 0 calc(0.75rem - 1px) calc(0.75rem - 1px);
+        background: transparent;
+        margin-top: 0 !important;
+        border: 0 !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25rem 1.875rem 1.25rem;
+    }
+}
