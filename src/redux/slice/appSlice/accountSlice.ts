@@ -43,6 +43,9 @@ export const adminLogin = createAsyncThunk('account/admin-login', async (params:
 export const adminRegister = createAsyncThunk('account/admin-register', async (params: any) => {
   return await accountApi.adminRegister(params).then((res) => res.data);
 });
+export const deleteAccount = createAsyncThunk('account/delete-account', async (params: any) => {
+  return await accountApi.deleteAccount(params).then((res) => res.data);
+});
 export const accountSlice = createSlice({
   name: 'account',
   initialState: {
@@ -101,9 +104,13 @@ export const accountSlice = createSlice({
     builder.addCase(adminRegister.fulfilled, (state, action) => {
       state.isLoading = true;
     });
+    //delete account
+    builder.addCase(deleteAccount.fulfilled, (state, action) => {
+      state.isLoading = true;
+    });
   },
 });
 
 const { reducer, actions } = accountSlice;
-export const {} = actions;
+export const { } = actions;
 export default reducer;

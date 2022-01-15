@@ -5,6 +5,10 @@
         justify-content: center;
         margin: 10px 0 10px 0;
     }
+    &__fullwidth{
+        width: 100%;
+        display: flex;
+    }
 }
 .fbhklE {
     font-weight: 600 !important;

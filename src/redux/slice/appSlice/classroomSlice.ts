@@ -31,6 +31,12 @@ export const getListClass = createAsyncThunk(
     return await classroomApi.getListClass().then((res) => res);
   },
 );
+export const deleteClass = createAsyncThunk('classroom/delete-classroom', async (params: any) => {
+  return await classroomApi.deleteClass(params).then((res) => res.data);
+});
+export const updateClass = createAsyncThunk('classroom/update-class', async (params: any) => {
+  return await classroomApi.updateClass(params).then((res) => res.data);
+});
 interface IInitialState {
   classroom: any;
   infoMyClassroom: any;
@@ -110,6 +116,26 @@ export const classroomSlice = createSlice({
       state.status = 'success';
     });
     builder.addCase(getListClass.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    //delete classroom
+    builder.addCase(deleteClass.pending, (state, action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(deleteClass.fulfilled, (state, action) => {
+      state.status = 'success';
+    });
+    builder.addCase(deleteClass.rejected, (state, action) => {
+      state.status = 'failed';
+    });
+    //update classroom
+    builder.addCase(updateClass.pending, (state, action) => {
+      state.status = 'loading';
+    });
+    builder.addCase(updateClass.fulfilled, (state, action) => {
+      state.status = 'success';
+    });
+    builder.addCase(updateClass.rejected, (state, action) => {
       state.status = 'failed';
     });
   },

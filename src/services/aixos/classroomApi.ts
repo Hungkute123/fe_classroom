@@ -32,6 +32,14 @@ const classroomApi = {
     const {data} = await axiosClient.get(url);
     return data;
   },
+  updateClass: async (requestOption: any) => {
+    const url = `class/update-class`;
+    return await axiosClient.patch(url, requestOption);
+  },
+  deleteClass: async (params: any) => {
+    const url = `class/delete-class`;
+    return await axiosClient.delete(url, {params});
+  },
 }
 
 export default classroomApi;

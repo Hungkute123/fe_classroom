@@ -45,6 +45,10 @@ const userApi = {
     const url = `account/admin-register`;
     return await axiosClient.post(url, requestOption);
   },
+  deleteAccount: async (params: any) => {
+    const url = `account/delete-account`;
+    return await axiosClient.delete(url, {params});
+  },
 };
 
 export default userApi;
