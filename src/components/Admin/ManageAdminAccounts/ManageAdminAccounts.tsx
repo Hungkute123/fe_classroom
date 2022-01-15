@@ -188,7 +188,6 @@ export const ManageAdminAccounts = () => {
   ];
   return (
     <div className="manage-admin-accounts">
-      <ToastContainer />
       <DataTable
         title="Quản lý tài khoản admin"
         columns={columns}

@@ -235,9 +235,9 @@ export const ManageUserAccounts = () => {
       sortable: true,
       cell: (row: any) => (
         <div className="manage-user-accounts__fullwidth">
-          <p style={{ width: '100px' }}>
+          <p style={{ width: '114px' }}>
             <input
-              style={{ width: '100px' }}
+              style={{ width: '100px',borderBottom: '1px solid #ccc' }}
               type="number"
               value={row.MSSV}
               onChange={(e) => handleChangeMSSV(row._id, String(e.target.value))}
@@ -295,7 +295,6 @@ export const ManageUserAccounts = () => {
 
   return (
     <div className="manage-user-accounts">
-      <ToastContainer />
       <DataTable
         title="Quản lý tài khoản user"
         columns={columns}

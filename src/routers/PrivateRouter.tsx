@@ -40,13 +40,11 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   useEffect(() => {
     fecthInfo();
     return () => {
-      console.log('isAccount:', isAccount);
     };
   }, [location]);
 
   const render = (props: any) => {
     if (
-      (isAccount == 'true' && location === '/account/login') ||
       (isAccount == 'true' && location === '/account/register') ||
       (isAccount == 'true' && location === '/account/forgot-password')
     ) {

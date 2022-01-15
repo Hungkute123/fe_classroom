@@ -181,7 +181,6 @@ export const ManageClasses = () => {
 
   return (
     <div className="manage-classes">
-      <ToastContainer />
       <DataTable
         title="Quản lý lớp học"
         columns={columns}

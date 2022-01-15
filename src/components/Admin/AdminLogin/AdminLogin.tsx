@@ -20,7 +20,6 @@ export const AdminLogin = () => {
       Email: e.target[0].value,
       Password: e.target[1].value,
     };
-    console.log(account);
     const isLogin = (await dispatch(loginWithEmail(account))).payload;
 
     if (isLogin) {

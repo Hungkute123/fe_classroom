@@ -17,3 +17,4 @@ export * from './ExerciseClass/ExerciseClass';
 export * from './MarkClass/MarkClass';
 export * from './Admin/Admin';
 export * from './ForgotPassword/ForgotPassword';
+export * from './Comment/Comment';
