@@ -1,87 +1,27 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
-import { getListClass } from '../../../redux/slice/appSlice/classroomSlice';
+import { BsFillTrashFill, BsLock, BsUnlock } from 'react-icons/bs';
+import { toast, ToastContainer } from 'react-toastify';
+import { deleteClass, getListClass, updateClass } from '../../../redux/slice/appSlice/classroomSlice';
 import { useAppDispatch } from '../../../redux/store';
+import { Modal } from '../../common';
 import { FilterComponent } from '../FilterComponent/FilterComponent';
 import './ManageClasses.scss';
 
-const columns = [
-  {
-    name: 'Mã lớp',
-    selector: (row: any) => row.CodeClass,
-    sortable: true,
-  },
-  {
-    name: 'Tên lớp',
-    selector: (row: any) => row.Title,
-    sortable: true,
-  },
-  {
-    name: 'Người sở hữu',
-    selector: (row: any) => row.Name,
-    sortable: true,
-    //right: true,
-  },
-  {
-    button: true,
-    center: true,
-    cell: () => (
-      <div className="App">
-        <div className="openbtn text-center">
-          <button
-            type="button"
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#myModal"
-          >
-            control
-          </button>
-          <div className="modal" tabIndex={-1} id="myModal">
-            <div className="modal-dialog">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Modal title</h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <div className="modal-body">
-                  <p>Modal body text goes here.</p>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                  <button type="button" className="btn btn-primary">
-                    Save changes
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    ),
-  },
-];
-
 export const ManageClasses = () => {
   const dispatch = useAppDispatch();
-  const [data, setData] = useState<any>([]);
+  const [dataClasses, setDataClasses] = useState<any>([]);
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-  const filteredItems = data.filter((item: any) =>
-    item.MSSV.toLowerCase().includes(filterText.toLowerCase()),
+  const filteredItems = dataClasses.filter((item: any) =>
+    item.Title.toLowerCase().includes(filterText.toLowerCase()),
   );
   const fetchListClasses = async () => {
     const dataListClasses = (await dispatch(getListClass())).payload;
     dataListClasses.map((item: any, index: number) => {
-      return data.push(item);
+      return dataClasses.push(item);
     });
-    setData([...data]);
+    setDataClasses([...dataClasses]);
   };
   useEffect(() => {
     fetchListClasses();
@@ -103,9 +43,145 @@ export const ManageClasses = () => {
       />
     );
   }, [filterText, resetPaginationToggle]);
+  const handleClickBlockClassroom = async (e: any, classroom: any) => {
+    e.preventDefault();
+    const classroomNew = {
+      Status: !classroom.Status,
+    };
+    const key = {
+      _id: classroom._id,
+    };
+
+    const update = (
+      await dispatch(
+        updateClass({ jwt: localStorage.getItem('jwt'), key: key, classroom: classroomNew }),
+      )
+    ).payload;
+    const message = classroom.Status ? 'Khóa tài khoản ' : 'Mở khóa tài khoản ';
+    if (update) {
+      toast.success(`${message}thành công`, {
+        position: 'top-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      const filtered = dataClasses.filter(function (el: any) {
+        if (el._id === classroom._id) {
+          el.Status = !classroom.Status;
+        }
+        return el;
+      });
+      setDataClasses(filtered);
+      return;
+    }
+
+    toast.error(`${message}thất bại`, {
+      position: 'top-right',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+  const handleClickDelClassroom = async (e: any, classroom: any) => {
+    e.preventDefault();
+
+    const update = (
+      await dispatch(deleteClass({ jwt: localStorage.getItem('jwt'), id: classroom._id }))
+    ).payload;
+    const message = 'Xóa tài khoản ';
+    if (update) {
+      toast.success(`${message}thành công`, {
+        position: 'top-right',
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      const filtered = dataClasses.filter(function (el: any) {
+        return el._id != classroom._id;
+      });
+      setDataClasses(filtered);
+      return;
+    }
+
+    toast.error(`${message}thất bại`, {
+      position: 'top-right',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+  const columns = [
+    {
+      name: 'Mã lớp',
+      selector: (row: any) => row.CodeClass,
+      sortable: true,
+    },
+    {
+      name: 'Tên lớp',
+      selector: (row: any) => row.Title,
+      sortable: true,
+    },
+    {
+      name: 'Người sở hữu',
+      selector: (row: any) => row.info[0].Name,
+      sortable: true,
+    },
+    {
+      name: 'Tình trạng',
+      width: '100px',
+      selector: (row: any) => (row.Status ? 'Hoạt động' : 'Đã khóa'),
+      sortable: false,
+    },
+    {
+      name: 'Khóa/Mở lớp học',
+      width: '150px',
+      button: true,
+      center: true,
+      cell: (row: any) => (
+        <Modal
+          button={row.Status ? <BsLock /> : <BsUnlock />}
+          title={row.Status ? 'Khóa lớp học' : 'Mở khóa lớp học'}
+          body={
+            row.Status
+              ? `Bạn có chắc chắn muốn khóa lớp học ${row.Title} không?`
+              : `Bạn có chắc chắn muốn mở lớp học ${row.Title} không?`
+          }
+          handleClick={(e: any) => handleClickBlockClassroom(e, row)}
+          id={`idClass${row._id}`}
+        ></Modal>
+      ),
+    },
+    {
+      name: 'Xóa lớp học',
+      button: true,
+      center: true,
+      cell: (row: any) => (
+        <Modal
+          button={<BsFillTrashFill />}
+          title={'Xóa lớp học'}
+          body={`Bạn có chắc chắn muốn xóa lớp học ${row.Title} không?`}
+          handleClick={(e: any) => handleClickDelClassroom(e, row)}
+          id={`delClass${row._id}`}
+        ></Modal>
+      ),
+    },
+  ];
 
   return (
     <div className="manage-classes">
+      <ToastContainer />
       <DataTable
         title="Quản lý lớp học"
         columns={columns}
