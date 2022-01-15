@@ -156,11 +156,11 @@ export const Routers = () => {
           layout={HeaderFooterLayout}
           isHasHeader={true}
           header={HeaderClassroom}
-          titleHeader="Mọi người"
+          titleHeader="Điểm số"
           isHasFooter={true}
           footer={Footer}
         />
-        <PrivateRouter
+        <PublicRouter
           exact={true}
           path={'/invite'}
           component={InviteClass}

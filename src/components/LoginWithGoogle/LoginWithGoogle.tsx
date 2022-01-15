@@ -5,22 +5,28 @@ import { GoogleLogin } from 'react-google-login';
 import { useAppDispatch } from '../../redux/store';
 import { getInfo, loginWithGoogle } from '../../redux/slice/appSlice/accountSlice';
 import Swal from 'sweetalert2';
+import { useHistory } from 'react-router-dom';
 
 export const LoginWithGoogle = () => {
   const dispatch = useAppDispatch();
-
+  const history = useHistory();
   const handleSuccess = async (response: any) => {
     const tokenID = response.tokenId;
     const isLogin = (await dispatch(loginWithGoogle({ jwt: tokenID }))).payload;
 
     if (isLogin) {
+      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
+      if (history.action === 'PUSH') {
+        history.goBack();
+      } else {
+        history.push({
+          pathname: `/`,
+        });
+      }
       Swal.fire({
         icon: 'success',
         title: 'ĐĂNG NHẬP THÀNH CÔNG',
       });
-
-      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
-
       return;
     }
 
