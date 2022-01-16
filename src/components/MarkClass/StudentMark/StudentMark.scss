@@ -1,11 +1,8 @@
 .student-mark {
-    margin-bottom: 1.875rem;
+    margin: 1rem 0;
     background-color: #fff;
     transition: all 0.5s ease-in-out;
     position: relative;
-    border: 0px solid transparent;
-    border-radius: 0;
-    box-shadow: 0px 12px 23px 0px rgb(189 162 92 / 4%);
     height: calc(100% - 30px);
     display: flex;
     flex-direction: column;
@@ -13,6 +10,8 @@
     word-wrap: break-word;
     background-clip: border-box;
     overflow: hidden !important;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    border-radius: 0.5rem;
 
     &__header {
         position: relative;
@@ -20,6 +19,13 @@
         text-align: center !important;
         padding: 1rem !important;
         background-color: #007a64;
+    }
+
+    &__logo {
+        img {
+            width: 196px;
+            height: auto;
+        }
     }
 
     &__title {
@@ -45,6 +51,7 @@
         flex-direction: column;
         padding-left: 0;
         margin-bottom: 0;
+        border: 1px solid #f0f1f5;
     }
 
     &__item {
@@ -52,12 +59,9 @@
         border-top-right-radius: 0;
         border-width: 0 0 1px;
         background-color: rgba(255, 255, 255, 0);
-        border: 1px solid #f0f1f5;
         padding: 1rem 1.5rem;
+        padding-bottom: 0;
         border-radius: 0;
-        display: flex;
-        justify-content: space-between !important;
-        position: relative;
 
         span {
             margin-bottom: 0 !important;
@@ -69,10 +73,38 @@
         }
     }
 
-    &__plex {
+    &__item-content {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #eaeaea;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    &__text {
+        flex: 1;
+
+        h5 {
+            margin-bottom: 0.25rem !important;
+            font-size: 1rem;
+            font-weight: bolder;
+            line-height: 1.2;
+        }
+    }
+
+    &__btn {
+        align-self: self-end;
+        margin-top: 5px;
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        i {
+            margin-left: 4px;
+            font-size: 30px;
+            color: #1967d2;
+        }
     }
 
     &__footer {
@@ -80,9 +112,6 @@
         background: transparent;
         margin-top: 0 !important;
         border: 0 !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         padding: 1.25rem 1.875rem 1.25rem;
     }
 }

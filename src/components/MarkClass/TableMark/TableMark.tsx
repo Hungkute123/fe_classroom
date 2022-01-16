@@ -39,8 +39,6 @@ export const TableMark = ({
   const className = 'table-mark';
   const fileInputRef: any = useRef();
 
-  //console.log(mark);
-
   return (
     <>
       {listGrade.length == 0 ? (

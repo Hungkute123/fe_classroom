@@ -1,0 +1,102 @@
+.comment-review-mark {
+  margin-bottom: 1.875rem;
+  background-color: #fff;
+  transition: all 0.5s ease-in-out;
+  position: relative;
+  border: 0px solid transparent;
+  border-radius: 0;
+  height: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-clip: border-box;
+  overflow: hidden;
+
+  &__body {
+    padding: 0;
+    flex: 1 1 auto;
+    min-height: 1px;
+  }
+
+  &__responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  &__table {
+    border: 0;
+    min-width: 30rem !important;
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #7e7e7e;
+
+    thead {
+      background-color: #1967d2;
+    }
+
+    th {
+      border-bottom-width: 1px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-color: #f0f1f5;
+      vertical-align: middle;
+      border: 1px solid #eeeeee;
+      padding: 0.75rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    td {
+      vertical-align: middle;
+      border-color: #f0f1f5;
+      padding: 12px 9px;
+      border: 1px solid #eeeeee;
+      text-align: center;
+    }
+  }
+
+  &__table::after {
+    th {
+      clear: both;
+      content: "";
+      display: block;
+    }
+  }
+
+  &__flex {
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    display: block;
+
+    input {
+      border-bottom: 1px solid #000;
+      width: 40px;
+      text-align: right;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    p {
+      display: inline-block;
+    }
+  }
+
+  &__icon {
+    margin-left: 8px;
+    font-size: 16px;
+    color: #1967d2 !important;
+  }
+}
+
+.mr-8 {
+  margin-right: 8px !important;
+}
