@@ -4,12 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 import {useLocation} from "react-router-dom";
 import { joinClassroom } from '../../redux/slice/appSlice/memberClassroomSlice';
-import { useAppDispatch } from '../../redux/store';
+import { RootState, useAppDispatch } from '../../redux/store';
 import './InviteClassroom.scss';
 
 export const InviteClassroom = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const location = useLocation().pathname;
+  const { isAccount } = useSelector((state: RootState) => state.account);
   const search = useLocation().search;
   const codeclass = new URLSearchParams(search).get('codeclass');
   let permission = new URLSearchParams(search).get('permission');
@@ -28,6 +30,17 @@ export const InviteClassroom = () => {
           pathname: `/myclassroom/${codeclass}/1/antbntig`,
         });
   }
+  const handleNotLogged = () => {
+    if (isAccount !== "true") {
+      history.push({
+        pathname: `/account/login`,
+      });
+    }
+  };
+  useEffect(() => {
+    handleNotLogged();
+    console.log(isAccount);
+  }, []);
   return (
     <div className="invite-classroom">
       <div className="invite-classroom__content">

@@ -58,10 +58,12 @@ export const accountSlice = createSlice({
     // login with email
     builder.addCase(loginWithEmail.fulfilled, (state, action) => {
       localStorage.setItem('jwt', action.payload);
+      state.isAccount = 'true';
     });
     //login with google
     builder.addCase(loginWithGoogle.fulfilled, (state, action) => {
       localStorage.setItem('jwt', action.payload);
+      state.isAccount = 'true';
     });
     //login with email
     builder.addCase(registerWithEmail.fulfilled, (state, action) => {

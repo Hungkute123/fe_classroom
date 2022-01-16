@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { BsKeyFill } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 import { getInfo, loginWithEmail } from '../../redux/slice/appSlice/accountSlice';
-import { useAppDispatch } from '../../redux/store';
+import { RootState, useAppDispatch } from '../../redux/store';
 import { LoginWithGoogle } from '..';
 
 import './Login.scss';
+import { useSelector } from 'react-redux';
 
 export const Login = () => {
+  const history = useHistory();
   const dispatch = useAppDispatch();
+  const location = useLocation().pathname;
+  const { isAccount } = useSelector((state: RootState) => state.account);
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
 
@@ -24,12 +28,18 @@ export const Login = () => {
     const isLogin = (await dispatch(loginWithEmail(account))).payload;
 
     if (isLogin) {
+      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
+      if (history.action === 'PUSH') {
+        history.goBack();
+      } else {
+        history.push({
+          pathname: `/`,
+        });
+      }
       Swal.fire({
         icon: 'success',
         title: 'ĐĂNG NHẬP THÀNH CÔNG',
       });
-
-      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
 
       return;
     } else {
@@ -40,7 +50,15 @@ export const Login = () => {
       return;
     }
   };
-
+  const handleLogged = () => {
+    if (isAccount == 'true' && location === '/account/login') {
+      return <Redirect to="/" />;
+    }
+  };
+  useEffect(() => {
+    handleLogged();
+    console.log(history);
+  }, []);
   return (
     <div className="login">
       <div className="login__content">

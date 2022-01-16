@@ -82,7 +82,6 @@ export const CreateAdminAccount = () => {
 
   return (
     <div className="create-admin-account">
-      <ToastContainer />
       <div className="create-admin-account box">
         <span></span>
         <span></span>
