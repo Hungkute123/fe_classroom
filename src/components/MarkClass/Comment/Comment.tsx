@@ -16,9 +16,9 @@ export const Comment = ({ listReviewMark }: IComment) => {
         <div className={`${className}`}>
           <div className={`${className}__body`}>
             <div className={`${className}__responsive`}>
-              {listReviewMark.length == 0 ? (
+              {listReviewMark.length === 0 ? (
                 <div className="alert alert-primary text-center" role="alert">
-                  Danh sách điểm chưa được xem
+                  Chưa có đơn phúc khảo nào
                 </div>
               ) : (
                 <table className={`${className}__table`}>

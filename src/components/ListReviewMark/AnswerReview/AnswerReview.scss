@@ -1,0 +1,25 @@
+.answer-review {
+    border-radius: 1.25rem !important;
+
+    &__header {
+        padding: 1rem 1.875rem !important;
+    }
+
+    &__body {
+        padding: 1.875rem !important;
+    }
+
+    &__footer {
+        padding: 1rem 1.875rem !important;
+    }
+
+    .h4 {
+        font-size: 20px !important;
+    }
+
+    input,
+    textarea {
+        border: 1px solid #ccc !important;
+        border-radius: 5px !important;
+    }
+}

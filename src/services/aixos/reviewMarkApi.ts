@@ -16,7 +16,7 @@ const reviewMarkApi = {
     return data;
   },
   updateMark: async (requestOption: any) => {
-    const url = 'review-mark/update-mark';
+    const url = 'review-mark/update-review';
     return await axiosClient.patch(url, requestOption);
   },
 };
