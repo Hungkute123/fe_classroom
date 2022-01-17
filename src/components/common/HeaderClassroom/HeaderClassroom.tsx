@@ -12,6 +12,7 @@ import {
   getStudentByCodeClass,
 } from '../../../redux/slice/appSlice/memberClassroomSlice';
 import { useAppDispatch } from '../../../redux/store';
+import { Notification } from '../../Notification/Notification';
 
 export const HeaderClassroom = () => {
   const dispatch = useAppDispatch();
@@ -116,21 +117,9 @@ export const HeaderClassroom = () => {
       </div>
       <div className="header-classroom__action">
         <div className="header-classroom__item">
-          {/* <button className="header__item__btn" onClick={() => setIsOpen(true)}>
-            <BsPlusLg size={25} />
-          </button> */}
-          {/* <DropdownButton
-            as={ButtonGroup}
-            title={<BsPlusLg size={25} />}
-            id="bg-nested-dropdown"
-            variant=""
-          >
-            <Dropdown.Item eventKey="1">Tham gia lớp học</Dropdown.Item>
-            <Dropdown.Item eventKey="2" onClick={() => setIsOpen(true)}>
-              Tạo lớp học
-            </Dropdown.Item>
-          </DropdownButton> */}
+          <Notification></Notification>
         </div>
+
         <div className="header-classroom__item">
           <DropdownButton
             as={ButtonGroup}

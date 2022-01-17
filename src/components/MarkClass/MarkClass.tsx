@@ -10,7 +10,10 @@ import { StudentMark } from './StudentMark/StudentMark';
 import markApi from '../../services/aixos/markApi';
 import classStructureApi from '../../services/aixos/classStructureApi';
 import './MarkClass.scss';
+import { io } from 'socket.io-client';
 import { toast, ToastContainer } from 'react-toastify';
+
+let socket:any;
 
 export const MarkClass = () => {
   const dispatch = useAppDispatch();
@@ -18,10 +21,9 @@ export const MarkClass = () => {
   const { codeclass }: { codeclass: string } = useParams();
   const csvStudentList = [{ MSSV: '', Name: '' }];
   const obj: any = { MSSV: '' };
-
   const listGrade = useAppSelector((state: RootState) => state.classStructure.listGrade);
+  const { account } = useAppSelector((state: RootState) => state.account);
   const info: any = useAppSelector((state: RootState) => state.account.account);
-
   const [isTeacher, setIsTeacher] = useState(false);
   const [listMark, setListMark] = useState<any>([]);
   const [keyStructure, setKeyStructure] = useState<any>([]);
@@ -85,6 +87,18 @@ export const MarkClass = () => {
 
     setMark(mark);
   };
+  // Tạo kết nối socket
+  useEffect(() => {
+    const ENDPOINT = String(process.env.URL_MY_SOCKET);
+    socket = io(ENDPOINT, { transports: ['websocket'] });
+    socket.on('connect', () => {
+      console.log(socket.id); 
+    });
+   const id = `${account._id}id`;
+    socket.emit('getNotification', { _id: id });
+    // const action = connectNotification(account._id);
+    // dispatch(action);
+  }, []);
 
   useMemo(() => {
     checkTeacher();
@@ -334,7 +348,7 @@ export const MarkClass = () => {
           progress: undefined,
         });
       }
-
+      
       return;
     }
 
@@ -382,7 +396,25 @@ export const MarkClass = () => {
       progress: undefined,
     });
   };
-
+const handleSendFinalGradeNotification = (event: any, listStudent: any, markType:any,codeClass:any, className:string, id:any) => {
+    event.preventDefault();
+    if(listStudent.length != 0){
+      listStudent.map((item:any)=>{
+        if(item.IDUser != ""){
+          return (socket.emit('sendNotification', {
+            notificationType: 'FINAL A GRADE COMPOSITION',
+            createDate: Date(),
+            read: false,
+            recipientID: item.IDUser,
+            senderID: id,
+            message: `Cột điểm ${markType} của bạn vừa được đánh dấu hoàn thành trong`,
+            className: className,
+            url: `/myclassroom/${codeClass}/3/emsdoi`,
+          }))
+        }
+      })
+    }
+  };
   return (
     <>
       <ToastContainer />
@@ -400,11 +432,14 @@ export const MarkClass = () => {
           handleSampleMark={handleSampleMark}
           handleChangeInput={handleChangeInput}
           totalMark={totalMark}
-          handleUpdateMark={handleUpdateMark}
-        />
-      ) : (
+          handleUpdateMark={handleUpdateMark} 
+          handleSendFinalGradeNotification={handleSendFinalGradeNotification}
+          userId={account._id}  
+          />
+      ) : ( 
         <StudentMark info={info} codeClass={codeclass} />
       )}
+
     </>
   );
 };
