@@ -1,0 +1,194 @@
+.list-review-mark {
+    margin-bottom: 1.875rem;
+    background-color: #fff;
+    transition: all 0.5s ease-in-out;
+    position: relative;
+    border: 0px solid transparent;
+    border-radius: 0;
+    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-clip: border-box;
+    overflow: hidden;
+
+    &__header {
+        border-color: #f0f1f5;
+        position: relative;
+        background: transparent;
+        padding: 1.5rem 1.875rem 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    &__left {
+        padding-left: 20px;
+        margin-right: 3rem !important;
+    }
+
+    &__name {
+        font-size: 14px !important;
+        line-height: 1.5;
+        margin-bottom: 0.25rem !important;
+    }
+
+    &__text-primary {
+        color: #1967d2 !important;
+        font-size: 1.125rem;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    &__body {
+        padding: 1.875rem;
+        flex: 1 1 auto;
+        min-height: 1px;
+    }
+
+    &__responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    &__table {
+        border: 0;
+        min-width: 30rem !important;
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #7e7e7e;
+
+        thead {
+            background-color: #1967d2;
+        }
+
+        th {
+            border-bottom-width: 1px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-color: #f0f1f5;
+            vertical-align: middle;
+            border: 1px solid #eeeeee;
+            padding: 0.75rem;
+            text-align: center;
+            color: #fff;
+        }
+
+        td {
+            vertical-align: middle;
+            border-color: #f0f1f5;
+            padding: 12px 9px;
+            border: 1px solid #eeeeee;
+            text-align: center;
+        }
+    }
+
+    &__table::after {
+        th {
+            clear: both;
+            content: "";
+            display: block;
+        }
+    }
+
+    &__btn-save {
+        margin-left: 8px;
+        font-size: 16px;
+    }
+
+    &__check {
+        display: inline-block;
+        margin-left: 8px;
+        font-size: 16px;
+
+        i {
+            color: #1967d2;
+        }
+    }
+
+    &__info {
+        padding: 8px 0;
+        color: #333;
+        clear: both;
+        float: left;
+        font-family: "poppins", sans-serif;
+        font-size: 1rem;
+    }
+
+    &__paginate {
+        border-radius: 1.25rem;
+        padding: 10px 0;
+        color: #333;
+        float: right;
+        text-align: right;
+    }
+
+    &__previous,
+    &__next {
+        background: transparent !important;
+        color: #1967d2 !important;
+        margin: 0 10px;
+        border: 1px solid #1967d2 !important;
+        cursor: pointer;
+        box-shadow: none;
+        padding: 8px 15px;
+        font-size: 14px;
+        border-radius: 0;
+        display: inline-block;
+        box-sizing: border-box;
+        min-width: 1.5em;
+        text-align: center;
+        text-decoration: none !important;
+    }
+
+    &__previous:hover,
+    &__next:hover {
+        background: #1967d2 !important;
+        color: #fff !important;
+        cursor: pointer;
+        box-shadow: none;
+    }
+
+    &__rank {
+        border-radius: 0;
+        display: inline-block;
+        background: rgba(0, 122, 100, 0.08);
+        border: 1px solid #1967d2;
+        margin: 0 0;
+    }
+
+    &__current,
+    &__btn:hover {
+        color: #fff !important;
+        background: #1967d2 !important;
+    }
+
+    &__btn {
+        padding: 8px 15px;
+        font-size: 14px;
+        border: 0 !important;
+        color: #1967d2;
+        margin: 0;
+        display: inline-block;
+        border-radius: 0;
+        text-align: center;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+}
+
+.row-content-mark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mr-8 {
+    margin-right: 8px !important;
+}

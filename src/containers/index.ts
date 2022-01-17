@@ -8,4 +8,5 @@ export * from './GradeStructure/GradeStructure';
 export * from './ExerciseClassPage/ExerciseClassPage';
 export * from './MarkClassPage/MarkClassPage';
 export * from './AdminHome/AdminHome';
-export * from './AdminAccount/AdminAccount'
+export * from './AdminAccount/AdminAccount';
+export * from './ListReviewMarkPage/ListReviewMarkPage';

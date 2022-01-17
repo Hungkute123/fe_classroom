@@ -15,6 +15,7 @@ import {
   MarkClassPage,
   AdminHome,
   AdminAccount,
+  ListReviewMarkPage,
 } from '../containers';
 import { Header, Footer, HeaderClassroom } from '../components/common';
 
@@ -173,6 +174,17 @@ export const Routers = () => {
           component={GradeStructure}
           layout={BlankLayout}
           titleHeader="Chỉnh sửa cấu trúc điểm"
+        />
+        <PrivateRouter
+          exact={true}
+          path={'/myclassroom/:codeclass/:number/listreviewmark'}
+          component={ListReviewMarkPage}
+          layout={HeaderFooterLayout}
+          isHasHeader={true}
+          header={HeaderClassroom}
+          titleHeader="Danh sách phúc khảo"
+          isHasFooter={true}
+          footer={Footer}
         />
       </Switch>
       <Switch>

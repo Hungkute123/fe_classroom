@@ -386,7 +386,7 @@ export const MarkClass = () => {
   return (
     <>
       <ToastContainer />
-      {/* {isTeacher ? (
+      {isTeacher ? (
         <TableMark
           handleDowloadTemplate={handleDowloadTemplate}
           handleGradeBoard={handleGradeBoard}
@@ -402,9 +402,9 @@ export const MarkClass = () => {
           totalMark={totalMark}
           handleUpdateMark={handleUpdateMark}
         />
-      ) : ( */}
+      ) : (
         <StudentMark info={info} codeClass={codeclass} />
-      {/* )} */}
+      )}
     </>
   );
 };
