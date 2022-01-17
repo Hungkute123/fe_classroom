@@ -10,7 +10,7 @@ import { StudentMark } from './StudentMark/StudentMark';
 import markApi from '../../services/aixos/markApi';
 import classStructureApi from '../../services/aixos/classStructureApi';
 import './MarkClass.scss';
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 export const MarkClass = () => {
   const dispatch = useAppDispatch();
@@ -42,19 +42,6 @@ export const MarkClass = () => {
     }
   };
 
-  useMemo(() => {
-    checkTeacher();
-  }, []);
-
-  useMemo(() => {
-    let total = 0;
-    listGrade.map((item: any) => {
-      total += item.Mark;
-    });
-
-    setTotalMark(total);
-  }, [listGrade]);
-
   // Lấy tên các loại điểm điểm
   const fetchClassStructure = async () => {
     const listGrade = (
@@ -78,7 +65,7 @@ export const MarkClass = () => {
   };
 
   // Hàm update điểm trong mảng
-  const updateMark = () => {
+  const calcMark = () => {
     let mark: { [property: string]: any } = {};
 
     for (let i = 0; i < listMark.length; i++) {
@@ -86,8 +73,10 @@ export const MarkClass = () => {
 
       if (typeof listMark[i].Point != 'undefined') {
         for (let j = 1; j < keyStructure.length; j++) {
-          mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = listMark[i].Point[keyStructure[j]];
-          totalMark += listMark[i].Point[keyStructure[j]];
+          if (typeof listMark[i].Point[keyStructure[j]] === 'number') {
+            mark[`${listMark[i].MSSV}-${keyStructure[j]}`] = listMark[i].Point[keyStructure[j]];
+            totalMark += listMark[i].Point[keyStructure[j]];
+          }
         }
       }
 
@@ -97,14 +86,22 @@ export const MarkClass = () => {
     setMark(mark);
   };
 
-  useEffect(() => {
+  useMemo(() => {
+    checkTeacher();
     fetchClassStructure();
     fetchListMark();
   }, []);
+  useMemo(() => {
+    let total = 0;
+    listGrade.map((item: any) => {
+      total += item.Mark;
+    });
 
-  useEffect(() => {
-    updateMark();
-  }, [listMark.length, keyStructure.length]);
+    setTotalMark(total);
+  }, [listGrade]);
+  useMemo(() => {
+    calcMark();
+  }, [listMark]);
 
   // Dowdload template danh sách lớp
   const handleDowloadTemplate = (csvData: any, fileName: any) => {
@@ -147,9 +144,14 @@ export const MarkClass = () => {
       return handleDowloadTemplate(gradeBoard, 'Grade Board');
     }
 
-    Swal.fire({
-      icon: 'error',
-      title: 'BẢNG ĐIỂM RỖNG',
+    toast.warn('Bảng điểm rỗng!', {
+      position: 'bottom-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
     });
   };
 
@@ -198,9 +200,14 @@ export const MarkClass = () => {
         });
 
         if (status.data) {
-          Swal.fire({
-            icon: 'success',
-            title: 'IMPORT FILE THÀNH CÔNG',
+          toast.success('Upload danh sách lớp thành công!', {
+            position: 'bottom-left',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
           });
 
           fetchListMark();
@@ -228,9 +235,14 @@ export const MarkClass = () => {
           });
 
           if (status.data) {
-            Swal.fire({
-              icon: 'success',
-              title: 'IMPORT FILE THÀNH CÔNG',
+            toast.success('Upload danh sách điểm thành công!', {
+              position: 'bottom-left',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
             });
 
             fetchListMark();
@@ -240,9 +252,14 @@ export const MarkClass = () => {
         }
       }
 
-      Swal.fire({
-        icon: 'error',
-        title: 'FILE KHÔNG ĐÚNG CẤU TRÚC',
+      toast.warn('File không đúng cấu trúc!', {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     });
   };
@@ -265,30 +282,105 @@ export const MarkClass = () => {
     });
 
     if (status) {
-      Swal.fire({
-        icon: 'success',
-        title: 'CẬP NHẬT TRẠNG THÁI XEM ĐIỂM THÀNH CÔNG',
+      toast.success(`Cập nhật trạng thái cột điểm thành công!`, {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
 
       fetchClassStructure();
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'CẬP NHẬT TRẠNG THÁI XEM ĐIỂM THẤT BẠI',
+      toast.warn('Cập nhật trạng thái cột điểm thất bại!', {
+        position: 'bottom-left',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
     }
   };
 
   // Cập nhật lại giá trị điểm trên db
   const handleUpdateMark = async (MSSV: string, MarkType: string) => {
-    console.log(mark[`${MSSV}-${MarkType}`]);
+    const markItem = listMark.find((mark: any) => (mark.MSSV = MSSV));
+
+    if (markItem) {
+      let Point: { [property: string]: any } = {};
+      Point[`${MarkType}`] = mark[`${MSSV}-${MarkType}`];
+
+      console.log(Point);
+
+      const markUpdate = {
+        jwt: localStorage.getItem('jwt'),
+        codeClass: codeclass,
+        MSSV: MSSV,
+        Point: Point,
+      };
+
+      const status = await markApi.updateMark({ ...markUpdate });
+
+      if (status.data) {
+        toast.success('Cập nhật điểm thành công!', {
+          position: 'bottom-left',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    }
+
+    toast.warn('Cập nhật điểm thất bại!', {
+      position: 'bottom-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   // Cập nhật lại điểm trong mảng
-  const handleChangeInput = (e: any, MSSV: string, MarkType: string) => {
-    console.log(e.target.value);
-    mark[`${MSSV}-${MarkType}`] = e.target.value;
-    setMark({ ...mark });
+  const handleChangeInput = (e: any, MSSV: string, MarkType: string, maxMark: number) => {
+    if (mark[`${MSSV}-totalMark`] === 0) {
+      mark[`${MSSV}-totalMark`] += Number(e.target.value);
+      mark[`${MSSV}-${MarkType}`] = Number(e.target.value);
+
+      setMark({ ...mark });
+      return;
+    }
+
+    if (Number(e.target.value) >= 0 && Number(e.target.value) <= maxMark) {
+      mark[`${MSSV}-totalMark`] += Number(e.target.value);
+
+      if (typeof mark[`${MSSV}-${MarkType}`] === 'number') {
+        mark[`${MSSV}-totalMark`] -= mark[`${MSSV}-${MarkType}`];
+      }
+
+      mark[`${MSSV}-${MarkType}`] = Number(e.target.value);
+
+      setMark({ ...mark });
+      return;
+    }
+
+    toast.warn('Dữ liệu nhập không đúng!', {
+      position: 'bottom-left',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
   return (
@@ -307,6 +399,7 @@ export const MarkClass = () => {
           handleSampleMark={handleSampleMark}
           handleChangeInput={handleChangeInput}
           totalMark={totalMark}
+          handleUpdateMark={handleUpdateMark}
         />
       ) : (
         <StudentMark />
