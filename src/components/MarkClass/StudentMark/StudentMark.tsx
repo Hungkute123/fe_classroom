@@ -43,7 +43,10 @@ export const StudentMark = ({ info, codeClass }: IStudentMark) => {
     listGrade.data.map((item: any) => {
       classStructure.push(item.MarkType);
       totalMark += item.Mark;
-      mark += markUser.Point[`${item.MarkType}`];
+
+      if (typeof markUser.Point[`${item.MarkType}`] === 'number' && item.Complete) {
+        mark += markUser.Point[`${item.MarkType}`];
+      }
     });
 
     setMarkUser(markUser);
@@ -108,6 +111,7 @@ export const StudentMark = ({ info, codeClass }: IStudentMark) => {
             </div>
             <ul className={`${className}__list`}>
               {keyStructure.length != 0 &&
+                keyStructure.Complete &&
                 keyStructure.map((item: any, index: number) => {
                   return (
                     <li className={`${className}__item`} key={index}>

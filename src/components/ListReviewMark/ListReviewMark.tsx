@@ -1,12 +1,33 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import reviewMarkApi from '../../services/aixos/reviewMarkApi';
+import { AnswerReview } from './AnswerReview/AnswerReview';
+import { ToastContainer } from 'react-toastify';
 import './ListReviewMark.scss';
 
 export const ListReviewMark = () => {
   const className = 'list-review-mark';
   const { codeclass }: { codeclass: string } = useParams();
   const [listReviewMark, setListReviewMark] = useState<any>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [infoReviewMark, setInfoReviewMark] = useState<any>({});
+
+  const handleReviewMark = (
+    typeMark: string,
+    currentMark: number,
+    desiredMark: number,
+    name: string,
+    MSSV: string,
+  ) => {
+    setIsOpen(true);
+    setInfoReviewMark({
+      typeMark,
+      currentMark,
+      desiredMark,
+      name,
+      MSSV,
+    });
+  };
 
   const fetchListReviewMark = async () => {
     const listReviewMark = await reviewMarkApi.getALLMark({
@@ -19,10 +40,19 @@ export const ListReviewMark = () => {
 
   useMemo(() => {
     fetchListReviewMark();
-  }, []);
+  }, [isOpen]);
 
   return (
     <div className="container">
+      <ToastContainer />
+      {isOpen && (
+        <AnswerReview
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          codeClass={codeclass}
+          infoReviewMark={infoReviewMark}
+        />
+      )}
       <div className="row row-content-mark">
         <div className="col-lg-12">
           <div className={`${className}`}>
@@ -60,9 +90,37 @@ export const ListReviewMark = () => {
                           <td>{item.CurrentMark}</td>
                           <td>{item.DesiredMark}</td>
                           <td>{item.CommentStudent}</td>
-                          <td>{item.Answer}</td>
+                          <td>
+                            {item.Answer ? (
+                              item.Answer
+                            ) : (
+                              <div className={`${className}__check`}>
+                                <i
+                                  className="fas fa-reply-all"
+                                  style={{ cursor: 'pointer' }}
+                                  onClick={() =>
+                                    handleReviewMark(
+                                      item.TypeMark,
+                                      item.CurrentMark,
+                                      item.DesiredMark,
+                                      item.Name,
+                                      item.MSSV,
+                                    )
+                                  }
+                                ></i>
+                              </div>
+                            )}
+                          </td>
                           <td>{item.Mark}</td>
-                          <td>{item.Status}</td>
+                          <td>
+                            <div className={`${className}__check`}>
+                              {item.Status ? (
+                                <i className="fas fa-check-circle"></i>
+                              ) : (
+                                <i className="fas fa-times-circle"></i>
+                              )}
+                            </div>
+                          </td>
                         </tr>
                       );
                     })}
