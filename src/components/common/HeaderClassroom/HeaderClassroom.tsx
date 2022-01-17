@@ -93,6 +93,18 @@ export const HeaderClassroom = () => {
             Điểm số
           </div>
         </Link>
+        {isTeacher && (
+          <Link to={`/myclassroom/${codeclass}/4/listreviewmark`}>
+            <div
+              className={`header-classroom__title ${
+                number == '4' ? 'header-classroom__title--select' : ''
+              }`}
+            >
+              Phúc khảo
+            </div>
+          </Link>
+        )}
+
         {/* <Link to={`/myclassroom/${codeclass}/4/abtipa`}>
           <div
             className={`header-classroom__title ${

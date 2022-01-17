@@ -53,7 +53,7 @@ export const StudentMark = ({ info, codeClass }: IStudentMark) => {
   };
 
   const fetchListReviewMark = async () => {
-    const listReviewMark = await reviewMarkApi.getALLMark({
+    const listReviewMark = await reviewMarkApi.getMark({
       jwt: localStorage.getItem('jwt'),
       CodeClass: codeClass,
       MSSV: info.MSSV,
@@ -100,9 +100,11 @@ export const StudentMark = ({ info, codeClass }: IStudentMark) => {
               <h3 className={`${className}__mark`}>
                 {info.Name} - {info.MSSV}
               </h3>
-              <p className={`${className}__mark`}>
-                Điểm tổng kết: {mark}/{totalMark}
-              </p>
+              {keyStructure.length != 0 && (
+                <p className={`${className}__mark`}>
+                  Điểm tổng kết: {mark}/{totalMark}
+                </p>
+              )}
             </div>
             <ul className={`${className}__list`}>
               {keyStructure.length != 0 &&

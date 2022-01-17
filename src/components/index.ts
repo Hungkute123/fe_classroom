@@ -18,3 +18,4 @@ export * from './MarkClass/MarkClass';
 export * from './Admin/Admin';
 export * from './ForgotPassword/ForgotPassword';
 export * from './MarkClass/Comment/Comment';
+export * from './ListReviewMark/ListReviewMark';

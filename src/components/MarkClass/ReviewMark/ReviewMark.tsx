@@ -29,6 +29,7 @@ export const ReviewMark = ({ isOpen, setIsOpen, typeMark, mark, info, codeClass 
       CurrentMark: e.target[0].value,
       DesiredMark: e.target[1].value,
       CommentStudent: e.target[2].value,
+      Status: false,
     };
 
     const status = await reviewMarkApi.addMark({
