@@ -10,19 +10,20 @@ import { StudentMark } from './StudentMark/StudentMark';
 import markApi from '../../services/aixos/markApi';
 import classStructureApi from '../../services/aixos/classStructureApi';
 import './MarkClass.scss';
-import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
+import { toast, ToastContainer } from 'react-toastify';
+
 let socket:any;
+
 export const MarkClass = () => {
   const dispatch = useAppDispatch();
 
   const { codeclass }: { codeclass: string } = useParams();
   const csvStudentList = [{ MSSV: '', Name: '' }];
   const obj: any = { MSSV: '' };
-
   const listGrade = useAppSelector((state: RootState) => state.classStructure.listGrade);
-  const info = useAppSelector((state: RootState) => state.memberClassroom.myInfo);
   const { account } = useAppSelector((state: RootState) => state.account);
+  const info: any = useAppSelector((state: RootState) => state.account.account);
   const [isTeacher, setIsTeacher] = useState(false);
   const [listMark, setListMark] = useState<any>([]);
   const [keyStructure, setKeyStructure] = useState<any>([]);
@@ -324,16 +325,14 @@ export const MarkClass = () => {
     const markItem = listMark.find((mark: any) => (mark.MSSV = MSSV));
 
     if (markItem) {
-      let Point: { [property: string]: any } = {};
-      Point[`${MarkType}`] = mark[`${MSSV}-${MarkType}`];
-
-      console.log(Point);
+      const Point = mark[`${MSSV}-${MarkType}`];
 
       const markUpdate = {
         jwt: localStorage.getItem('jwt'),
         codeClass: codeclass,
         MSSV: MSSV,
         Point: Point,
+        MarkType: MarkType,
       };
 
       const status = await markApi.updateMark({ ...markUpdate });
@@ -349,6 +348,8 @@ export const MarkClass = () => {
           progress: undefined,
         });
       }
+      
+      return;
     }
 
     toast.warn('Cập nhật điểm thất bại!', {
@@ -416,6 +417,7 @@ const handleSendFinalGradeNotification = (event: any, listStudent: any, markType
   };
   return (
     <>
+      <ToastContainer />
       {isTeacher ? (
         <TableMark
           handleDowloadTemplate={handleDowloadTemplate}
@@ -434,13 +436,10 @@ const handleSendFinalGradeNotification = (event: any, listStudent: any, markType
           handleSendFinalGradeNotification={handleSendFinalGradeNotification}
           userId={account._id}  
           />
-      ) : (
-        <StudentMark />
+      ) : ( 
+        <StudentMark info={info} codeClass={codeclass} />
       )}
-    </>
 
-    // onClick={(e: any) =>
-    //   handleUpdateMark(item.MSSV, itemGrade.MarkType)
-    // }
+    </>
   );
 };
