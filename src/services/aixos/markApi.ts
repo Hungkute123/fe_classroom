@@ -14,6 +14,11 @@ const markApi = {
     const { data } = await axiosClient.get(url, { params });
     return data;
   },
+  getMark: async (params: any) => {
+    const url = 'mark/get-mark';
+    const { data } = await axiosClient.get(url, { params });
+    return data;
+  },
   updateMark: async (requestOption: any) => {
     const url = 'mark/update-mark';
     return await axiosClient.patch(url, requestOption);

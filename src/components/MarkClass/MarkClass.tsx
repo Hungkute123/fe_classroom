@@ -10,7 +10,7 @@ import { StudentMark } from './StudentMark/StudentMark';
 import markApi from '../../services/aixos/markApi';
 import classStructureApi from '../../services/aixos/classStructureApi';
 import './MarkClass.scss';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 export const MarkClass = () => {
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export const MarkClass = () => {
   const obj: any = { MSSV: '' };
 
   const listGrade = useAppSelector((state: RootState) => state.classStructure.listGrade);
-  const info = useAppSelector((state: RootState) => state.memberClassroom.myInfo);
+  const info: any = useAppSelector((state: RootState) => state.account.account);
 
   const [isTeacher, setIsTeacher] = useState(false);
   const [listMark, setListMark] = useState<any>([]);
@@ -311,16 +311,14 @@ export const MarkClass = () => {
     const markItem = listMark.find((mark: any) => (mark.MSSV = MSSV));
 
     if (markItem) {
-      let Point: { [property: string]: any } = {};
-      Point[`${MarkType}`] = mark[`${MSSV}-${MarkType}`];
-
-      console.log(Point);
+      const Point = mark[`${MSSV}-${MarkType}`];
 
       const markUpdate = {
         jwt: localStorage.getItem('jwt'),
         codeClass: codeclass,
         MSSV: MSSV,
         Point: Point,
+        MarkType: MarkType,
       };
 
       const status = await markApi.updateMark({ ...markUpdate });
@@ -336,6 +334,8 @@ export const MarkClass = () => {
           progress: undefined,
         });
       }
+      
+      return;
     }
 
     toast.warn('Cập nhật điểm thất bại!', {
@@ -385,7 +385,8 @@ export const MarkClass = () => {
 
   return (
     <>
-      {isTeacher ? (
+      <ToastContainer />
+      {/* {isTeacher ? (
         <TableMark
           handleDowloadTemplate={handleDowloadTemplate}
           handleGradeBoard={handleGradeBoard}
@@ -401,13 +402,9 @@ export const MarkClass = () => {
           totalMark={totalMark}
           handleUpdateMark={handleUpdateMark}
         />
-      ) : (
-        <StudentMark />
-      )}
+      ) : ( */}
+        <StudentMark info={info} codeClass={codeclass} />
+      {/* )} */}
     </>
-
-    // onClick={(e: any) =>
-    //   handleUpdateMark(item.MSSV, itemGrade.MarkType)
-    // }
   );
 };
