@@ -19,6 +19,8 @@ interface ITableMark {
   handleChangeInput: any;
   totalMark: number;
   handleUpdateMark: any;
+  handleSendFinalGradeNotification:any;
+  userId: any;
 }
 
 export const TableMark = ({
@@ -35,10 +37,12 @@ export const TableMark = ({
   handleChangeInput,
   totalMark,
   handleUpdateMark,
+  handleSendFinalGradeNotification,
+  userId,
 }: ITableMark) => {
   const className = 'table-mark';
   const fileInputRef: any = useRef();
-
+  
   //console.log(mark);
 
   return (
@@ -114,14 +118,17 @@ export const TableMark = ({
                                     >
                                       <Dropdown.Item
                                         eventKey="1"
-                                        onClick={() =>
+                                        onClick={(e) =>{
+
                                           handleComplete(
                                             item._id,
                                             item.CodeClass,
                                             item.MarkType,
                                             item.Mark,
                                             !item.Complete,
-                                          )
+                                            );
+                                            handleSendFinalGradeNotification(e,listMark,item.MarkType,item.CodeClass, 'test',userId)
+                                        }
                                         }
                                       >
                                         {item.Complete ? 'Đóng hoàn thành' : 'Hoàn thành'}
