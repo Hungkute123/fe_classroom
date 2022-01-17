@@ -9,18 +9,19 @@ import {
   Offcanvas,
 } from 'react-bootstrap';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { BsPlusLg } from 'react-icons/bs';
+import { BsBell, BsPlusLg } from 'react-icons/bs';
 import { Link, useHistory } from 'react-router-dom';
 import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import './Header.scss';
 import { JoinClasByCodeModal } from '../../JoinClassByCodeModal/JoinClassByCodeModal';
+import { Notification } from '../../Notification/Notification';
 
 export const Header = () => {
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenJoinClass, setIsOpenJoinClass] = useState(false)
+  const [isOpenJoinClass, setIsOpenJoinClass] = useState(false);
   const [menu, setMenu] = useState(false);
   const account: any = useSelector((state: RootState) => state.account.account);
   const handleShow = () => setMenu(true);
@@ -34,7 +35,7 @@ export const Header = () => {
   return (
     <div className="header">
       <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen} />
-      <JoinClasByCodeModal isOpen={isOpenJoinClass} setIsOpen={setIsOpenJoinClass}/>
+      <JoinClasByCodeModal isOpen={isOpenJoinClass} setIsOpen={setIsOpenJoinClass} />
       <div className="header__logo">
         <div className="header__logo--btn">
           <Button variant="outline-dark" onClick={handleShow}>
@@ -52,6 +53,9 @@ export const Header = () => {
         </Link>
       </div>
       <div className="header__action">
+        <div className="header__item">
+          <Notification></Notification>
+        </div>
         <div className="header__item">
           {/* <button className="header__item__btn" onClick={() => setIsOpen(true)}>
             <BsPlusLg size={25} />

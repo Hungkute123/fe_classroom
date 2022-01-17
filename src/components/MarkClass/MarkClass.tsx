@@ -334,7 +334,7 @@ export const MarkClass = () => {
           progress: undefined,
         });
       }
-
+      
       return;
     }
 
