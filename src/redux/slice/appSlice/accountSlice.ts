@@ -46,13 +46,19 @@ export const adminRegister = createAsyncThunk('account/admin-register', async (p
 export const deleteAccount = createAsyncThunk('account/delete-account', async (params: any) => {
   return await accountApi.deleteAccount(params).then((res) => res.data);
 });
+interface IInitialState {
+  isAccount: string,
+  account: any,
+  isLoading: boolean,
+}
+const initialclassroom = {
+  isAccount: '',
+  account: {},
+  isLoading: false,
+} as IInitialState;
 export const accountSlice = createSlice({
   name: 'account',
-  initialState: {
-    isAccount: '',
-    account: {},
-    isLoading: false,
-  },
+  initialState: initialclassroom,
   reducers: {},
   extraReducers: (builder) => {
     // login with email
