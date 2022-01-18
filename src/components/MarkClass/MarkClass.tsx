@@ -12,6 +12,8 @@ import classStructureApi from '../../services/aixos/classStructureApi';
 import './MarkClass.scss';
 import { io } from 'socket.io-client';
 import { toast, ToastContainer } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { getClassroomByCodeClass } from '../../redux/slice/appSlice/classroomSlice';
 
 let socket:any;
 
@@ -34,7 +36,10 @@ export const MarkClass = () => {
     codeclass: codeclass,
     jwt: localStorage.getItem('jwt'),
   };
-
+  const { infoMyClassroom } = useSelector((state: RootState) => state.classroom);
+  useEffect(() => {
+    dispatch(getClassroomByCodeClass(classroom))
+  }, []);
   // Kiểm tra có phải giáo viên không?
   const checkTeacher = async () => {
     const isTeacher = (await dispatch(getMyInfo(classroom))).payload;
@@ -434,7 +439,8 @@ const handleSendFinalGradeNotification = (event: any, listStudent: any, markType
           totalMark={totalMark}
           handleUpdateMark={handleUpdateMark} 
           handleSendFinalGradeNotification={handleSendFinalGradeNotification}
-          userId={account._id}  
+          userId={account._id}
+          title={infoMyClassroom.Title}
           />
       ) : ( 
         <StudentMark info={info} codeClass={codeclass} />

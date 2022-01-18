@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import './StudentMark.scss';
-import { Comment } from '../..';
+import { Comment } from '../Comment/Comment';
 import classStructureApi from '../../../services/aixos/classStructureApi';
 import markApi from '../../../services/aixos/markApi';
 import reviewMarkApi from '../../../services/aixos/reviewMarkApi';
