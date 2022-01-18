@@ -18,6 +18,7 @@ export const ListReviewMark = () => {
     desiredMark: number,
     name: string,
     MSSV: string,
+    commentStudent: string,
   ) => {
     setIsOpen(true);
     setInfoReviewMark({
@@ -26,6 +27,7 @@ export const ListReviewMark = () => {
       desiredMark,
       name,
       MSSV,
+      commentStudent,
     });
   };
 
@@ -90,29 +92,25 @@ export const ListReviewMark = () => {
                           <td>{item.CurrentMark}</td>
                           <td>{item.DesiredMark}</td>
                           <td>{item.CommentStudent}</td>
+                          <td>{item.Answer}</td>
+                          <td>{item.FinalMark}</td>
                           <td>
-                            {item.Answer ? (
-                              item.Answer
-                            ) : (
-                              <div className={`${className}__check`}>
-                                <i
-                                  className="fas fa-reply-all"
-                                  style={{ cursor: 'pointer' }}
-                                  onClick={() =>
-                                    handleReviewMark(
-                                      item.TypeMark,
-                                      item.CurrentMark,
-                                      item.DesiredMark,
-                                      item.Name,
-                                      item.MSSV,
-                                    )
-                                  }
-                                ></i>
-                              </div>
-                            )}
-                          </td>
-                          <td>{item.Mark}</td>
-                          <td>
+                            <div className={`${className}__check`}>
+                              <i
+                                className="fas fa-reply-all"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() =>
+                                  handleReviewMark(
+                                    item.TypeMark,
+                                    item.CurrentMark,
+                                    item.DesiredMark,
+                                    item.Name,
+                                    item.MSSV,
+                                    item.CommentStudent,
+                                  )
+                                }
+                              ></i>
+                            </div>
                             <div className={`${className}__check`}>
                               {item.Status ? (
                                 <i className="fas fa-check-circle"></i>
