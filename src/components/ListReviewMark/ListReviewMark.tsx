@@ -19,7 +19,7 @@ export const ListReviewMark = () => {
     name: string,
     MSSV: string,
     commentStudent: string,
-    id: any
+    id: any,
   ) => {
     setIsOpen(true);
     setInfoReviewMark({
@@ -29,7 +29,7 @@ export const ListReviewMark = () => {
       name,
       MSSV,
       commentStudent,
-      id
+      id,
     });
   };
 
@@ -109,33 +109,11 @@ export const ListReviewMark = () => {
                                     item.Name,
                                     item.MSSV,
                                     item.CommentStudent,
+                                    item.IDUser,
                                   )
                                 }
                               ></i>
                             </div>
-                            {item.Answer ? (
-                              item.Answer
-                            ) : (
-                              <div className={`${className}__check`}>
-                                <i
-                                  className="fas fa-reply-all"
-                                  style={{ cursor: 'pointer' }}
-                                  onClick={() =>
-                                    handleReviewMark(
-                                      item.TypeMark,
-                                      item.CurrentMark,
-                                      item.DesiredMark,
-                                      item.Name,
-                                      item.MSSV,
-                                      item.IDUser
-                                    )
-                                  }
-                                ></i>
-                              </div>
-                            )}
-                          </td>
-                          <td>{item.Mark}</td>
-                          <td>
                             <div className={`${className}__check`}>
                               {item.Status ? (
                                 <i className="fas fa-check-circle"></i>
