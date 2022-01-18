@@ -18,6 +18,7 @@ export const ListReviewMark = () => {
     desiredMark: number,
     name: string,
     MSSV: string,
+    id: any
   ) => {
     setIsOpen(true);
     setInfoReviewMark({
@@ -26,6 +27,7 @@ export const ListReviewMark = () => {
       desiredMark,
       name,
       MSSV,
+      id
     });
   };
 
@@ -105,6 +107,7 @@ export const ListReviewMark = () => {
                                       item.DesiredMark,
                                       item.Name,
                                       item.MSSV,
+                                      item.IDUser
                                     )
                                   }
                                 ></i>
