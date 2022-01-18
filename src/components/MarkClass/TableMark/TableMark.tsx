@@ -19,8 +19,9 @@ interface ITableMark {
   handleChangeInput: any;
   totalMark: number;
   handleUpdateMark: any;
-  handleSendFinalGradeNotification:any;
+  handleSendFinalGradeNotification: any;
   userId: any;
+  title?: string;
 }
 
 export const TableMark = ({
@@ -39,12 +40,18 @@ export const TableMark = ({
   handleUpdateMark,
   handleSendFinalGradeNotification,
   userId,
+  title,
 }: ITableMark) => {
   const className = 'table-mark';
   const fileInputRef: any = useRef();
-  
-  //console.log(mark);
 
+  //console.log(mark);
+  const onClickHandleComplete = (e: any, item: any) => {
+    handleComplete(item._id, item.CodeClass, item.MarkType, item.Mark, !item.Complete);
+    if (item.Complete === false) {
+      handleSendFinalGradeNotification(e, listMark, item.MarkType, item.CodeClass, title, userId);
+    }
+  };
   return (
     <>
       {listGrade.length == 0 ? (
@@ -73,7 +80,7 @@ export const TableMark = ({
                 <div className={`${className}__header`}>
                   <div className={`${className}__left`}>
                     <p className={`${className}__name`}>Bảng Điểm</p>
-                    <h4 className={`${className}__text-primary`}>Dental Care</h4>
+                    <h4 className={`${className}__text-primary`}>{title}</h4>
                   </div>
                   <div className={`${className}__right`}>
                     <button
@@ -118,18 +125,9 @@ export const TableMark = ({
                                     >
                                       <Dropdown.Item
                                         eventKey="1"
-                                        onClick={(e) =>{
-
-                                          handleComplete(
-                                            item._id,
-                                            item.CodeClass,
-                                            item.MarkType,
-                                            item.Mark,
-                                            !item.Complete,
-                                            );
-                                            handleSendFinalGradeNotification(e,listMark,item.MarkType,item.CodeClass, 'test',userId)
-                                        }
-                                        }
+                                        onClick={(e) => {
+                                          onClickHandleComplete(e, item);
+                                        }}
                                       >
                                         {item.Complete ? 'Đóng hoàn thành' : 'Hoàn thành'}
                                       </Dropdown.Item>
@@ -180,7 +178,7 @@ export const TableMark = ({
                                               e,
                                               item.MSSV,
                                               keyStructure[indexGrade + 1],
-                                              itemGrade.Mark
+                                              itemGrade.Mark,
                                             )
                                           }
                                         />

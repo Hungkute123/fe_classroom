@@ -46,25 +46,19 @@ export const Notification = () => {
   const handleChangeIsAll = (e: any) => {
     setIsAll(e);
   };
-  useEffect(() => {
-    setCountNotification(0);
-    setDataFilter([]);
-    dataNotification.map((item) => {
-      if (item.Read === false) {
-        setCountNotification(countNotificaton + 1);
-        dataFilter.push(item);
-        setDataFilter([...dataFilter]);
-      }
-    });
-  }, [dataNotification.length]);
+  
   useEffect(() => {
     handleConnectSocket();
   }, []);
 
   useEffect(() => {
+    console.log(isConnect);
     if (isConnect) {
       socket.on('dataNotification', (data: any) => {
         data.data.map((item: any) => {
+          if (item.Read === false) {
+            setCountNotification(countNotificaton + 1);
+          }
           dataNotification.push(item);
           setDataNotification([...dataNotification]);
         });
@@ -72,6 +66,9 @@ export const Notification = () => {
       });
       socket.on('newDataNotification', (data: any) => {
         data.data.map((item: any) => {
+          if (item.Read === false) {
+            setCountNotification(countNotificaton + 1);
+          }
           dataNotification.push(item);
           setDataNotification([...dataNotification]);
           toast.info('Bạn có một thông báo mới!', {
@@ -84,7 +81,6 @@ export const Notification = () => {
             progress: undefined,
           });
         });
-        console.log(data);
       });
     }
     // const action = getNotification({});
@@ -119,8 +115,8 @@ export const Notification = () => {
         key: key,
       });
       dataNotification[index].Read = true;
-      console.log(dataNotification[index].Read);
       setDataNotification([...dataNotification]);
+      setCountNotification(countNotificaton - 1);
     }
   };
   return (
