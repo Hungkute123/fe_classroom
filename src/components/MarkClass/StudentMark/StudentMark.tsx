@@ -10,9 +10,18 @@ import { ReviewMark } from '../ReviewMark/ReviewMark';
 interface IStudentMark {
   info: any;
   codeClass: string;
+  handleSendRequestGradeReviewNotification: any;
+  title?: any;
+  recipientID:any
 }
 
-export const StudentMark = ({ info, codeClass }: IStudentMark) => {
+export const StudentMark = ({
+  info,
+  codeClass,
+  handleSendRequestGradeReviewNotification,
+  title,
+  recipientID
+}: IStudentMark) => {
   const className = 'student-mark';
   const [listReviewMark, setListReviewMark] = useState<any>([]);
   const [markUser, setMarkUser] = useState<any>({});
@@ -92,6 +101,9 @@ export const StudentMark = ({ info, codeClass }: IStudentMark) => {
           mark={markCurrent}
           info={info}
           codeClass={codeClass}
+          handleSendRequestGradeReviewNotification={handleSendRequestGradeReviewNotification}
+          title={title}
+          recipientID={recipientID}
         />
       )}
 

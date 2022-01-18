@@ -11,9 +11,22 @@ interface IReviewMark {
   mark?: number;
   info: any;
   codeClass: string;
+  handleSendRequestGradeReviewNotification: any;
+  title: string;
+  recipientID: any;
 }
 
-export const ReviewMark = ({ isOpen, setIsOpen, typeMark, mark, info, codeClass }: IReviewMark) => {
+export const ReviewMark = ({
+  isOpen,
+  setIsOpen,
+  typeMark,
+  mark,
+  info,
+  codeClass,
+  handleSendRequestGradeReviewNotification,
+  title,
+  recipientID,
+}: IReviewMark) => {
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -22,6 +35,7 @@ export const ReviewMark = ({ isOpen, setIsOpen, typeMark, mark, info, codeClass 
     e.preventDefault();
 
     const reviewMark = {
+      IDUser: info._id,
       Name: info.Name,
       MSSV: info.MSSV,
       TypeMark: typeMark,
@@ -48,6 +62,14 @@ export const ReviewMark = ({ isOpen, setIsOpen, typeMark, mark, info, codeClass 
         progress: undefined,
       });
 
+      handleSendRequestGradeReviewNotification(
+        typeMark,
+        codeClass,
+        title,
+        info._id,
+        recipientID,
+        info.Name,
+      );
       handleClose();
 
       return;

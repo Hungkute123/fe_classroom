@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
+import { getClassroomByCodeClass } from '../../../redux/slice/appSlice/classroomSlice';
+import { RootState, useAppDispatch, useAppSelector } from '../../../redux/store';
 import reviewMarkApi from '../../../services/aixos/reviewMarkApi';
 import './AnswerReview.scss';
 
@@ -10,11 +14,33 @@ interface IAnswerReview {
   codeClass: string;
   infoReviewMark: any;
 }
-
+let socket: any;
 export const AnswerReview = ({ isOpen, setIsOpen, codeClass, infoReviewMark }: IAnswerReview) => {
+  
+  const dispatch = useAppDispatch();
+  const { account } = useAppSelector((state: RootState) => state.account);
+  const { infoMyClassroom } = useSelector((state: RootState) => state.classroom);
+  const classroom = {
+    codeclass: codeClass,
+    jwt: localStorage.getItem('jwt'),
+  };
+  useEffect(() => {
+    dispatch(getClassroomByCodeClass(classroom));
+  }, []);
+
   const handleClose = () => {
     setIsOpen(false);
   };
+  // Tạo kết nối socket
+  useEffect(() => {
+    const ENDPOINT = String(process.env.URL_MY_SOCKET);
+    socket = io(ENDPOINT, { transports: ['websocket'] });
+    socket.on('connect', () => {
+      console.log(socket.id);
+    });
+    const id = `${account._id}reply`;
+    socket.emit('getNotification', { _id: id });
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -42,7 +68,16 @@ export const AnswerReview = ({ isOpen, setIsOpen, codeClass, infoReviewMark }: I
         draggable: true,
         progress: undefined,
       });
-
+      
+      handleSendReplyGradeReviewNotification(
+        e,
+        infoReviewMark.typeMark,
+        codeClass,
+        infoMyClassroom.Title,
+        account._id,
+        infoReviewMark.id,
+        account.Name,
+      );
       handleClose();
 
       return;
@@ -58,7 +93,37 @@ export const AnswerReview = ({ isOpen, setIsOpen, codeClass, infoReviewMark }: I
       progress: undefined,
     });
   };
-
+  const handleSendReplyGradeReviewNotification = (
+    e:any,
+    markType: any,
+    codeClass: any,
+    className: string,
+    senderID: any,
+    recipientID: any,
+    name: string,
+  ) => {
+    e.preventDefault();
+    socket.emit('sendNotification', {
+      notificationType: 'REPLY TO A STUDENT GRADE VIEW',
+      createDate: Date(),
+      read: false,
+      recipientID: recipientID,
+      senderID: senderID,
+      message: `${name} đã phản hồi phúc khảo của bạn về điểm ${markType} trong`,
+      className: className,
+      url: `/myclassroom/${codeClass}/3/emsdoi`,
+    });
+    return socket.emit('sendNotification', {
+      notificationType: 'FINAL DECISION A GRADE VIEW',
+      createDate: Date(),
+      read: false,
+      recipientID: recipientID,
+      senderID: senderID,
+      message: `${name} đã quyết định phúc khảo của bạn về điểm ${markType} trong`,
+      className: className,
+      url: `/myclassroom/${codeClass}/3/emsdoi`,
+    });
+  };
   return (
     <>
       <Modal

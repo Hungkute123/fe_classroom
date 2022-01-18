@@ -15,7 +15,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { getClassroomByCodeClass } from '../../redux/slice/appSlice/classroomSlice';
 
-let socket:any;
+let socket: any;
 
 export const MarkClass = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ export const MarkClass = () => {
   };
   const { infoMyClassroom } = useSelector((state: RootState) => state.classroom);
   useEffect(() => {
-    dispatch(getClassroomByCodeClass(classroom))
+    dispatch(getClassroomByCodeClass(classroom));
   }, []);
   // Kiểm tra có phải giáo viên không?
   const checkTeacher = async () => {
@@ -97,9 +97,9 @@ export const MarkClass = () => {
     const ENDPOINT = String(process.env.URL_MY_SOCKET);
     socket = io(ENDPOINT, { transports: ['websocket'] });
     socket.on('connect', () => {
-      console.log(socket.id); 
+      console.log(socket.id);
     });
-   const id = `${account._id}id`;
+    const id = `${account._id}id`;
     socket.emit('getNotification', { _id: id });
     // const action = connectNotification(account._id);
     // dispatch(action);
@@ -353,7 +353,7 @@ export const MarkClass = () => {
           progress: undefined,
         });
       }
-      
+
       return;
     }
 
@@ -401,12 +401,19 @@ export const MarkClass = () => {
       progress: undefined,
     });
   };
-const handleSendFinalGradeNotification = (event: any, listStudent: any, markType:any,codeClass:any, className:string, id:any) => {
+  const handleSendFinalGradeNotification = (
+    event: any,
+    listStudent: any,
+    markType: any,
+    codeClass: any,
+    className: string,
+    id: any,
+  ) => {
     event.preventDefault();
-    if(listStudent.length != 0){
-      listStudent.map((item:any)=>{
-        if(item.IDUser != ""){
-          return (socket.emit('sendNotification', {
+    if (listStudent.length != 0) {
+      listStudent.map((item: any) => {
+        if (item.IDUser != '') {
+          return socket.emit('sendNotification', {
             notificationType: 'FINAL A GRADE COMPOSITION',
             createDate: Date(),
             read: false,
@@ -415,10 +422,30 @@ const handleSendFinalGradeNotification = (event: any, listStudent: any, markType
             message: `Cột điểm ${markType} của bạn vừa được đánh dấu hoàn thành trong`,
             className: className,
             url: `/myclassroom/${codeClass}/3/emsdoi`,
-          }))
+          });
         }
-      })
+      });
     }
+  };
+  const handleSendRequestGradeReviewNotification = (
+    markType: any,
+    codeClass: any,
+    className: string,
+    senderID: any,
+    recipientID: any,
+    name: string,
+  ) => {
+
+    return socket.emit('sendNotification', {
+      notificationType: 'REQUEST A GRADE VIEW',
+      createDate: Date(),
+      read: false,
+      recipientID: recipientID,
+      senderID: senderID,
+      message: `${name} đã xin phúc khảo lại cột điểm ${markType} trong`,
+      className: className,
+      url: `/myclassroom/${codeClass}/4/listreviewmark`,
+    });
   };
   return (
     <>
@@ -437,15 +464,20 @@ const handleSendFinalGradeNotification = (event: any, listStudent: any, markType
           handleSampleMark={handleSampleMark}
           handleChangeInput={handleChangeInput}
           totalMark={totalMark}
-          handleUpdateMark={handleUpdateMark} 
+          handleUpdateMark={handleUpdateMark}
           handleSendFinalGradeNotification={handleSendFinalGradeNotification}
           userId={account._id}
           title={infoMyClassroom.Title}
-          />
-      ) : ( 
-        <StudentMark info={info} codeClass={codeclass} />
+        />
+      ) : (
+        <StudentMark
+          info={info}
+          codeClass={codeclass}
+          handleSendRequestGradeReviewNotification={handleSendRequestGradeReviewNotification}
+          title={infoMyClassroom.Title}
+          recipientID={infoMyClassroom.IDUser}
+        />
       )}
-
     </>
   );
 };
