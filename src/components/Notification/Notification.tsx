@@ -12,6 +12,8 @@ import {
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import { useAppDispatch } from '../../redux/store';
+import { getInfo } from '../../redux/slice/appSlice/accountSlice';
 interface INotification {
   _id: string;
   NotificationType: string;
@@ -25,10 +27,11 @@ interface INotification {
 }
 let socket: any;
 export const Notification = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showOptions, setShowOptions] = useState(false);
   const [isAll, setIsAll] = useState(true);
   const { account } = useSelector((state: RootState) => state.account);
+  const [isConnect, setIsConnect] = useState(false);
   //const { socket, notification } = useSelector((state: RootState) => state.notification);
   const [dataNotification, setDataNotification] = useState<INotification[]>([]);
   const [countNotificaton, setCountNotification] = useState(0);
@@ -55,69 +58,51 @@ export const Notification = () => {
     });
   }, [dataNotification.length]);
   useEffect(() => {
-    const ENDPOINT = String(process.env.URL_MY_SOCKET);
-    socket = io(ENDPOINT, { transports: ['websocket'] });
-    socket.on('connect', () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    });
-    console.log(socket);
-    socket.emit('getNotification', { _id: account._id });
-    // const action = connectNotification(account._id);
-    // dispatch(action);
+    handleConnectSocket();
   }, []);
 
   useEffect(() => {
-    socket.on('dataNotification', (data: any) => {
-      data.data.map((item: any) => {
-        dataNotification.push(item);
-        setDataNotification([...dataNotification]);
-      });
-      console.log(data);
-    });
-    socket.on('newDataNotification', (data: any) => {
-      data.data.map((item: any) => {
-        dataNotification.push(item);
-        setDataNotification([...dataNotification]);
-        toast.info('Bạn có một thông báo mới!', {
-          position: 'bottom-left',
-          autoClose: 4000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+    if (isConnect) {
+      socket.on('dataNotification', (data: any) => {
+        data.data.map((item: any) => {
+          dataNotification.push(item);
+          setDataNotification([...dataNotification]);
         });
+        console.log(data);
       });
-      console.log(data);
-    });
+      socket.on('newDataNotification', (data: any) => {
+        data.data.map((item: any) => {
+          dataNotification.push(item);
+          setDataNotification([...dataNotification]);
+          toast.info('Bạn có một thông báo mới!', {
+            position: 'bottom-left',
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        });
+        console.log(data);
+      });
+    }
     // const action = getNotification({});
     // dispatch(action);
     // console.log(notification);
     // setDataNotification([...notification]);
-  }, []);
+  }, [isConnect]);
 
-  const handleSendNotification = (event: any) => {
-    event.preventDefault();
-    // const action = sendNotification({notificationType: 'test',
-    // createDate: Date(),
-    // read: false,
-    // recipientID: account._id,
-    // senderID: account._id,
-    // message: 'Có bài tập mới',
-    // className: 'Thiết kế phần mềm',
-    // url: 'sos'})
-    // dispatch(action)
-    socket.emit('sendNotification', {
-      _id: account._id,
-      notificationType: 'test',
-      createDate: Date(),
-      read: false,
-      recipientID: account._id,
-      senderID: account._id,
-      message: 'Có bài tập mới',
-      className: 'Thiết kế phần mềm',
-      url: 'sos',
+  const handleConnectSocket = async () => {
+    const data = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
+    const ENDPOINT = String(process.env.URL_MY_SOCKET);
+    socket = io(ENDPOINT, { transports: ['websocket'] });
+    socket.on('connect', () => {
+      console.log(socket.id);
     });
+    console.log(socket);
+    setIsConnect(true);
+    socket.emit('getNotification', { _id: data._id });
   };
   const handleUpdateNotification = (item: any, index: number) => {
     console.log('haha');
