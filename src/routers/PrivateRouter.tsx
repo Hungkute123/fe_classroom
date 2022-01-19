@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { directive } from '@babel/types';
 import { Spinner } from 'react-bootstrap';
+import { LoadingView } from '../components';
 
 export const PrivateRouter: React.FC<IPrivateRouter> = ({
   component: Component,
@@ -39,8 +40,7 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
   };
   useEffect(() => {
     fecthInfo();
-    return () => {
-    };
+    return () => {};
   }, [location]);
 
   const render = (props: any) => {
@@ -50,7 +50,15 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
     ) {
       return <Redirect to="/" />;
     }
-
+    if (
+      account.Permission === 'User' &&
+      (location === '/admin/create-admin-account' ||
+        location === '/admin/manage-admin-accounts' ||
+        location === '/admin/manage-user-accounts' ||
+        location === '/admin/manage-classes')
+    ) {
+      return <Redirect to="/" />;
+    }
     if (
       isAccount == 'false' &&
       location != '/account/login' &&
@@ -61,16 +69,7 @@ export const PrivateRouter: React.FC<IPrivateRouter> = ({
     }
 
     return isFetch == false ? (
-      <div style={{ marginTop: '20px' }}>
-        <Spinner animation="grow" variant="primary" />
-        <Spinner animation="grow" variant="secondary" />
-        <Spinner animation="grow" variant="success" />
-        <Spinner animation="grow" variant="danger" />
-        <Spinner animation="grow" variant="warning" />
-        <Spinner animation="grow" variant="info" />
-        <Spinner animation="grow" variant="light" />
-        <Spinner animation="grow" variant="dark" />
-      </div>
+      <LoadingView></LoadingView>
     ) : (
       <Layout
         header={
