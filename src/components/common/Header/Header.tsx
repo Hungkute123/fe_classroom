@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   ButtonGroup,
@@ -10,20 +10,29 @@ import {
 } from 'react-bootstrap';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsBell, BsPlusLg } from 'react-icons/bs';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { CreateClassModal } from '../../CreateClassModal/CreateClassModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/rootReducer';
 import './Header.scss';
 import { JoinClasByCodeModal } from '../../JoinClassByCodeModal/JoinClassByCodeModal';
 import { Notification } from '../../Notification/Notification';
+import { useAppDispatch } from '../../../redux/store';
+import {
+  getMyInfo,
+  getStudentByCodeClass,
+} from '../../../redux/slice/appSlice/memberClassroomSlice';
 
 export const Header = () => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenJoinClass, setIsOpenJoinClass] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
   const account: any = useSelector((state: RootState) => state.account.account);
+  const { codeclass }: { codeclass: string } = useParams();
+  const { number }: { number: string } = useParams();
   const handleShow = () => setMenu(true);
   const handleClose = () => setMenu(false);
   const handleLogout = () => {
@@ -32,6 +41,25 @@ export const Header = () => {
       pathname: `/account/login`,
     });
   };
+  const classroom = {
+    codeclass: codeclass,
+    jwt: localStorage.getItem('jwt'),
+  };
+  const checkTeacher = async () => {
+    const isTeacher = (await dispatch(getMyInfo(classroom))).payload;
+
+    if (isTeacher.Permission === 'Teacher') {
+      setIsTeacher(true);
+    }
+  };
+
+  useEffect(() => {
+    if (codeclass && codeclass != undefined) {
+      checkTeacher();
+      dispatch(getStudentByCodeClass(classroom));
+    }
+  }, [codeclass]);
+
   return (
     <div className="header">
       <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -52,6 +80,60 @@ export const Header = () => {
           <img src="/logo.jpg" alt="" />
         </Link>
       </div>
+      {codeclass != undefined ? (
+        <div className="header-classroom__body">
+          <Link to={`/myclassroom/${codeclass}/1/antbntig`}>
+            <div
+              className={`header-classroom__title ${
+                number == '1' ? 'header-classroom__title--select' : ''
+              }`}
+            >
+              Bảng tin
+            </div>
+          </Link>
+          <Link to={`/myclassroom/${codeclass}/2/omiuniguo`}>
+            <div
+              className={`header-classroom__title ${
+                number == '2' ? 'header-classroom__title--select' : ''
+              }`}
+            >
+              Mọi người
+            </div>
+          </Link>
+          <Link to={`/myclassroom/${codeclass}/3/emsdoi`}>
+            <div
+              className={`header-classroom__title ${
+                number == '3' ? 'header-classroom__title--select' : ''
+              }`}
+            >
+              Điểm số
+            </div>
+          </Link>
+          {isTeacher && (
+            <Link to={`/myclassroom/${codeclass}/4/listreviewmark`}>
+              <div
+                className={`header-classroom__title ${
+                  number == '4' ? 'header-classroom__title--select' : ''
+                }`}
+              >
+                Phúc khảo
+              </div>
+            </Link>
+          )}
+
+          {/* <Link to={`/myclassroom/${codeclass}/4/abtipa`}>
+          <div
+            className={`header-classroom__title ${
+              number == '4' ? 'header-classroom__title--select' : ''
+            }`}
+          >
+            Bài tập
+          </div>
+        </Link> */}
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="header__action">
         <div className="header__item">
           <Notification></Notification>

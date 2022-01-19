@@ -3,6 +3,7 @@ import { Button, Col, Container, FloatingLabel, Form, Modal, Row, Spinner } from
 import { BsFiles } from 'react-icons/bs';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { inviteClassroom } from '../../redux/slice/appSlice/classroomSlice';
 import { useAppDispatch } from '../../redux/store';
@@ -10,6 +11,7 @@ import './AddStudentModal.scss';
 
 export const AddStudentModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
   const [validated, setValidated] = useState(false);
+  const [email, setEmail] = useState('');
   const [title, setTitle] = useState('Nhấn để copy mã');
   const [isSpinner, setIsSpinner] = useState(false);
   const target = useRef(null);
@@ -20,12 +22,13 @@ export const AddStudentModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
     event.preventDefault();
     setIsSpinner(true);
     const invite = {
-      email: event.target[1].value,
+      email: email,
       path: `${path}&permission=Student`,
       jwt: localStorage.getItem('jwt'),
     };
     const check = (await dispatch(inviteClassroom(invite))).payload;
     setIsOpen(false);
+    setEmail('');
     setIsSpinner(false);
     if (check === 'success') {
       Swal.fire({
@@ -40,11 +43,21 @@ export const AddStudentModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
     }
   };
   const handleClose = () => {
+    setEmail('');
     setIsOpen(false);
   };
   const handleClickCopy = () => {
     setTitle('Đã copy mã');
     navigator.clipboard.writeText(path);
+    toast.success(`Copy đường liên kết thành công`, {
+      position: 'bottom-left',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     setIsOpen(true);
   };
   return (
@@ -85,6 +98,8 @@ export const AddStudentModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
                 <Form.Control
                   type="emailStudent"
                   placeholder="Nhập email người bạn muốn mời"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                 />
               </FloatingLabel>

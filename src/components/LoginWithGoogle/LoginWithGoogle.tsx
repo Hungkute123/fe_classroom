@@ -15,25 +15,36 @@ export const LoginWithGoogle = () => {
     const isLogin = (await dispatch(loginWithGoogle({ jwt: tokenID }))).payload;
 
     if (isLogin) {
-      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
-      if (history.action === 'PUSH') {
-        history.goBack();
-      } else {
-        history.push({
-          pathname: `/`,
+      const data = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
+
+      if (!data.Status) {
+        window.localStorage.clear();
+        Swal.fire({
+          icon: 'error',
+          title: 'TÀI KHOẢN ĐÃ BỊ KHÓA',
         });
+      } else {
+        if (history.action === 'PUSH') {
+          history.goBack();
+        } else {
+          history.push({
+            pathname: `/`,
+          });
+        }
+        Swal.fire({
+          icon: 'success',
+          title: 'ĐĂNG NHẬP THÀNH CÔNG',
+        });
+
+        return;
       }
+    } else {
       Swal.fire({
-        icon: 'success',
-        title: 'ĐĂNG NHẬP THÀNH CÔNG',
+        icon: 'error',
+        title: 'ĐĂNG NHẬP THẤT BẠI',
       });
       return;
     }
-
-    Swal.fire({
-      icon: 'error',
-      title: 'ĐĂNG NHẬP THẤT BẠI',
-    });
   };
   const handleFalied = (response: any) => {
     console.log(response);

@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../../redux/store';
 import './AdminLogin.scss';
 
 export const AdminLogin = () => {
-    const history= useHistory();
+  const history = useHistory();
   const dispatch = useAppDispatch();
   const handleSubmitForm = async (e: any) => {
     e.preventDefault();
@@ -21,18 +21,27 @@ export const AdminLogin = () => {
       Password: e.target[1].value,
     };
     const isLogin = (await dispatch(loginWithEmail(account))).payload;
-
+    
     if (isLogin) {
-      Swal.fire({
-        icon: 'success',
-        title: 'ĐĂNG NHẬP THÀNH CÔNG',
-      });
+      const data = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
 
-      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
-      history.push({
-        pathname: `/admin/manage-user-accounts`,
-      });
-      return;
+      if (!data.Status) {
+        window.localStorage.clear();
+        Swal.fire({
+          icon: 'error',
+          title: 'TÀI KHOẢN ĐÃ BỊ KHÓA',
+        });
+      } else {
+        history.push({
+          pathname: `/admin/manage-user-accounts`,
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'ĐĂNG NHẬP THÀNH CÔNG',
+        });
+
+        return;
+      }
     } else {
       Swal.fire({
         icon: 'error',
