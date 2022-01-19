@@ -35,7 +35,6 @@ export const Notification = () => {
   //const { socket, notification } = useSelector((state: RootState) => state.notification);
   const [dataNotification, setDataNotification] = useState<INotification[]>([]);
   const [countNotificaton, setCountNotification] = useState(0);
-  const [dataFilter, setDataFilter] = useState<INotification[]>([]);
   const handleOnEnter = () => {
     setShowOptions(true);
   };
@@ -46,24 +45,33 @@ export const Notification = () => {
   const handleChangeIsAll = (e: any) => {
     setIsAll(e);
   };
-  
+
   useEffect(() => {
     handleConnectSocket();
+    return () => {
+      socket.on('disconnect', () => {
+        console.log('disconnected');
+      });
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
     console.log(isConnect);
     if (isConnect) {
       socket.on('dataNotification', (data: any) => {
-        data.data.map((item: any) => {
-          if (item.Read === false) {
-            setCountNotification(countNotificaton + 1);
-          }
+        let counter = 0;
+        data.data.map((item: any, index: number) => {
           dataNotification.push(item);
           setDataNotification([...dataNotification]);
+          if (item.Read === false) {
+            counter++;
+          }
         });
-        console.log(data);
+        setCountNotification(counter);
+        //setDataNotification([...data.data]);
       });
+
       socket.on('newDataNotification', (data: any) => {
         data.data.map((item: any) => {
           if (item.Read === false) {
@@ -83,11 +91,17 @@ export const Notification = () => {
         });
       });
     }
-    // const action = getNotification({});
-    // dispatch(action);
-    // console.log(notification);
-    // setDataNotification([...notification]);
   }, [isConnect]);
+
+  // useEffect(() => {
+  //   setCountNotification(0);
+  //   dataNotification.map((item:any, index:number) => {
+  //     if (item.Read === false) {
+  //       setCountNotification(countNotificaton + 1);
+  //       console.log(countNotificaton, index);
+  //     }
+  //   });
+  // }, [dataNotification.length]);
 
   const handleConnectSocket = async () => {
     const data = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
@@ -100,6 +114,7 @@ export const Notification = () => {
     setIsConnect(true);
     socket.emit('getNotification', { _id: data._id });
   };
+
   const handleUpdateNotification = (item: any, index: number) => {
     console.log('haha');
     console.log(item, index);
@@ -117,8 +132,10 @@ export const Notification = () => {
       dataNotification[index].Read = true;
       setDataNotification([...dataNotification]);
       setCountNotification(countNotificaton - 1);
+      console.log(countNotificaton);
     }
   };
+
   return (
     <div className="notification" onMouseEnter={handleOnEnter} onMouseLeave={handleOnLeave}>
       <div className="notification__label">
@@ -175,75 +192,78 @@ export const Notification = () => {
             {dataNotification.length === 0 ? (
               <div className="notification__body__empty">Bạn chưa có thông báo nào</div>
             ) : (
-              dataNotification.map((item: any, index: number) => {
-                return isAll === true ? (
-                  <Link
-                    to={`${item.Url}`}
-                    onClick={(e) => handleUpdateNotification(item, index)}
-                    key={index}
-                  >
-                    <div
-                      className={`notification__body__container ${
-                        item.Read ? '' : 'notification__body__container__new'
-                      }  `}
+              dataNotification
+                .slice(0)
+                .reverse()
+                .map((item: any, index: number) => {
+                  return isAll === true ? (
+                    <Link
+                      to={`${item.Url}`}
+                      onClick={(e) => handleUpdateNotification(item, index)}
+                      key={index}
                     >
-                      <div className="notification__body__container__image">
-                        <img src={item.info[0].Image}></img>
-                        <div className="notification__body__container__content">
-                          <div className="notification__body__container__content__header">
-                            <div className="notification__body__container__content__title">
-                              {item.info[0].Name}
+                      <div
+                        className={`notification__body__container ${
+                          item.Read ? '' : 'notification__body__container__new'
+                        }  `}
+                      >
+                        <div className="notification__body__container__image">
+                          <img src={item.info[0].Image}></img>
+                          <div className="notification__body__container__content">
+                            <div className="notification__body__container__content__header">
+                              <div className="notification__body__container__content__title">
+                                {item.info[0].Name}
+                              </div>
+                              <span className="notification__body__container__content__time">
+                                {moment(item.CreateDate).format('hh:mm:ss DD/MM/YYYY')}
+                              </span>
                             </div>
-                            <span className="notification__body__container__content__time">
-                              {moment(item.CreateDate).format('hh:mm:ss DD/MM/YYYY')}
-                            </span>
-                          </div>
-                          <div className="notification__body__container__content__body">
-                            <div className="notification__body__container__content__body__title">
-                              <span>{item.Message} </span>
-                              {item.ClassName}
+                            <div className="notification__body__container__content__body">
+                              <div className="notification__body__container__content__body__title">
+                                <span>{item.Message} </span>
+                                {item.ClassName}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                ) : item.Read === false ? (
-                  <Link
-                    to={`${item.Url}`}
-                    onClick={(e) => handleUpdateNotification(item, index)}
-                    key={index}
-                  >
-                    <div
-                      className={`notification__body__container ${
-                        item.Read ? '' : 'notification__body__container__new'
-                      }  `}
+                    </Link>
+                  ) : item.Read === false ? (
+                    <Link
+                      to={`${item.Url}`}
+                      onClick={(e) => handleUpdateNotification(item, index)}
+                      key={index}
                     >
-                      <div className="notification__body__container__image">
-                        <img src={item.info[0].Image}></img>
-                        <div className="notification__body__container__content">
-                          <div className="notification__body__container__content__header">
-                            <div className="notification__body__container__content__title">
-                              {item.info[0].Name}
+                      <div
+                        className={`notification__body__container ${
+                          item.Read ? '' : 'notification__body__container__new'
+                        }  `}
+                      >
+                        <div className="notification__body__container__image">
+                          <img src={item.info[0].Image}></img>
+                          <div className="notification__body__container__content">
+                            <div className="notification__body__container__content__header">
+                              <div className="notification__body__container__content__title">
+                                {item.info[0].Name}
+                              </div>
+                              <span className="notification__body__container__content__time">
+                                {moment(item.CreateDate).format('hh:mm:ss DD/MM/YYYY')}
+                              </span>
                             </div>
-                            <span className="notification__body__container__content__time">
-                              {moment(item.CreateDate).format('hh:mm:ss DD/MM/YYYY')}
-                            </span>
-                          </div>
-                          <div className="notification__body__container__content__body">
-                            <div className="notification__body__container__content__body__title">
-                              <span>{item.Message} </span>
-                              {item.ClassName}
+                            <div className="notification__body__container__content__body">
+                              <div className="notification__body__container__content__body__title">
+                                <span>{item.Message} </span>
+                                {item.ClassName}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                ) : (
-                  <div key={index}></div>
-                );
-              })
+                    </Link>
+                  ) : (
+                    <div key={index}></div>
+                  );
+                })
             )}
           </div>
 

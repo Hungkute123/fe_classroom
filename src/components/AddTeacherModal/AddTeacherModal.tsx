@@ -10,6 +10,7 @@ import './AddTeacherModal.scss';
 export const AddTeacherModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
   const [validated, setValidated] = useState(false);
   const [isSpinner, setIsSpinner] = useState(false);
+  const [emailTeacher, setEmailTeacher] = useState('');
   const dispatch = useAppDispatch();
   const { codeclass }: { codeclass: string } = useParams();
   let path =
@@ -24,6 +25,7 @@ export const AddTeacherModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
     };
     const check = (await dispatch(inviteClassroom(invite))).payload;
     setIsOpen(false);
+    setEmailTeacher('');
     setIsSpinner(false);
     if (check === 'success') {
       Swal.fire({
@@ -38,6 +40,7 @@ export const AddTeacherModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
     }
   };
   const handleClose = () => {
+    setEmailTeacher('')
     setIsOpen(false);
   };
   return (
@@ -57,6 +60,8 @@ export const AddTeacherModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
               <Form.Control
                 type="emailTeacher"
                 placeholder="Nhập email người bạn muốn mời"
+                value={emailTeacher}
+                  onChange={(e) => setEmailTeacher(e.target.value)}
                 required
               />
             </FloatingLabel>

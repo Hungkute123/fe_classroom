@@ -237,16 +237,22 @@ export const ManageUserAccounts = () => {
         <div className="manage-user-accounts__fullwidth">
           <p style={{ width: '114px' }}>
             <input
-              style={{ width: '100px',borderBottom: '1px solid #ccc' }}
+              style={{ width: '100px', borderBottom: '1px solid #ccc' }}
               type="number"
               value={row.MSSV}
               onChange={(e) => handleChangeMSSV(row._id, String(e.target.value))}
             />
           </p>
-          <i style={{ width: '40px' }}>
+          <i
+            style={{ width: '40px' }}
+            className="fas fa-save"
+            onClick={(e) => handleClickSaveMSSV(e, row)}
+            title="Cập nhập mã số sinh viên"
+          ></i>
+          {/* <i style={{ width: '40px' }}>
             <BsFileEarmarkText onClick={(e) => handleClickSaveMSSV(e, row)} />
-          </i>
-          <i>
+          </i> */}
+          <i title="Xóa mã số sinh viên">
             <BsFileExcel onClick={(e) => handleClickDeleteMSSV(e, row)} />
           </i>
         </div>
@@ -265,7 +271,7 @@ export const ManageUserAccounts = () => {
       center: true,
       cell: (row: any) => (
         <Modal
-          button={row.Status ? <BsLock /> : <BsUnlock />}
+          button={row.Status ? <BsLock title="Khóa tài khoản"/> : <BsUnlock title="Mở khóa tài khoản"/>}
           title={row.Status ? 'Khóa tài khoản' : 'Mở khóa tài khoản'}
           body={
             row.Status
@@ -283,7 +289,7 @@ export const ManageUserAccounts = () => {
       center: true,
       cell: (row: any) => (
         <Modal
-          button={<BsFillTrashFill />}
+          button={<BsFillTrashFill title="Xóa tài khoản"/>}
           title={'Xóa tài khoản'}
           body={`Bạn có chắc chắn muốn xóa tài khoản ${row.Email} không?`}
           handleClick={(e: any) => handleClickDelAccount(e, row)}

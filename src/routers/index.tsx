@@ -17,7 +17,7 @@ import {
   AdminAccount,
   ListReviewMarkPage,
 } from '../containers';
-import { Header, Footer, HeaderClassroom } from '../components/common';
+import { Header, Footer } from '../components/common';
 
 export const Routers = () => {
   const buildysURL = process.env.REACT_APP_LINK_BUILDYS;
@@ -123,7 +123,7 @@ export const Routers = () => {
           component={MyClassroom}
           layout={HeaderFooterLayout}
           isHasHeader={true}
-          header={HeaderClassroom}
+          header={Header}
           titleHeader="Bảng tin"
           isHasFooter={true}
           footer={Footer}
@@ -134,7 +134,7 @@ export const Routers = () => {
           component={ExerciseClassPage}
           layout={HeaderFooterLayout}
           isHasHeader={true}
-          header={HeaderClassroom}
+          header={Header}
           titleHeader="Mọi người"
           isHasFooter={true}
           footer={Footer}
@@ -145,7 +145,7 @@ export const Routers = () => {
           component={MyListMemberClass}
           layout={HeaderFooterLayout}
           isHasHeader={true}
-          header={HeaderClassroom}
+          header={Header}
           titleHeader="Mọi người"
           isHasFooter={true}
           footer={Footer}
@@ -156,7 +156,7 @@ export const Routers = () => {
           component={MarkClassPage}
           layout={HeaderFooterLayout}
           isHasHeader={true}
-          header={HeaderClassroom}
+          header={Header}
           titleHeader="Điểm số"
           isHasFooter={true}
           footer={Footer}
@@ -181,7 +181,7 @@ export const Routers = () => {
           component={ListReviewMarkPage}
           layout={HeaderFooterLayout}
           isHasHeader={true}
-          header={HeaderClassroom}
+          header={Header}
           titleHeader="Danh sách phúc khảo"
           isHasFooter={true}
           footer={Footer}

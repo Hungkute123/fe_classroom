@@ -159,7 +159,7 @@ export const ManageAdminAccounts = () => {
       center: true,
       cell: (row: any) => (
         <Modal
-          button={row.Status ? <BsLock /> : <BsUnlock />}
+          button={row.Status ? <BsLock title="Khóa tài khoản"/> : <BsUnlock title="Mở khóa tài khoản"/>}
           title={row.Status ? 'Khóa tài khoản' : 'Mở khóa tài khoản'}
           body={
             row.Status
@@ -177,7 +177,7 @@ export const ManageAdminAccounts = () => {
       center: true,
       cell: (row: any) => (
         <Modal
-          button={<BsFillTrashFill />}
+          button={<BsFillTrashFill title="Xóa tài khoản"/>}
           title={'Xóa tài khoản'}
           body={`Bạn có chắc chắn muốn xóa tài khoản ${row.Email} không?`}
           handleClick={(e: any) => handleClickDelAccount(e, row)}

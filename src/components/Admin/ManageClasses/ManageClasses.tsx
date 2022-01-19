@@ -151,7 +151,7 @@ export const ManageClasses = () => {
       center: true,
       cell: (row: any) => (
         <Modal
-          button={row.Status ? <BsLock /> : <BsUnlock />}
+          button={row.Status ? <BsLock title="Khóa lớp học"/> : <BsUnlock title="Mở lớp học"/>}
           title={row.Status ? 'Khóa lớp học' : 'Mở khóa lớp học'}
           body={
             row.Status
@@ -169,7 +169,7 @@ export const ManageClasses = () => {
       center: true,
       cell: (row: any) => (
         <Modal
-          button={<BsFillTrashFill />}
+          button={<BsFillTrashFill title="Xóa lớp học"/>}
           title={'Xóa lớp học'}
           body={`Bạn có chắc chắn muốn xóa lớp học ${row.Title} không?`}
           handleClick={(e: any) => handleClickDelClassroom(e, row)}

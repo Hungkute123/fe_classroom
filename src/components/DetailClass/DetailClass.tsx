@@ -4,6 +4,7 @@ import './DetailClass.scss';
 import { BsExclamationCircle, BsFiles } from 'react-icons/bs';
 import { Grade } from './Grade/Grade';
 import { Post } from './Post/Post';
+import { toast } from 'react-toastify';
 interface IDetailClass {
   CodeClass: string;
   Title: string;
@@ -35,6 +36,15 @@ export const DetailClass: React.FC<IDetailClass> = ({
   const handleClickCopy = () => {
     setTitle('Đã copy mã');
     navigator.clipboard.writeText(CodeClass);
+    toast.success(`Copy mã lớp thành công`, {
+      position: 'bottom-left',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
   return (
     <div className={`detail-class detail-class__${isShow}`}>

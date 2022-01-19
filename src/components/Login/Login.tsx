@@ -26,22 +26,32 @@ export const Login = () => {
     };
 
     const isLogin = (await dispatch(loginWithEmail(account))).payload;
+   
 
     if (isLogin) {
-      dispatch(getInfo({ jwt: localStorage.getItem('jwt') }));
-      if (history.action === 'PUSH') {
-        history.goBack();
-      } else {
-        history.push({
-          pathname: `/`,
+      const data = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
+      
+      if (!data.Status) {
+        window.localStorage.clear();
+        Swal.fire({
+          icon: 'error',
+          title: 'TÀI KHOẢN ĐÃ BỊ KHÓA',
         });
-      }
-      Swal.fire({
-        icon: 'success',
-        title: 'ĐĂNG NHẬP THÀNH CÔNG',
-      });
+      } else {
+        if (history.action === 'PUSH') {
+          history.goBack();
+        } else {
+          history.push({
+            pathname: `/`,
+          });
+        }
+        Swal.fire({
+          icon: 'success',
+          title: 'ĐĂNG NHẬP THÀNH CÔNG',
+        });
 
-      return;
+        return;
+      }
     } else {
       Swal.fire({
         icon: 'error',
@@ -57,7 +67,6 @@ export const Login = () => {
   };
   useEffect(() => {
     handleLogged();
-    console.log(history);
   }, []);
   return (
     <div className="login">
