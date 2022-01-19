@@ -28,7 +28,7 @@ export const ManageUserAccounts = () => {
   const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const filteredItems = data.filter((item: any) => item.MSSV.includes(filterText));
   const fetchListUserAccount = async () => {
-    const dataListUserAccount = (await dispatch(getListUserAccounts())).payload;
+    const dataListUserAccount = (await dispatch(getListUserAccounts({jwt: localStorage.getItem('jwt')}))).payload;
     dataListUserAccount.map((item: any, index: number) => {
       return data.push(item);
     });
@@ -283,20 +283,20 @@ export const ManageUserAccounts = () => {
         ></Modal>
       ),
     },
-    {
-      name: 'Xóa tài khoản',
-      button: true,
-      center: true,
-      cell: (row: any) => (
-        <Modal
-          button={<BsFillTrashFill title="Xóa tài khoản"/>}
-          title={'Xóa tài khoản'}
-          body={`Bạn có chắc chắn muốn xóa tài khoản ${row.Email} không?`}
-          handleClick={(e: any) => handleClickDelAccount(e, row)}
-          id={`del${row._id}`}
-        ></Modal>
-      ),
-    },
+    // {
+    //   name: 'Xóa tài khoản',
+    //   button: true,
+    //   center: true,
+    //   cell: (row: any) => (
+    //     <Modal
+    //       button={<BsFillTrashFill title="Xóa tài khoản"/>}
+    //       title={'Xóa tài khoản'}
+    //       body={`Bạn có chắc chắn muốn xóa tài khoản ${row.Email} không?`}
+    //       handleClick={(e: any) => handleClickDelAccount(e, row)}
+    //       id={`del${row._id}`}
+    //     ></Modal>
+    //   ),
+    // },
   ];
 
   return (

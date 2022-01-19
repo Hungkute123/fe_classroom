@@ -17,7 +17,7 @@ export const ManageClasses = () => {
     item.Title.toLowerCase().includes(filterText.toLowerCase()),
   );
   const fetchListClasses = async () => {
-    const dataListClasses = (await dispatch(getListClass())).payload;
+    const dataListClasses = (await dispatch(getListClass({jwt: localStorage.getItem('jwt')}))).payload;
     dataListClasses.map((item: any, index: number) => {
       return dataClasses.push(item);
     });
@@ -57,7 +57,7 @@ export const ManageClasses = () => {
         updateClass({ jwt: localStorage.getItem('jwt'), key: key, classroom: classroomNew }),
       )
     ).payload;
-    const message = classroom.Status ? 'Khóa tài khoản ' : 'Mở khóa tài khoản ';
+    const message = classroom.Status ? 'Khóa lớp học ' : 'Mở khóa lớp học ';
     if (update) {
       toast.success(`${message}thành công`, {
         position: 'top-right',
@@ -94,7 +94,7 @@ export const ManageClasses = () => {
     const update = (
       await dispatch(deleteClass({ jwt: localStorage.getItem('jwt'), id: classroom._id }))
     ).payload;
-    const message = 'Xóa tài khoản ';
+    const message = 'Xóa lớp học ';
     if (update) {
       toast.success(`${message}thành công`, {
         position: 'top-right',
@@ -135,7 +135,7 @@ export const ManageClasses = () => {
     },
     {
       name: 'Người sở hữu',
-      selector: (row: any) => row.info[0].Name,
+      selector: (row: any) => row.info[0] ? row.info[0].Name : '',
       sortable: true,
     },
     {
