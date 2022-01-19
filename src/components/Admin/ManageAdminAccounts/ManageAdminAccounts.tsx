@@ -23,7 +23,7 @@ export const ManageAdminAccounts = () => {
     item.Email.toLowerCase().includes(filterText.toLowerCase()),
   );
   const fetchListAdminAccount = async () => {
-    const dataListAdminAccount = (await dispatch(getListAdminAccounts())).payload;
+    const dataListAdminAccount = (await dispatch(getListAdminAccounts({jwt: localStorage.getItem('jwt')}))).payload;
     dataListAdminAccount.map((item: any, index: number) => {
       return dataAdminAccount.push(item);
     });
@@ -171,20 +171,20 @@ export const ManageAdminAccounts = () => {
         ></Modal>
       ),
     },
-    {
-      name: 'Xóa tài khoản',
-      button: true,
-      center: true,
-      cell: (row: any) => (
-        <Modal
-          button={<BsFillTrashFill title="Xóa tài khoản"/>}
-          title={'Xóa tài khoản'}
-          body={`Bạn có chắc chắn muốn xóa tài khoản ${row.Email} không?`}
-          handleClick={(e: any) => handleClickDelAccount(e, row)}
-          id={`del${row._id}`}
-        ></Modal>
-      ),
-    },
+    // {
+    //   name: 'Xóa tài khoản',
+    //   button: true,
+    //   center: true,
+    //   cell: (row: any) => (
+    //     <Modal
+    //       button={<BsFillTrashFill title="Xóa tài khoản"/>}
+    //       title={'Xóa tài khoản'}
+    //       body={`Bạn có chắc chắn muốn xóa tài khoản ${row.Email} không?`}
+    //       handleClick={(e: any) => handleClickDelAccount(e, row)}
+    //       id={`del${row._id}`}
+    //     ></Modal>
+    //   ),
+    // },
   ];
   return (
     <div className="manage-admin-accounts">

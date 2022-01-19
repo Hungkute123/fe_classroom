@@ -27,8 +27,8 @@ export const inviteClassroom = createAsyncThunk(
 );
 export const getListClass = createAsyncThunk(
   'classroom/getListClass',
-  async () => {
-    return await classroomApi.getListClass().then((res) => res);
+  async (params: any) => {
+    return await classroomApi.getListClass(params).then((res) => res);
   },
 );
 export const deleteClass = createAsyncThunk('classroom/delete-classroom', async (params: any) => {

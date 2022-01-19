@@ -28,13 +28,13 @@ export const updateMSSV = createAsyncThunk('account/update-account-mssv', async 
 export const getInfo = createAsyncThunk('account/get-info', async (params: any) => {
   return await accountApi.getInfo(params).then((res) => res.data);
 });
-export const getListUserAccounts = createAsyncThunk('account/get-list-user-accounts', async () => {
-  return await accountApi.getListUserAccounts().then((res) => res.data);
+export const getListUserAccounts = createAsyncThunk('account/get-list-user-accounts', async (params: any) => {
+  return await accountApi.getListUserAccounts(params).then((res) => res.data);
 });
 export const getListAdminAccounts = createAsyncThunk(
   'account/get-list-admin-accounts',
-  async () => {
-    return await accountApi.getListAdminAccounts().then((res) => res.data);
+  async (params: any) => {
+    return await accountApi.getListAdminAccounts(params).then((res) => res.data);
   },
 );
 export const adminLogin = createAsyncThunk('account/admin-login', async (params: any) => {
@@ -106,6 +106,7 @@ export const accountSlice = createSlice({
     });
     //update admin login
     builder.addCase(adminLogin.fulfilled, (state, action) => {
+      localStorage.setItem('jwt', action.payload);
       state.isLoading = true;
     });
     //update admin register

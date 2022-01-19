@@ -33,13 +33,13 @@ const userApi = {
     const url = `account/get-info`;
     return await axiosClient.get(url, { params });
   },
-  getListAdminAccounts: async () => {
+  getListAdminAccounts: async (params: any) => {
     const url = `account/get-list-admin-accounts`;
-    return await axiosClient.get(url);
+    return await axiosClient.get(url,{ params });
   },
-  getListUserAccounts: async () => {
+  getListUserAccounts: async (params: any) => {
     const url = `account/get-list-user-accounts`;
-    return await axiosClient.get(url);
+    return await axiosClient.get(url,{ params });
   },
   adminLogin: async (requestOption: any) => {
     const url = `account/admin-login`;

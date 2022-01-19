@@ -5,7 +5,7 @@ import { MdEmail } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-import { getInfo, loginWithEmail } from '../../../redux/slice/appSlice/accountSlice';
+import { adminLogin, getInfo } from '../../../redux/slice/appSlice/accountSlice';
 import { useAppDispatch } from '../../../redux/store';
 
 import './AdminLogin.scss';
@@ -20,18 +20,26 @@ export const AdminLogin = () => {
       Email: e.target[0].value,
       Password: e.target[1].value,
     };
-    const isLogin = (await dispatch(loginWithEmail(account))).payload;
-    
+    const isLogin = (await dispatch(adminLogin(account))).payload;
+
     if (isLogin) {
       const data = (await dispatch(getInfo({ jwt: localStorage.getItem('jwt') }))).payload;
 
-      if (!data.Status) {
+      if (data.Status === false) {
         window.localStorage.clear();
         Swal.fire({
           icon: 'error',
           title: 'TÀI KHOẢN ĐÃ BỊ KHÓA',
         });
-      } else {
+      } 
+      else if(data.Permission !="Admin"){
+        window.localStorage.clear();
+        Swal.fire({
+          icon: 'error',
+          title: 'ĐĂNG NHẬP THẤT BẠI',
+        });
+      }
+      else {
         history.push({
           pathname: `/admin/manage-user-accounts`,
         });

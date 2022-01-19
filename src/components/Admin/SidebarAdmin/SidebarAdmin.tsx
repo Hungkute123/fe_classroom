@@ -100,7 +100,7 @@ export const SidebarAdmin: React.FC<ISidebarAdmin> = ({
             >
               <FaRegKissWinkHeart />
               <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                18120390-18120428
+                Classroom
               </span>
             </a>
           </div>
