@@ -63,7 +63,7 @@ export const ListReviewMark = () => {
             <div className={`${className}__header`}>
               <div className={`${className}__left`}>
                 <p className={`${className}__name`}>Danh Sách Học Sinh Phúc Khảo</p>
-                <h4 className={`${className}__text-primary`}>Dental Care</h4>
+                <h4 className={`${className}__text-primary`}></h4>
               </div>
             </div>
             <div className={`${className}__body`}>
