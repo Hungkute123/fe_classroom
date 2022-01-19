@@ -6,15 +6,19 @@ import './CreateClassModal.scss';
 
 export const CreateClassModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
   const [validated, setValidated] = useState(false);
+  const [title, setTitle] = useState('');
+  const [part, setPart] = useState('');
+  const [theme, setTheme] = useState('');
+  const [room, setRoom] = useState('');
   const dispatch = useDispatch();
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const classroom = {
-      Title: event.target[0].value,
-      Part: event.target[1].value,
-      Theme: event.target[2].value,
+      Title: title,
+      Part: part,
+      Theme: theme,
       Image: 'https://www.gstatic.com/classroom/themes/img_backtoschool.jpg',
-      Room: Number(event.target[3].value),
+      Room: room,
       jwt: localStorage.getItem('jwt'),
     };
     dispatch(createClassroom(classroom));
@@ -38,17 +42,17 @@ export const CreateClassModal: React.FC<IModal> = ({ isOpen, setIsOpen }) => {
         <Form validated={validated} onSubmit={handleSubmit}>
           <Modal.Body>
             <FloatingLabel controlId="formCreateClass" label="Tên lớp học" className="mb-3">
-              <Form.Control type="nameClass" placeholder="Nhập tên lớp học" required />
+              <Form.Control type="nameClass" placeholder="Nhập tên lớp học" required value={title} onChange={(e)=>setTitle(e.target.value)} />
             </FloatingLabel>
             <FloatingLabel controlId="formPartClass" label="Phần" className="mb-3">
-              <Form.Control type="partClass" placeholder="Nhập phần của lớp học" />
+              <Form.Control type="partClass" placeholder="Nhập phần của lớp học" value={part} onChange={(e)=>setPart(e.target.value)}/>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </FloatingLabel>
             <FloatingLabel controlId="formThemeClass" label="Chủ đề" className="mb-3">
-              <Form.Control type="themeClass" placeholder="Nhập chủ đề lớp học" />
+              <Form.Control type="themeClass" placeholder="Nhập chủ đề lớp học" value={theme} onChange={(e)=>setTheme(e.target.value)}/>
             </FloatingLabel>
             <FloatingLabel controlId="formRoomClass" label="Phòng" className="mb-3">
-              <Form.Control type="roomClass" placeholder="Nhập số phòng" />
+              <Form.Control type="roomClass" placeholder="Nhập số phòng" value={room} onChange={(e)=>setRoom(e.target.value)}/>
             </FloatingLabel>
           </Modal.Body>
           <Modal.Footer>
