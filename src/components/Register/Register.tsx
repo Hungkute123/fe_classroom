@@ -61,21 +61,30 @@ export const Register = () => {
       return;
     }
 
-    const isRegister = (await dispatch(registerWithEmail(account))).payload;
+    let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
 
-    if (isRegister) {
+    if (strongPassword.test(account.Password)) {
+      const isRegister = (await dispatch(registerWithEmail(account))).payload;
+
+      if (isRegister) {
+        Swal.fire({
+          icon: 'success',
+          title: 'ĐĂNG KÝ THÀNH CÔNG',
+        });
+
+        return;
+      }
+
       Swal.fire({
-        icon: 'success',
-        title: 'ĐĂNG KÝ THÀNH CÔNG',
+        icon: 'error',
+        title: 'EMAIL ĐÃ TỒN TẠI',
       });
-
-      return;
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: ' Phải đủ 8 ký tự, có ký tự hoa, thường, số và ký tự đặc biệt',
+      });
     }
-
-    Swal.fire({
-      icon: 'error',
-      title: 'EMAIL ĐÃ TỒN TẠI',
-    });
   };
 
   return (
