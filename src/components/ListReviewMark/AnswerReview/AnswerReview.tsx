@@ -46,7 +46,7 @@ export const AnswerReview = ({ isOpen, setIsOpen, codeClass, infoReviewMark }: I
     e.preventDefault();
 
     const reviewMark = {
-      FinalMark: e.target[2].value,
+      FinalMark: Number(e.target[2].value),
       Answer: e.target[3].value,
       Status: true,
     };
@@ -55,6 +55,10 @@ export const AnswerReview = ({ isOpen, setIsOpen, codeClass, infoReviewMark }: I
       jwt: localStorage.getItem('jwt'),
       CodeClass: codeClass,
       MSSV: infoReviewMark.MSSV,
+      TypeMark: infoReviewMark.typeMark,
+      CurrentMark: infoReviewMark.currentMark,
+      DesiredMark: infoReviewMark.desiredMark,
+      CommentStudent: infoReviewMark.commentStudent,
       reviewMark: reviewMark,
     });
 
@@ -150,7 +154,7 @@ export const AnswerReview = ({ isOpen, setIsOpen, codeClass, infoReviewMark }: I
               <Form.Label>Điểm chính thức</Form.Label>
               <Form.Control
                 type="number"
-                step="0.1"
+                step="0.05"
                 min="0"
                 placeholder="Nhập điểm chính thức..."
                 required
