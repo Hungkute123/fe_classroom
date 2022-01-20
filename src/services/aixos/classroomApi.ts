@@ -6,13 +6,11 @@ const classroomApi = {
     const { data } = await axiosClient.get(url, { params });
     return data;
   },
-
   createClass: (requestOption: any) => {
     const url = 'class';
     return axiosClient.post(url, requestOption);
   },
   getClassByCodeClass: async (params: any) => {
-
     const url = 'class/codeclass';
     const { data } = await axiosClient.get(url, { params });
     return data;
@@ -40,6 +38,6 @@ const classroomApi = {
     const url = `class/delete-class`;
     return await axiosClient.delete(url, { params });
   },
-}
+};
 
 export default classroomApi;
