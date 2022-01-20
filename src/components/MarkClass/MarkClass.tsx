@@ -40,6 +40,7 @@ export const MarkClass = () => {
   useEffect(() => {
     dispatch(getClassroomByCodeClass(classroom));
   }, []);
+  
   // Kiểm tra có phải giáo viên không?
   const checkTeacher = async () => {
     const isTeacher = (await dispatch(getMyInfo(classroom))).payload;
