@@ -65,7 +65,7 @@
 
   &__action {
     justify-content: flex-end;
-    
+
     button {
       display: flex;
       justify-content: center;
@@ -91,8 +91,14 @@
       color: rgb(97, 97, 97);
     }
   }
+  &__line {
+    border-top: 1px solid #ccc;
+  }
 }
 
 .dropdown-toggle::after {
   display: none !important;
+}
+.offcanvas-start {
+  width: 300px !important;
 }

@@ -1,0 +1,108 @@
+.navs {
+  &__title {
+    letter-spacing: 0.01785714em;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    color: #5f6368;
+    display: block;
+    padding: 0.6rem 1rem;
+  }
+  &__body {
+    &__empty {
+      font-size: 15px;
+      padding: 15px;
+      margin-top: 12px;
+    }
+    &__container {
+      padding: 0.4rem 1.2rem;
+      &__new {
+        background-color: #f5f5f5;
+      }
+      &__image {
+        -webkit-align-items: center;
+        align-items: center;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+        img {
+          height: 2rem;
+          margin: 0.4rem 1rem 0 0;
+          width: 2rem;
+          -webkit-align-self: flex-start;
+          align-self: flex-start;
+          -webkit-border-radius: 50%;
+          border-radius: 50%;
+          -webkit-flex-shrink: 0;
+          flex-shrink: 0;
+          max-height: 75px;
+          max-width: 75px;
+          vertical-align: middle;
+        }
+      }
+      &__content {
+        -webkit-box-flex: 1;
+        box-flex: 1;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        min-width: 0;
+        &__header {
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-justify-content: space-between;
+          justify-content: space-between;
+          min-height: 1.5rem;
+        }
+        &__title {
+          letter-spacing: 0.01785714em;
+          font-family: 'Google Sans', Roboto, Arial, sans-serif;
+          font-size: 0.875rem;
+          font-weight: 600;
+          line-height: 1.25rem;
+          color: #3c4043;
+        }
+        &__time {
+          letter-spacing: 0.025em;
+          font-family: Roboto, Arial, sans-serif;
+          font-size: 0.75rem;
+          font-weight: 400;
+          line-height: 1rem;
+          color: #5f6368;
+          display: inline-block;
+        }
+        &__body {
+          letter-spacing: 0.01428571em;
+          font-family: Roboto, Arial, sans-serif;
+          font-size: 0.875rem;
+          font-weight: 400;
+          line-height: 1.25rem;
+          color: #3c4043;
+          word-wrap: break-word;
+          &__title {
+            font-weight: 600;
+            float: left;
+          }
+          span {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-weight: 400;
+            font-size: 13px;
+            color: #6f6767;
+          }
+        }
+      }
+      &:hover {
+        opacity: 0.9;
+        background-color: #0000ee17;
+      }
+    }
+  }
+}
+
+.nav {
+  border-right: 1px solid #fff !important;
+}

@@ -22,6 +22,7 @@ import {
   getMyInfo,
   getStudentByCodeClass,
 } from '../../../redux/slice/appSlice/memberClassroomSlice';
+import { Navs } from '../Navs/Navs';
 
 export const Header = () => {
   const history = useHistory();
@@ -31,8 +32,11 @@ export const Header = () => {
   const [menu, setMenu] = useState(false);
   const [isTeacher, setIsTeacher] = useState(false);
   const account: any = useSelector((state: RootState) => state.account.account);
+  const { classroom } = useSelector((state: RootState) => state.classroom);
   const { codeclass }: { codeclass: string } = useParams();
   const { number }: { number: string } = useParams();
+  const [myClassroom, setMyClassroom] = useState<any>([]);
+  const [joinClassroom, setJoinClassroom] = useState<any>([]);
   const handleShow = () => setMenu(true);
   const handleClose = () => setMenu(false);
   const handleLogout = () => {
@@ -41,12 +45,12 @@ export const Header = () => {
       pathname: `/account/login`,
     });
   };
-  const classroom = {
+  const getClassroom = {
     codeclass: codeclass,
     jwt: localStorage.getItem('jwt'),
   };
   const checkTeacher = async () => {
-    const isTeacher = (await dispatch(getMyInfo(classroom))).payload;
+    const isTeacher = (await dispatch(getMyInfo(getClassroom))).payload;
 
     if (isTeacher.Permission === 'Teacher') {
       setIsTeacher(true);
@@ -56,10 +60,21 @@ export const Header = () => {
   useEffect(() => {
     if (codeclass && codeclass != undefined) {
       checkTeacher();
-      dispatch(getStudentByCodeClass(classroom));
+      dispatch(getStudentByCodeClass(getClassroom));
     }
   }, [codeclass]);
 
+  useEffect(() => {
+    classroom.map((item: any) => {
+      if(item.IDUser === account._id){
+        myClassroom.push(item)
+        setMyClassroom([...myClassroom]);
+      }else{
+        joinClassroom.push(item)
+        setJoinClassroom([...joinClassroom]);
+      }
+    });
+  },[classroom.length]);
   return (
     <div className="header">
       <CreateClassModal isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -73,7 +88,12 @@ export const Header = () => {
             <Offcanvas.Header closeButton>
               <Offcanvas.Title>Classroom</Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body>Comming soon...</Offcanvas.Body>
+            <div className="header__nav__body">
+              <div className="header__line"></div>
+              <Navs title="Giảng dạy" list={myClassroom}/>
+              <div className="header__line"></div>
+              <Navs title="Đã tham gia" list={joinClassroom}/>
+            </div>
           </Offcanvas>
         </div>
         <Link to="/">
