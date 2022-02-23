@@ -5,6 +5,7 @@ import { BsExclamationCircle, BsFiles } from 'react-icons/bs';
 import { Grade } from './Grade/Grade';
 import { Post } from './Post/Post';
 import { toast } from 'react-toastify';
+import { CreatePost } from './CreatePost/CreatePost';
 interface IDetailClass {
   CodeClass: string;
   Title: string;
@@ -99,10 +100,11 @@ export const DetailClass: React.FC<IDetailClass> = ({
         <Container>
           <Row>
             <Col sm={2}>
-              <Grade IsTeacher={IsTeacher}/>
+              <Grade IsTeacher={IsTeacher} />
             </Col>
             <Col sm={10} className="detail-class__post">
-              {/* <Post /> */}
+              <CreatePost />
+              <Post />
             </Col>
           </Row>
         </Container>
